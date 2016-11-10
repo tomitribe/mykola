@@ -1,6 +1,10 @@
-let codemirror = require("../bower_components/codemirror/lib/codemirror.js");
+import 'core-js/es6';
 
-angular.module('angular-tomitribe-diff', [])
+module tomitribe_diff {
+    var angular: any;
+    let codemirror = require("../bower_components/codemirror/lib/codemirror.js");
+
+    angular.module('angular-tomitribe-diff', [])
     .directive('tribeDiff', ['$document', '$timeout', ($document, $timeout) => {
         return {
             restrict: 'A',
@@ -62,3 +66,4 @@ angular.module('angular-tomitribe-diff', [])
             })
         }
     }]);
+}

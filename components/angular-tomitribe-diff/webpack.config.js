@@ -1,14 +1,16 @@
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack');
+var precss = require('precss');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
-  context: __dirname + "/src",
+  context: __dirname + '/src',
   entry:  {
-    component: './tomitribe-diff.ts',
+    'tomitribe-diff': './tomitribe-diff.ts'
   },
   output: {
-    path: __dirname +"/dist",
+    path: __dirname +'/dist',
     filename: '[name].js',
+    chunkFilename: '[id].js'
   },
   module: {
     loaders: [
@@ -34,17 +36,6 @@ module.exports = {
   postcss: function () {
     return [precss, autoprefixer];
   },
-
-  tslint: {
-    emitErrors: false,
-    failOnHint: true
-  },
-
-  plugins:[
-    new HtmlWebpackPlugin({
-      template: './tomitribe-diff.jade'
-    })
-  ],
 
   htmlLoader: {
     minimize: false
