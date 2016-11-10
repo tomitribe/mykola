@@ -1,0 +1,12 @@
+{
+  "name": "angular-tomitribe-components",
+  "version": "0.0.1",
+  "description": "Test with npm publish",
+  "files": [
+  ],
+  "scripts": {
+  },
+  "devDependencies": {
+  },
+  "license": "MIT"
+}
