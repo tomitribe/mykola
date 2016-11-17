@@ -1,0 +1,22 @@
+git:
+  depth: 1
+sudo: false
+language: node_js
+cache:
+  directories:
+  - node_modules
+node_js:
+- '6'
+script: cd $PACKAGE_DIR && npm install && bower install
+deploy:
+  provider: npm
+  email: ""
+  api_key:
+    secure: 
+  on:
+    branch: master
+env:
+  - PACKAGE_DIR=packages/angular-tomitribe-diff-directive
+  - PACKAGE_DIR=packages/pkg2
+after_deploy:
+  - "echo 'Deploying...'"
