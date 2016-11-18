@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true
+  },
+  "exclude": [
+    "node_modules/awesome-typescript-loader/",
+    "node_modules/typescript/",
+    "node_modules/rx/",
+    "node_modules/bs-recipes/",
+    "node_modules/popsicle/",
+    "node_modules/popsicle-retry/",
+    "node_modules/typings/",
+    "node_modules/typings-core/",
+    "out",
+    "dist",
+    "dev",
+    "reports",
+    "components"
+  ]
+}

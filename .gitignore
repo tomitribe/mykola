@@ -4,4 +4,8 @@ bower_modules
 *.log
 *.cache
 
+dist
+reports
+typings
+out
 .idea/

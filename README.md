@@ -6,3 +6,12 @@ https://github.com/toddmotto/angular-styleguide#es2015-and-tooling
 
 npm publish testing
 
+How to use server 
+```sh
+npm i webpack typings typescript -g
+npm i
+npm start
+```
+
+Check demo page at:
+http://localhost:8082/
