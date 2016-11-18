@@ -2,12 +2,13 @@ import "angular";
 import "angular-route";
 import "angular-cookies";
 import "angular-resource";
+import "angular-tomitribe-button";
 
 // load our default (non specific) css
 import "font-awesome/css/font-awesome.css";
 import "./styles/app.sass";
 module index {
-    angular.module("demo-app", ['ngRoute'])
+    angular.module("demo-app", ['ngRoute', 'tomitribe-button'])
         .config([
             '$locationProvider', '$routeProvider', '$httpProvider', '$logProvider',
             function ($locationProvider, $routeProvider, $httpProvider, $logProvider) {
