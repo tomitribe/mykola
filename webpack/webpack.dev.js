@@ -2,7 +2,6 @@ var loaders = require("./loaders");
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
-var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
     entry: ['./src/index.ts'],
