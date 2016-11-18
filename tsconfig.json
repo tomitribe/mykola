@@ -22,7 +22,6 @@
     "out",
     "dist",
     "dev",
-    "reports",
-    "components"
+    "reports"
   ]
 }
