@@ -15,3 +15,9 @@ npm start
 
 Check demo page at:
 http://localhost:8082/
+
+Component example:
+https://github.com/Dexmaster/angular-component-tr
+
+Use example:
+https://github.com/Dexmaster/mykola/commit/a933807a49c1d78dcf71a390186183eb7702f801
