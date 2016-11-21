@@ -6,6 +6,7 @@ $btn-icon-size: ('xs': 13px, 's': 15px, 'm': 20px, 'l': 24px, 'xl': 28px)
 
 $base-round:            20px !default
 $base-spacing-unit:     8px  !default
+
 $size-xs:               24px !default
 $size-s:                30px !default
 $size-m:                36px !default
@@ -23,42 +24,47 @@ $light-grey:    #E2E1E1
 $green:         #1AAE6A
 $amber:         #F8AC59
 $red:           #F16060
+$white:         #FFFFFF
 
 $primary:               $orange !default
 $primary-hue-1:         $light-orange !default
-$accent:                $grey  !default
-$accent-hue-1:          $dark-grey  !default
+$accent:                $dark-grey  !default
+$accent-hue-1:          $grey  !default
 $accent-hue-2:          $light-grey  !default
 $colors:                ('primary': $primary, 'primary-hue-1': $primary-hue-1, 'accent': $accent, 'accent-hue-1': $accent-hue-1,'accent-hue-2': $accent-hue-2)
 
 $base-font-size:        16px            !default
 
-.fab 
+.fab
     display: inline-block
     vertical-align: top
     position: relative
 
     &.open
-        .fab-primary .rt
-            &:nth-of-type(1)
-                opacity: 1
-                @include transform(rotate(45deg))
+        .fab-primary
+            .rt, .fa
+                &:nth-of-type(1)
+                    opacity: 1
+                    @include transform(rotate(45deg))
+            .btn
+                background-color: $accent
+                color: $white
 
-        .fab-actions 
+        .fab-actions
             pointer-events: auto
             .btn
                 opacity: 1
 
-            &.fab-actions-up .btn 
+            &.fab-actions-up .btn
                 @include transform(scale(1) translateY(-($base-spacing-unit * 1.5)))
 
-            &.fab-actions-right .btn 
+            &.fab-actions-right .btn
                 @include transform(scale(1) translateX($base-spacing-unit * 1.5))
 
-            &.fab-actions-down .btn 
+            &.fab-actions-down .btn
                 @include transform(scale(1) translateY($base-spacing-unit * 1.5))
 
-            &.fab-actions-left .btn 
+            &.fab-actions-left .btn
                 @include transform(scale(1) translateX(-($base-spacing-unit * 1.5)))
 
     // FAB primary button
@@ -69,73 +75,100 @@ $base-font-size:        16px            !default
             @include transition-duration(0.4s)
             @include transition-timing-function($ease-out-quint)
 
-            &:nth-of-type(1) 
+            &:nth-of-type(1)
                 opacity: 1
                 @include transform(rotate(0deg))
 
 
     // FAB actions
-    .fab-actions 
+    .fab-actions
         pointer-events: none
 
-        .btn 
+        .btn
             display: block
             opacity: 0
             @include transform(scale(0.6))
             @include transition-property(opacity, transform)
             @include transition-duration(0.4s)
             @include transition-timing-function($ease-out-quint)
-        
-    
+
+
 
     // FAB actions directions
     .fab-actions-up,
-    .fab-actions-left 
-        .btn 
-            @for $i from 1 through 10 
+    .fab-actions-left
+        .btn
+            @for $i from 1 through 10
                 &:nth-child(#{$i})
                     @include transition-delay(0.02s * (10 / $i))
 
     .fab-actions-down,
-    .fab-actions-right 
-        .btn 
-            @for $i from 1 through 10 
+    .fab-actions-right
+        .btn
+            @for $i from 1 through 10
                 &:nth-child(#{$i})
                     @include transition-delay(0.05s * $i)
-                
+
     .fab-actions-left,
-    .fab-actions-right 
+    .fab-actions-right
+        height: 100%
         @include display(flex)
         @include flex-direction(row)
         @include flex-wrap(nowrap)
-    
+        @include align-items(center)
 
-    .fab-actions-up 
-        @include position(absolute, null null $size-xl 7px)
+        @each $key, $size in $sizes
+            .btn-fab.btn-#{$key}
+                .text
+                    position: absolute
+                    right: 0
+                    left: 0
+                    top: $size*1.1
+                    color: $accent
+                &:hover
+                    .text
+                        color: $primary
 
-        .btn 
+
+    .fab-actions-up,
+    .fab-actions-down
+        width: 100%
+        @include display(flex)
+        @include flex-direction(column)
+        @include flex-wrap(nowrap)
+        @include align-items(center)
+
+        @each $key, $size in $sizes
+            .btn-fab.btn-#{$key}
+                .text
+                    position: absolute
+                    right: $size*1.1
+                    top: 0
+                    color: $accent
+                &:hover
+                    .text
+                        color: $primary
+
+    .fab-actions-up
+        @include position(absolute, null null null null)
+        .btn
             margin-bottom: $base-spacing-unit
-        
-    
 
-    .fab-actions-down 
-        @include position(absolute, $size-xl null null 7px)
-
-        .btn 
+    .fab-actions-down
+        @include position(absolute, null null null null)
+        .btn
             margin-top: $base-spacing-unit
-        
-    
 
-    .fab-actions-left 
+
+    .fab-actions-left
         @include position(0 0 null null)
 
-        .btn 
+        .btn
             margin-right: $base-spacing-unit
 
-    .fab-actions-right 
+    .fab-actions-right
         @include position(0 null null 0)
 
-        .btn 
+        .btn
             margin-left: $base-spacing-unit
-        
-    
+

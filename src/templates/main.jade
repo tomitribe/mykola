@@ -1,19 +1,22 @@
 div
   .top-background
   div(data-app-header)
-  section
+  section.pull-right
     div.column
       tribe-fab(fab-direction='down' fab-trigger='fabOver')
         tribe-fab-trigger
           tribe-button(tribe-size='l', tribe-type='fab', tribe-tooltip='Add', tribe-tooltip-position='top')
             span.alegreya.rt +
         tribe-fab-actions
-          tribe-button(tribe-size='m', tribe-type='flat', tribe-tooltip='Delete', tribe-tooltip-position='right')
+          tribe-button(tribe-size='m', tribe-type='fab', tribe-tooltip='Delete', tribe-tooltip-position='right')
             i.fa.fa-android
-          tribe-button(tribe-size='m', tribe-type='flat', tribe-tooltip='Archive', tribe-tooltip-position='right')
+            div.text Android
+          tribe-button(tribe-size='m', tribe-type='fab', tribe-tooltip='Archive', tribe-tooltip-position='right')
             i.fa.fa-pencil
-          tribe-button(tribe-size='m', tribe-type='flat', tribe-tooltip='Edit', tribe-tooltip-position='right')
+            div.text Pencil
+          tribe-button(tribe-size='m', tribe-type='fab', tribe-tooltip='Edit', tribe-tooltip-position='right')
             i.fa.fa-remove
+            div.text Remove
     div.column
       tribe-fab(fab-direction='down' fab-trigger='fabClick')
         tribe-fab-trigger
@@ -22,18 +25,21 @@ div
         tribe-fab-actions
           tribe-button(tribe-size='m', tribe-type='fab', tribe-tooltip='Delete', tribe-tooltip-position='right')
             i.fa.fa-android
+            div.text Android
           tribe-button(tribe-size='m', tribe-type='fab', tribe-tooltip='Archive', tribe-tooltip-position='right')
             i.fa.fa-pencil
+            div.text Pencil
           tribe-button(tribe-size='m', tribe-type='fab', tribe-tooltip='Edit', tribe-tooltip-position='right')
             i.fa.fa-remove
+            div.text Remove
     div.column
       tribe-fab(fab-direction='left' fab-trigger='fabOver' trigger-hide='true')
         tribe-fab-trigger
-          span.alegreya.rt +
+          i.fa.fa-ellipsis-h(style="font-size: 25px;")
         tribe-fab-actions
-          tribe-button(tribe-size='s', tribe-type='fab', tribe-tooltip='Delete', tribe-tooltip-position='right')
+          tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Delete', tribe-tooltip-position='right')
             i.fa.fa-android
-          tribe-button(tribe-size='s', tribe-type='fab', tribe-tooltip='Archive', tribe-tooltip-position='right')
+          tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Archive', tribe-tooltip-position='right')
             i.fa.fa-pencil
-          tribe-button(tribe-size='s', tribe-type='fab', tribe-tooltip='Edit', tribe-tooltip-position='right')
+          tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Edit', tribe-tooltip-position='right')
             i.fa.fa-remove

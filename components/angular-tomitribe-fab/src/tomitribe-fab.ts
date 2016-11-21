@@ -25,7 +25,7 @@ module tomitribe_fab {
             template: require('./tomitribe-fab.jade'),
             scope: true,
             link: link,
-            controller: ['$scope', tribeFabController],
+            controller: ['$scope', '$timeout', tribeFabController],
             controllerAs: 'tribeFab',
             bindToController: true,
             transclude: true,
@@ -55,7 +55,7 @@ module tomitribe_fab {
         }
     }
 
-    function tribeFabController($scope)
+    function tribeFabController($scope, $timeout)
     {
         var tribeFab = this;
 
@@ -83,6 +83,22 @@ module tomitribe_fab {
                 }
             });
         }
+
+        var timer;
+        $scope.showIt = function () {
+            $timeout.cancel(timer);
+            timer = $timeout(function () {
+                $scope.fabOver = true;
+            }, 500);
+        };
+
+        // mouseleave event
+        $scope.hideIt = function () {
+            $timeout.cancel(timer);
+            timer = $timeout(function () {
+                $scope.fabOver = false;
+            }, 500);
+        };
     }
 
     function tribeFabTrigger()

@@ -2,7 +2,8 @@ import "angular";
 import "angular-route";
 import "angular-cookies";
 import "angular-resource";
-import "angular-tomitribe-button";
+//import "angular-tomitribe-button";
+require("../components/angular-tomitribe-button/index");
 require("../components/angular-tomitribe-fab/index");
 
 // load our default (non specific) css
