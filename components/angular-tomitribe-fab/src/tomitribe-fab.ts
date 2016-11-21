@@ -25,7 +25,7 @@ module tomitribe_fab {
             template: require('./tomitribe-fab.jade'),
             scope: true,
             link: link,
-            controller: tribeFabController,
+            controller: ['$scope', tribeFabController],
             controllerAs: 'tribeFab',
             bindToController: true,
             transclude: true,
@@ -34,14 +34,28 @@ module tomitribe_fab {
 
         function link(scope, element, attrs, ctrl)
         {
+            scope.fabClick = false;
+            scope.fabOver = false;
+            scope.dynamicClass = 'closed';
+            scope.hideTrigger = false;
+
             attrs.$observe('fabDirection', function(newDirection)
             {
                 ctrl.setFabDirection(newDirection);
             });
+
+            attrs.$observe('fabTrigger', function(newTrigger)
+            {
+                ctrl.setFabTrigger(newTrigger);
+            });
+
+            if(attrs.triggerHide) {
+                scope.hideTrigger = true;
+            }
         }
     }
 
-    function tribeFabController()
+    function tribeFabController($scope)
     {
         var tribeFab = this;
 
@@ -49,7 +63,25 @@ module tomitribe_fab {
 
         function setFabDirection(_direction)
         {
+            if(typeof _direction !== "string") return;
             tribeFab.fabDirection = _direction;
+        }
+
+        tribeFab.setFabTrigger = setFabTrigger;
+
+        function setFabTrigger(_newTrigger){
+            if(typeof _newTrigger !== "string") return;
+            if(!!$scope.trigger) $scope.trigger();
+            $scope.trigger = $scope.$watch(_newTrigger, function(newVal)
+            {
+                if(newVal){
+                    $scope.opened = true;
+                    $scope.dynamicClass = 'open';
+                } else {
+                    $scope.opened = false;
+                    $scope.dynamicClass = 'closed';
+                }
+            });
         }
     }
 

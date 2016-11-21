@@ -1,49 +1,69 @@
 @import "~bourbon/app/assets/stylesheets/_bourbon.scss"
 
-$base-spacing-unit: 8px
-$size-xl: 56px
+$btn-padding:   ('xs': 10px, 's': 12px, 'm': 14px, 'l': 16px, 'xl': 26px)
+$btn-font-size: ('xs': 11px, 's': 11px, 'm': 13px, 'l': 14px, 'xl': 16px)
+$btn-icon-size: ('xs': 13px, 's': 15px, 'm': 20px, 'l': 24px, 'xl': 28px)
+
+$base-round:            20px !default
+$base-spacing-unit:     8px  !default
+$size-xs:               24px !default
+$size-s:                30px !default
+$size-m:                36px !default
+$size-l:                40px !default
+$size-xl:               56px !default
+
+$sizes:                 ('xs': $size-xs, 's': $size-s, 'm': $size-m, 'l': $size-l, 'xl': $size-xl)
+
+// Main colors
+$orange:        #E87225
+$light-orange:  #F99A5C
+$dark-grey:     #464748
+$grey:          #A8A9AA
+$light-grey:    #E2E1E1
+$green:         #1AAE6A
+$amber:         #F8AC59
+$red:           #F16060
+
+$primary:               $orange !default
+$primary-hue-1:         $light-orange !default
+$accent:                $grey  !default
+$accent-hue-1:          $dark-grey  !default
+$accent-hue-2:          $light-grey  !default
+$colors:                ('primary': $primary, 'primary-hue-1': $primary-hue-1, 'accent': $accent, 'accent-hue-1': $accent-hue-1,'accent-hue-2': $accent-hue-2)
+
+$base-font-size:        16px            !default
 
 .fab 
     display: inline-block
     vertical-align: top
     position: relative
 
-    &:hover 
-        .fab__primary .fa
+    &.open
+        .fab-primary .rt
             &:nth-of-type(1)
                 opacity: 1
                 @include transform(rotate(45deg))
 
-
-        .fab__actions 
+        .fab-actions 
             pointer-events: auto
-
-            .btn 
+            .btn
                 opacity: 1
 
-
-            &.fab__actions--up .btn 
+            &.fab-actions-up .btn 
                 @include transform(scale(1) translateY(-($base-spacing-unit * 1.5)))
 
-
-            &.fab__actions--right .btn 
+            &.fab-actions-right .btn 
                 @include transform(scale(1) translateX($base-spacing-unit * 1.5))
 
-
-            &.fab__actions--down .btn 
+            &.fab-actions-down .btn 
                 @include transform(scale(1) translateY($base-spacing-unit * 1.5))
 
-
-            &.fab__actions--left .btn 
+            &.fab-actions-left .btn 
                 @include transform(scale(1) translateX(-($base-spacing-unit * 1.5)))
 
-
-
-
-
     // FAB primary button
-    .fab__primary 
-        .fa
+    .fab-primary
+        .rt
             @include position(absolute, 0 0 0 0)
             @include transition-property(opacity, transform)
             @include transition-duration(0.4s)
@@ -55,7 +75,7 @@ $size-xl: 56px
 
 
     // FAB actions
-    .fab__actions 
+    .fab-actions 
         pointer-events: none
 
         .btn 
@@ -69,36 +89,28 @@ $size-xl: 56px
     
 
     // FAB actions directions
-    .fab__actions--up,
-    .fab__actions--left 
+    .fab-actions-up,
+    .fab-actions-left 
         .btn 
             @for $i from 1 through 10 
                 &:nth-child(#{$i})
                     @include transition-delay(0.02s * (10 / $i))
-                
-            
-        
-    
 
-    .fab__actions--down,
-    .fab__actions--right 
+    .fab-actions-down,
+    .fab-actions-right 
         .btn 
             @for $i from 1 through 10 
                 &:nth-child(#{$i})
                     @include transition-delay(0.05s * $i)
                 
-            
-        
-    
-
-    .fab__actions--left,
-    .fab__actions--right 
+    .fab-actions-left,
+    .fab-actions-right 
         @include display(flex)
         @include flex-direction(row)
         @include flex-wrap(nowrap)
     
 
-    .fab__actions--up 
+    .fab-actions-up 
         @include position(absolute, null null $size-xl 7px)
 
         .btn 
@@ -106,7 +118,7 @@ $size-xl: 56px
         
     
 
-    .fab__actions--down 
+    .fab-actions-down 
         @include position(absolute, $size-xl null null 7px)
 
         .btn 
@@ -114,16 +126,14 @@ $size-xl: 56px
         
     
 
-    .fab__actions--left 
-        @include position(absolute, null $size-xl 7px null)
+    .fab-actions-left 
+        @include position(0 0 null null)
 
         .btn 
             margin-right: $base-spacing-unit
-        
-    
 
-    .fab__actions--right 
-        @include position(absolute, null null 7px $size-xl)
+    .fab-actions-right 
+        @include position(0 null null 0)
 
         .btn 
             margin-left: $base-spacing-unit
