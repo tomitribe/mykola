@@ -89,7 +89,7 @@ module tomitribe_fab {
             $timeout.cancel(timer);
             timer = $timeout(function () {
                 $scope.fabOver = true;
-            }, 500);
+            }, 200);
         };
 
         // mouseleave event
@@ -97,7 +97,7 @@ module tomitribe_fab {
             $timeout.cancel(timer);
             timer = $timeout(function () {
                 $scope.fabOver = false;
-            }, 500);
+            }, 200);
         };
     }
 
