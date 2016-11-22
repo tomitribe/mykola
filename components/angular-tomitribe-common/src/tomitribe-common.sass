@@ -1,0 +1,68 @@
+@import "~bourbon/app/assets/stylesheets/_bourbon.scss"
+
+$btn-padding:   ('xs': 10px, 's': 12px, 'm': 14px, 'l': 16px, 'xl': 26px)
+$btn-font-size: ('xs': 11px, 's': 11px, 'm': 13px, 'l': 14px, 'xl': 16px)
+$btn-icon-size: ('xs': 13px, 's': 15px, 'm': 20px, 'l': 24px, 'xl': 28px)
+
+$base-round:            20px             !default
+
+$size-xs:               24px !default
+$size-s:                30px !default
+$size-m:                36px !default
+$size-l:                40px !default
+$size-xl:               56px !default
+
+$sizes:                 ('xs': $size-xs, 's': $size-s, 'm': $size-m, 'l': $size-l, 'xl': $size-xl)
+
+// Main colors
+$orange:        #E87225
+$light-orange:  #F99A5C
+$dark-grey:     #464748
+$grey:          #A8A9AA
+$light-grey:    #E2E1E1
+$green:         #1AAE6A
+$amber:         #F8AC59
+$red:           #F16060
+$white:         #FFFFFF
+
+$primary:               $orange !default
+$primary-hue-1:         $light-orange !default
+$accent:                $dark-grey  !default
+$accent-hue-1:          $grey  !default
+
+$colors:                ('primary': $primary, 'primary-hue-1': $primary-hue-1, 'accent': $accent, 'accent-hue-1': $accent-hue-1)
+
+$base-font-size:        16px            !default
+$base-spacing-unit:     8px  !default
+
+@mixin font-size($font-size)
+  font-size: $font-size
+  font-size: ($font-size / $base-font-size) * 1rem
+
+// Z-depth mixin
+@mixin z-depth($z-depth)
+  @if $z-depth == 1
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.14), 0 2px 2px 0 rgba(0,0,0,.098), 0 1px 5px 0 rgba(0,0,0,.084)
+  @elseif $z-depth == 2
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.14), 0 4px 5px 0 rgba(0,0,0,.098), 0 1px 10px 0 rgba(0,0,0,.084)
+  @elseif $z-depth == 3
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.14), 0 6px 10px 0 rgba(0,0,0,.098), 0 1px 18px 0 rgba(0,0,0,.084)
+  @elseif $z-depth == 4
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.14), 0 8px 10px 1px rgba(0,0,0,.098), 0 3px 14px 2px rgba(0,0,0,.084)
+  @elseif $z-depth == 5
+    box-shadow: 0 8px 10px -5px rgba(0,0,0,.14), 0 16px 24px 2px rgba(0,0,0,.098), 0 6px 30px 5px rgba(0,0,0,.084)
+
+// Text field reset
+@mixin text-field-reset()
+  display: block
+  margin: 0
+  padding: 0
+  border: none
+  background-color: transparent
+  box-shadow: none
+  overflow: hidden
+  cursor: text
+  @include appearance(none)
+
+  &:focus
+    outline: none

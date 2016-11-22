@@ -1,7 +1,8 @@
 {
   "name": "angular-tomitribe-components",
   "version": "0.1.1",
-  "description": "",
+  "description": "Angular UI Component library named after famous Ukrainian composer, Mykola Leontovych",
+  "repository": "https://github.com/tomitribe/mykola.git",
   "main": "/",
   "scripts": {
     "start": "webpack --config webpack/webpack.dev.js --watch --NODE_ENV=dev",
@@ -19,8 +20,7 @@
     "jquery": "^3.1.1"
   },
   "devDependencies": {
-    "angular-mocks": "^1.5.8",
-    "angular-tomitribe-button": "0.0.8",
+    "angular-tomitribe-common": "0.0.1",
     "babel-core": "^6.18.2",
     "browser-sync": "^2.18.1",
     "browser-sync-webpack-plugin": "^1.1.3",
@@ -39,5 +39,6 @@
     "typings": "^2.0.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.3"
-  }
+  },
+  "engine": "node >= 6.0.0"
 }

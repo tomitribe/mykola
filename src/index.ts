@@ -2,7 +2,8 @@ import "angular";
 import "angular-route";
 import "angular-cookies";
 import "angular-resource";
-//import "angular-tomitribe-button";
+import "angular-tomitribe-common";
+
 require("../components/angular-tomitribe-button/index");
 require("../components/angular-tomitribe-fab/index");
 require("../components/angular-tomitribe-tooltip/index");
@@ -10,6 +11,7 @@ require("../components/angular-tomitribe-tooltip/index");
 // load our default (non specific) css
 import "font-awesome/css/font-awesome.css";
 import "./styles/app.sass";
+
 module index {
     var threeDots = require('file-loader!./images/threeDots-icon.png');
     angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip'])

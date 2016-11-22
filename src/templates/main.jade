@@ -3,21 +3,6 @@ div
   div(data-app-header)
   section.pull-right
     div.column
-      tribe-fab(fab-direction='down' fab-trigger='fabOver')
-        tribe-fab-trigger
-          tribe-button(tribe-size='l', tribe-type='fab')
-            span.alegreya.rt +
-        tribe-fab-actions
-          tribe-button(tribe-size='m', tribe-type='fab')
-            span.rt OA2
-            div.text OAUTH 2.0 PROFILE
-          tribe-button(tribe-size='m', tribe-type='fab')
-            span.rt HS
-            div.text CREATE HTTP SIGNATURES PROFILE
-          tribe-button(tribe-size='m', tribe-type='fab')
-            i.fa.fa-cloud-upload
-            div.text IMPORT PROFILE
-    div.column
       tribe-fab(fab-direction='down' fab-trigger='fabClick')
         tribe-fab-trigger
           tribe-button(tribe-size='l', tribe-type='fab')
@@ -33,19 +18,22 @@ div
             i.fa.fa-remove
             div.text Remove
     div.column
-      tribe-fab(fab-direction='left' fab-trigger='fabOver' trigger-hide='true')
+      tribe-fab(fab-direction='down' fab-trigger='fabOver')
         tribe-fab-trigger
-          i.rt.bimg(style="font-size: 25px; background-image: url({{threeDots}})")
+          tribe-button(tribe-size='l', tribe-type='fab')
+            span.alegreya.rt +
         tribe-fab-actions
-          tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Delete', tribe-tooltip-position='bottom')
-            i.fa.fa-android
-          tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Archive', tribe-tooltip-position='bottom')
-            i.fa.fa-pencil
-          tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Edit', tribe-tooltip-position='bottom' disabled)
-            i.fa.fa-remove
-
+          tribe-button(tribe-size='m', tribe-type='fab')
+            span.rt OA2
+            div.text OAUTH 2.0 PROFILE
+          tribe-button(tribe-size='m', tribe-type='fab')
+            span.rt HS
+            div.text CREATE HTTP SIGNATURES PROFILE
+          tribe-button(tribe-size='m', tribe-type='fab')
+            i.fa.fa-cloud-upload
+            div.text IMPORT PROFILE
     div.column
-      tribe-fab(fab-direction='left' fab-trigger='fabClick' trigger-hide='true')
+      tribe-fab(fab-direction='left' fab-trigger='fabOver' trigger-hide='true')
         tribe-fab-trigger
           i.rt.bimg(style="font-size: 25px; background-image: url({{threeDots}})")
         tribe-fab-actions
