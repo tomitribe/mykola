@@ -6,7 +6,6 @@
   "license": "MIT",
   "main": "index.ts",
   "dependencies": {
-    "angular": "^1.5.8",
-    "bourbon": "^4.2.7"
+    "angular-tomitribe-common": "^0.0.1"
   }
 }
