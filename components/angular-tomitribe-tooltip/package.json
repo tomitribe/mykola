@@ -2,7 +2,7 @@
   "name": "angular-tomitribe-tooltip",
   "version": "0.0.1",
   "description": "Tomitribe component floating tooltip",
-  "repository": "https://github.com/Dexmaster/mykola/tree/master/components/angular-tomitribe-tooltip",
+  "repository": "https://github.com/tomitribe/mykola/tree/master/components/angular-tomitribe-tooltip",
   "license": "MIT",
   "main": "index.ts",
   "dependencies": {

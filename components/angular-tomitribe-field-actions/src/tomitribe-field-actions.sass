@@ -1,0 +1,30 @@
+@import '~angular-tomitribe-common/src/tomitribe-common.sass'
+
+$size: 22px
+$bg-color: #f5f5f5
+
+div.tribe-field-actions-body
+  @include display(flex)
+  border: solid #cccccc 1px
+  background-color: #f0f0f0
+  z-index: 2000
+  > div
+    margin: 3px
+    width: $size
+    height: $size
+    @include display(flex)
+    @include flex-direction(column)
+    @include justify-content(center)
+    @include align-items(center)
+    border: solid #cbcbcb 1px
+    background-color: $bg-color
+    i
+      color: #777
+    &:hover
+      background-color: darken($bg-color, 10)
+      cursor: pointer
+      i
+        color: inherit
+    &.disabled
+      @include display(none)
+
