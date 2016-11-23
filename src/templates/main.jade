@@ -2,8 +2,11 @@ div
   .top-background
   div(data-app-header)
   section.pull-right
+    tribe-button(class="outside-trigger" ng-click="menuOneStatus = !menuOneStatus") Outside trigger
+
     div.column
-      tribe-fab(fab-direction='down' fab-trigger='fabClick')
+      div {{menuOneStatus ? 'true' : 'false'}}
+      tribe-fab(fab-direction='down' fab-trigger='fabClick' opened-status='menuOneStatus')
         tribe-fab-trigger
           tribe-button(tribe-size='l', tribe-type='fab')
             span.alegreya.rt +
@@ -18,7 +21,8 @@ div
             i.fa.fa-remove
             div.text Remove
     div.column
-      tribe-fab(fab-direction='down' fab-trigger='fabOver')
+      div {{menuTwoStatus ? 'true' : 'false'}}
+      tribe-fab(fab-direction='down' fab-trigger='fabOver' opened-status='menuTwoStatus')
         tribe-fab-trigger
           tribe-button(tribe-size='l', tribe-type='fab')
             span.alegreya.rt +

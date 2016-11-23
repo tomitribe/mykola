@@ -14,20 +14,24 @@ module tomitribe_fab {
     require('./tomitribe-fab.sass');
     angular
         .module('tomitribe-fab', [])
-        .directive('tribeFab', tribeFab)
+        .directive('tribeFab', ['$timeout', tribeFab])
         .directive('tribeFabTrigger', tribeFabTrigger)
         .directive('tribeFabActions', tribeFabActions);
 
-    function tribeFab()
+    function tribeFab($timeout)
     {
         return {
             restrict: 'E',
             template: require('./tomitribe-fab.jade'),
-            scope: true,
+            scope: {
+                fabTrigger: '@?',
+                fabDirection: '@?',
+                opened: '=?openedStatus',
+                triggerHide: '@?'
+            },
             link: link,
             controller: ['$scope', '$timeout', tribeFabController],
             controllerAs: 'tribeFab',
-            bindToController: true,
             transclude: true,
             replace: true
         };
@@ -37,21 +41,11 @@ module tomitribe_fab {
             scope.fabClick = false;
             scope.fabOver = false;
             scope.dynamicClass = 'closed';
-            scope.hideTrigger = false;
+            scope.triggerHide = !!scope.triggerHide || false;
+            scope.opened = scope.opened || false;
 
-            attrs.$observe('fabDirection', function(newDirection)
-            {
-                ctrl.setFabDirection(newDirection);
-            });
-
-            attrs.$observe('fabTrigger', function(newTrigger)
-            {
-                ctrl.setFabTrigger(newTrigger);
-            });
-
-            if(attrs.triggerHide) {
-                scope.hideTrigger = true;
-            }
+            ctrl.init(scope.fabDirection, scope.fabTrigger);
+            ctrl.toggleOpen(scope.opened);
         }
     }
 
@@ -59,29 +53,31 @@ module tomitribe_fab {
     {
         var tribeFab = this;
 
-        tribeFab.setFabDirection = setFabDirection;
+        tribeFab.init = init;
 
-        function setFabDirection(_direction)
+        function init(_direction, _trigger)
         {
-            if(typeof _direction !== "string") return;
+            if(typeof _direction !== "string") _direction = "down";
             tribeFab.fabDirection = _direction;
+
+            if(typeof _trigger !== "string") _trigger = "favClick";
+            if(!!$scope.trigger) $scope.trigger();
+            $scope.trigger = $scope.$watch(_trigger, _checkStatus);
+
+            let _toggleOpen = (_opened)=> {$scope[_trigger] = _opened};
+            $scope.$watch('opened', _toggleOpen);
+            tribeFab.toggleOpen = _toggleOpen;
         }
 
-        tribeFab.setFabTrigger = setFabTrigger;
-
-        function setFabTrigger(_newTrigger){
-            if(typeof _newTrigger !== "string") return;
-            if(!!$scope.trigger) $scope.trigger();
-            $scope.trigger = $scope.$watch(_newTrigger, function(newVal)
-            {
-                if(newVal){
-                    $scope.opened = true;
-                    $scope.dynamicClass = 'open';
-                } else {
-                    $scope.opened = false;
-                    $scope.dynamicClass = 'closed';
-                }
-            });
+        function _checkStatus(newVal)
+        {
+            if(!!newVal){
+                $scope.opened = true;
+                $scope.dynamicClass = 'open';
+            } else {
+                $scope.opened = false;
+                $scope.dynamicClass = 'closed';
+            }
         }
 
         var timer;
@@ -92,7 +88,6 @@ module tomitribe_fab {
             }, 200);
         };
 
-        // mouseleave event
         $scope.hideIt = function () {
             $timeout.cancel(timer);
             timer = $timeout(function () {

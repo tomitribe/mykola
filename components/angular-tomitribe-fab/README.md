@@ -1,2 +1,4 @@
-# angular-component-tr
-Test component seed
+# angular-tomitribe-fab
+
+Floating action button component
+

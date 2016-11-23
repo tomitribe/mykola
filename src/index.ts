@@ -30,13 +30,14 @@ module index {
                         template: require('./templates/main.jade'),
                         controller: ['$scope', ($scope) =>{
                             $scope.threeDots = threeDots;
+                            $scope.menuOneStatus = true;
                         }]
                     })
                     .otherwise({
                         controller: ['$scope', '$location', ($scope, $location) => {
                             $scope.path = $location.path();
-                            $scope.threeDots = threeDots;
-                        }],
+                                    $scope.threeDots = threeDots;
+                                }],
                         template: require('./templates/main.jade')
                     });
             }

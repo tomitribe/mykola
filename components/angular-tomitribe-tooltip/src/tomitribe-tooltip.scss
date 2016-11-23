@@ -24,24 +24,12 @@
   }
 
   &.tooltip-left {
-    @include transform(translateX(-24px));
+    @include transform(translateX(-14px));
   }
 
   &.tooltip-right {
     @include transform(translateX(14px));
   }
-}
-
-// Tooltip background
-.tooltip__background {
-  @include position(absolute, 0 0 0 0);
-  z-index: -1;
-  border-radius: 50%;
-  background-color: $dark-grey;
-  @include transform(scale(0) translateY(50%));
-  @include transition-property(transform);
-  @include transition-duration(0.6s);
-  @include transition-timing-function($ease-out-quint);
 }
 
 // Tooltip label
@@ -50,64 +38,59 @@
   color: $white;
   white-space: nowrap;
 
-    padding: 0 $base-spacing-unit;
-    @include font-size(10px);
-    line-height: 22px;
+  padding: 0 $base-spacing-unit;
+  @include font-size(10px);
+  line-height: 22px;
+
+  background-color: $dark-grey;
+  &::after {
+    content: "";
+    position: absolute;
+    border-style: solid;
+  }
 }
-
-
-
-
 
 // Tooltip direction modifiers
 .tooltip-top {
-  .tooltip__background {
-    @include transform(scale(0) translateY(50%));
-    @include transform-origin(center bottom);
+  .tooltip__label::after{
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-color: $dark-grey transparent transparent transparent;
   }
 }
 
 .tooltip-top.tooltip-is-active {
-  .tooltip__background {
-    @include transform(scale(3) translateY(50%));
-  }
+
 }
 
 .tooltip-bottom {
-  .tooltip__background {
-    @include transform(scale(0) translateY(-50%));
-    @include transform-origin(center top);
+  .tooltip__label::after{
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-color: transparent $dark-grey transparent;
   }
 }
 
 .tooltip-bottom.tooltip-is-active {
-  .tooltip__background {
-    @include transform(scale(3) translateY(-50%));
-  }
 }
 
 .tooltip-left {
-  .tooltip__background {
-    @include transform(scale(0) translateX(50%));
-    @include transform-origin(right center);
-  }
 }
 
 .tooltip-left.tooltip-is-active {
-  .tooltip__background {
-    @include transform(scale(3) translateX(50%));
-  }
+
 }
 
 .tooltip-right {
-  .tooltip__background {
-    @include transform(scale(0) translateX(-50%));
-    @include transform-origin(left center);
-  }
+
 }
 
 .tooltip-right.tooltip-is-active {
-  .tooltip__background {
-    @include transform(scale(3) translateX(-50%));
-  }
+
+
 }
+
