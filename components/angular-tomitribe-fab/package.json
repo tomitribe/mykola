@@ -1,8 +1,8 @@
 {
   "name": "angular-tomitribe-fab",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Tomitribe component floating action button",
-  "repository": "https://github.com/Dexmaster/mykola/tree/master/components/angular-tomitribe-fab",
+  "repository": "https://github.com/tomitribe/mykola/tree/master/components/angular-tomitribe-fab",
   "license": "MIT",
   "main": "index.ts",
   "dependencies": {

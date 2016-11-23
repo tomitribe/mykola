@@ -1,0 +1,11 @@
+{
+  "name": "angular-tomitribe-field-actions",
+  "version": "0.0.1",
+  "description": "Tomitribe component floating field actions",
+  "repository": "https://github.com/tomitribe/mykola/tree/master/components/angular-tomitribe-field-actions",
+  "license": "MIT",
+  "main": "index.ts",
+  "dependencies": {
+    "angular-tomitribe-common": "^0.0.1"
+  }
+}
