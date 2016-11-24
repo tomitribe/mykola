@@ -14,13 +14,27 @@ body
   display: inline-block
   height: 300px
   width: 300px
-.pull-right
+  box-sizing: border-box
+  padding: 30px
+  float: left
+.column.pull-right
   float: right
 .bimg
   background-repeat: no-repeat
   background-position: right center
   background-image: url(../images/threeDots-icon.png)
-  margin-right: 8px
+.open .bimg
+  background-image: url(../images/threeDots-icon-orange.png)
 .outside-trigger
   left: 0
   position: absolute
+.dropdown .dropdown-list .item
+  font-size: 11px
+  font-family: Lato, sans-serif
+  font-weight: bold
+  text-transform: none
+.clear
+  clear: both
+.row
+  display: inline-block
+  float: right

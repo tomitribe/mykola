@@ -2,52 +2,80 @@ div
   .top-background
   div(data-app-header)
   section.pull-right
-    tribe-button(class="outside-trigger" ng-click="menuOneStatus = !menuOneStatus") Outside trigger
+    div.clear.row
+      div.column
+        tribe-button(class="outside-trigger" ng-click="menuOneStatus = !menuOneStatus") Outside trigger
+        div tribe-fab down click
+        div {{menuOneStatus ? 'true' : 'false'}}
+        tribe-fab(fab-direction='down' fab-trigger='fabClick' opened-status='menuOneStatus')
+          tribe-fab-trigger
+            tribe-button(tribe-size='l', tribe-type='fab')
+              span.alegreya.rt +
+          tribe-fab-actions
+            tribe-button(tribe-size='m', tribe-type='fab')
+              i.fa.fa-android
+              div.text Android
+            tribe-button(tribe-size='m', tribe-type='fab')
+              i.fa.fa-pencil
+              div.text Pencil
+            tribe-button(tribe-size='m', tribe-type='fab')
+              i.fa.fa-remove
+              div.text Remove
+      div.column
+        div tribe-fab down over
+        div {{menuTwoStatus ? 'true' : 'false'}}
+        tribe-fab(fab-direction='down' fab-trigger='fabOver' opened-status='menuTwoStatus')
+          tribe-fab-trigger
+            tribe-button(tribe-size='l', tribe-type='fab')
+              span.alegreya.rt +
+          tribe-fab-actions
+            tribe-button(tribe-size='m', tribe-type='fab')
+              span.rt OA2
+              div.text OAUTH 2.0 PROFILE
+            tribe-button(tribe-size='m', tribe-type='fab')
+              span.rt HS
+              div.text CREATE HTTP SIGNATURES PROFILE
+            tribe-button(tribe-size='m', tribe-type='fab')
+              i.fa.fa-cloud-upload
+              div.text IMPORT PROFILE
+      div.column
+        div tribe-fab left
+        div {{menuThreeStatus ? 'true' : 'false'}}
+        tribe-fab(fab-direction='left' fab-trigger='fabOver' trigger-hide='true' opened-status='menuThreeStatus')
+          tribe-fab-trigger
+            i.rt.bimg
+          tribe-fab-actions
+            tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='User', tribe-tooltip-position='left')
+              i.fa.fa-id-card
+            tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Edit', tribe-tooltip-position='top')
+              i.fa.fa-edit
+            tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Copy', tribe-tooltip-position='bottom')
+              i.fa.fa-copy
+            tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Delete', tribe-tooltip-position='right')
+              i.fa.fa-trash
 
-    div.column
-      div {{menuOneStatus ? 'true' : 'false'}}
-      tribe-fab(fab-direction='down' fab-trigger='fabClick' opened-status='menuOneStatus')
-        tribe-fab-trigger
-          tribe-button(tribe-size='l', tribe-type='fab')
-            span.alegreya.rt +
-        tribe-fab-actions
-          tribe-button(tribe-size='m', tribe-type='fab')
-            i.fa.fa-android
-            div.text Android
-          tribe-button(tribe-size='m', tribe-type='fab')
-            i.fa.fa-pencil
-            div.text Pencil
-          tribe-button(tribe-size='m', tribe-type='fab')
-            i.fa.fa-remove
-            div.text Remove
-    div.column
-      div {{menuTwoStatus ? 'true' : 'false'}}
-      tribe-fab(fab-direction='down' fab-trigger='fabOver' opened-status='menuTwoStatus')
-        tribe-fab-trigger
-          tribe-button(tribe-size='l', tribe-type='fab')
-            span.alegreya.rt +
-        tribe-fab-actions
-          tribe-button(tribe-size='m', tribe-type='fab')
-            span.rt OA2
-            div.text OAUTH 2.0 PROFILE
-          tribe-button(tribe-size='m', tribe-type='fab')
-            span.rt HS
-            div.text CREATE HTTP SIGNATURES PROFILE
-          tribe-button(tribe-size='m', tribe-type='fab')
-            i.fa.fa-cloud-upload
-            div.text IMPORT PROFILE
-    div.column
-      tribe-fab(fab-direction='left' fab-trigger='fabOver' trigger-hide='true')
-        tribe-fab-trigger
-          i.rt.bimg
-        tribe-fab-actions
-          tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='User', tribe-tooltip-position='left')
-            i.fa.fa-id-card
-          tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Edit', tribe-tooltip-position='top')
-            i.fa.fa-edit
-          tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Copy', tribe-tooltip-position='bottom')
-            i.fa.fa-copy
-          tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Delete', tribe-tooltip-position='right')
-            i.fa.fa-trash
-
-
+    div.clear.row
+      div.column.pull-right
+        div DropDown
+        div {{dropDownTwoStatus ? 'true' : 'false'}}
+        tribe-dropdown(dropdown-direction='down' pull-direction='right'  dropdown-trigger='dropdownClick' opened-status='dropDownTwoStatus')
+          tribe-dropdown-trigger
+            i.bimg(style="font-size: 25px;")
+          tribe-dropdown-list
+            .item Hello
+            .item World
+            .item.disabled World
+            .separator
+            .item World2
+      div.column.pull-right(style="text-align: right;")
+        div DropDown
+        div {{dropDownStatus ? 'true' : 'false'}}
+        tribe-dropdown(dropdown-direction='down' pull-direction='left'  dropdown-trigger='dropdownClick' opened-status='dropDownStatus' style="float: right")
+          tribe-dropdown-trigger
+            i.bimg(style="font-size: 25px;")
+          tribe-dropdown-list
+            .item Hello
+            .item World
+            .item.disabled World
+            .separator
+            .item World2
