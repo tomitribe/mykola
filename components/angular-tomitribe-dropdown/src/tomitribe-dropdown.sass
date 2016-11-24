@@ -1,0 +1,108 @@
+@import '~angular-tomitribe-common/src/tomitribe-common.sass'
+
+.dropdown
+  position: relative
+  width: 30px
+
+  &.open
+    .dropdown-list
+      display: block
+
+  .dropdown-primary
+    width: 30px
+    height: 40px
+    display: table-cell
+    vertical-align: middle
+    + .dropdown-list-down
+      top: 40px
+      text-align: left
+      &:before,
+      &:after
+        bottom: 100%
+        content: " "
+        position: absolute
+        border-width: 15px
+        border-style: solid
+        z-index: 0
+      &:before
+        border-width: 16px
+        margin-right: -1px
+        margin-left: -1px
+        border-color: transparent transparent #e5e6e7 transparent
+      &:after
+        border-color: transparent transparent #e5e6e7 transparent
+        border-bottom-color: #fff
+      &.pull-right
+        left: -8px
+        &:before,
+        &:after
+          left: 8px
+      &.pull-left
+        right: -8px
+        &:before,
+        &:after
+          right: 8px
+    + .dropdown-list-up
+      left: -8px
+      bottom: 40px
+      text-align: left
+      &:before,
+      &:after
+        top: 100%
+        left: 8px
+        content: " "
+        position: absolute
+        border-width: 15px
+        border-style: solid
+        z-index: 0
+      &:before
+        border-width: 16px
+        margin-right: -1px
+        margin-left: -1px
+        border-color: #e5e6e7 transparent transparent transparent
+      &:after
+        border-color: #e5e6e7 transparent transparent transparent
+        border-top-color: #fff
+
+    i
+      display: inline-block
+      width: 30px
+      height: 10px
+      position: relative
+      z-index: 1
+      &:hover
+        cursor: pointer
+  .dropdown-list
+    display: none
+    min-width: 180px
+    position: absolute
+    border: 1px solid #e5e6e7
+    border-radius: 2px
+    padding: 10px
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2)
+    .item
+      border: none
+      box-shadow: none
+      position: relative
+      padding: 5px 10px
+      color: $dark-grey
+      span
+        display: inline-block
+        padding: 7px
+      &:hover
+        color: $white
+        cursor: pointer
+        background-color: $orange
+    .disabled
+      color: #A8A9AA
+      &:hover
+        color: #A8A9AA
+        cursor: default
+        background-color: inherit
+    .separator
+      content: " "
+      height: 10px
+      margin: -2px 0
+      z-index: -1
+      @include background(radial-gradient(#DEDEDE 21%, transparent 24%) left top repeat-x)
+      @include background-size(10px 10px)

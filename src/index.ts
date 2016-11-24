@@ -7,13 +7,14 @@ import "angular-tomitribe-common";
 require("../components/angular-tomitribe-button/index");
 require("../components/angular-tomitribe-fab/index");
 require("../components/angular-tomitribe-tooltip/index");
+require("../components/angular-tomitribe-dropdown/index");
 
 // load our default (non specific) css
 import "font-awesome/css/font-awesome.css";
 import "./styles/app.sass";
 
 module index {
-    angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip'])
+    angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip', 'tomitribe-dropdown'])
         .config([
             '$locationProvider', '$routeProvider', '$httpProvider', '$logProvider',
             function ($locationProvider, $routeProvider, $httpProvider, $logProvider) {
@@ -29,6 +30,8 @@ module index {
                         template: require('./templates/main.jade'),
                         controller: ['$scope', ($scope) =>{
                             $scope.menuOneStatus = true;
+                            $scope.dropDownStatus = true;
+                            $scope.dropDownTwoStatus = true;
                         }]
                     })
                     .otherwise({
