@@ -5,7 +5,7 @@
   z-index: 9999;
   border-radius: $base-round;
   opacity: 0;
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
   @include transition-property(opacity, transform);
   @include transition-duration(0.6s);
@@ -57,7 +57,7 @@
     left: 50%;
     margin-left: -5px;
     border-width: 5px;
-    border-color: $dark-grey transparent transparent transparent;
+    border-color: $dark-grey transparent transparent;
   }
 }
 
@@ -71,14 +71,22 @@
     left: 50%;
     margin-left: -5px;
     border-width: 5px;
-    border-color: transparent $dark-grey transparent;
+    border-color: transparent transparent $dark-grey;
   }
 }
 
 .tooltip-bottom.tooltip-is-active {
+
 }
 
 .tooltip-left {
+  .tooltip__label::after{
+    bottom: 50%;
+    left: 100%;
+    margin-bottom: -5px;
+    border-width: 5px;
+    border-color: transparent transparent transparent $dark-grey ;
+  }
 }
 
 .tooltip-left.tooltip-is-active {
@@ -86,7 +94,13 @@
 }
 
 .tooltip-right {
-
+  .tooltip__label::after{
+    bottom: 50%;
+    right: 100%;
+    margin-bottom: -5px;
+    border-width: 5px;
+    border-color: transparent $dark-grey transparent transparent;
+  }
 }
 
 .tooltip-right.tooltip-is-active {

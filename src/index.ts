@@ -13,7 +13,6 @@ import "font-awesome/css/font-awesome.css";
 import "./styles/app.sass";
 
 module index {
-    var threeDots = require('file-loader!./images/threeDots-icon.png');
     angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip'])
         .config([
             '$locationProvider', '$routeProvider', '$httpProvider', '$logProvider',
@@ -29,15 +28,13 @@ module index {
                     .when('/', {
                         template: require('./templates/main.jade'),
                         controller: ['$scope', ($scope) =>{
-                            $scope.threeDots = threeDots;
                             $scope.menuOneStatus = true;
                         }]
                     })
                     .otherwise({
                         controller: ['$scope', '$location', ($scope, $location) => {
                             $scope.path = $location.path();
-                                    $scope.threeDots = threeDots;
-                                }],
+                        }],
                         template: require('./templates/main.jade')
                     });
             }
