@@ -160,11 +160,6 @@ module tomitribe_fab {
                         class: 'tooltip tooltip-' + tribeTooltip.position
                     });
 
-                tooltipBackground = angular.element('<div/>',
-                    {
-                        class: 'tooltip__background'
-                    });
-
                 tooltipLabel = angular.element('<span/>',
                     {
                         class: 'tooltip__label',

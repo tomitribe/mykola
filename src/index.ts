@@ -7,14 +7,14 @@ import "angular-tomitribe-common";
 require("../components/angular-tomitribe-button/index");
 require("../components/angular-tomitribe-fab/index");
 require("../components/angular-tomitribe-tooltip/index");
+require("../components/angular-tomitribe-dropdown/index");
 
 // load our default (non specific) css
 import "font-awesome/css/font-awesome.css";
 import "./styles/app.sass";
 
 module index {
-    var threeDots = require('file-loader!./images/threeDots-icon.png');
-    angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip'])
+    angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip', 'tomitribe-dropdown'])
         .config([
             '$locationProvider', '$routeProvider', '$httpProvider', '$logProvider',
             function ($locationProvider, $routeProvider, $httpProvider, $logProvider) {
@@ -29,15 +29,15 @@ module index {
                     .when('/', {
                         template: require('./templates/main.jade'),
                         controller: ['$scope', ($scope) =>{
-                            $scope.threeDots = threeDots;
                             $scope.menuOneStatus = true;
+                            $scope.dropDownStatus = true;
+                            $scope.dropDownTwoStatus = true;
                         }]
                     })
                     .otherwise({
                         controller: ['$scope', '$location', ($scope, $location) => {
                             $scope.path = $location.path();
-                                    $scope.threeDots = threeDots;
-                                }],
+                        }],
                         template: require('./templates/main.jade')
                     });
             }
