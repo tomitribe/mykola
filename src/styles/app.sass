@@ -19,14 +19,15 @@ body
   float: left
 .column.pull-right
   float: right
-.bimg
-  background-repeat: no-repeat
-  background-position: right center
-  background-image: url(../images/threeDots-icon.png)
-  &:hover
+.fab
+  .bimg
+    background-repeat: no-repeat
+    background-position: right center
+    background-image: url(../images/threeDots-icon.png)
+    &:hover
+      background-image: url(../images/threeDots-icon-orange.png)
+  .open .bimg
     background-image: url(../images/threeDots-icon-orange.png)
-.open .bimg
-  background-image: url(../images/threeDots-icon-orange.png)
 .outside-trigger
   left: 0
   position: absolute
