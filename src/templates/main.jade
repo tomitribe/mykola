@@ -53,12 +53,9 @@ div
               i.fa.fa-copy
             tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Delete', tribe-tooltip-position='right')
               i.fa.fa-trash
-
     div.clear.row
       div.column.pull-right
-        div DropDown
-        div {{dropDownTwoStatus ? 'true' : 'false'}}
-        tribe-dropdown(dropdown-direction='down' pull-direction='right'  dropdown-trigger='dropdownClick' opened-status='dropDownTwoStatus')
+        tribe-dropdown(dropdown-direction='up' pull-direction='right'  dropdown-trigger='dropdownClick' opened-status='dropDownTwoStatus')
           tribe-dropdown-trigger
             i.bimg(style="font-size: 25px;")
           tribe-dropdown-list
@@ -67,10 +64,12 @@ div
             .item.disabled World
             .separator
             .item World2
-      div.column.pull-right(style="text-align: right;")
+        div DropDown
+        div {{dropDownTwoStatus ? 'true' : 'false'}}
+      div.column.pull-right
         div DropDown
         div {{dropDownStatus ? 'true' : 'false'}}
-        tribe-dropdown(dropdown-direction='down' pull-direction='left'  dropdown-trigger='dropdownClick' opened-status='dropDownStatus' style="float: right")
+        tribe-dropdown(dropdown-direction='down' pull-direction='left'  dropdown-trigger='dropdownClick' opened-status='dropDownStatus')
           tribe-dropdown-trigger
             i.bimg(style="font-size: 25px;")
           tribe-dropdown-list

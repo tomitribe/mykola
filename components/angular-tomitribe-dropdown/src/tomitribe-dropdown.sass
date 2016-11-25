@@ -7,15 +7,21 @@
   &.open
     .dropdown-list
       display: block
-
+    .dropdown-primary .bimg
+      background-image: url(./images/threeDots-icon-orange.png)
   .dropdown-primary
     width: 30px
     height: 40px
     display: table-cell
     vertical-align: middle
+    .bimg
+      background-repeat: no-repeat
+      background-position: right center
+      background-image: url(./images/threeDots-icon.png)
+      &:hover
+        background-image: url(./images/threeDots-icon-orange.png)
     + .dropdown-list-down
       top: 40px
-      text-align: left
       &:before,
       &:after
         bottom: 100%
@@ -33,23 +39,22 @@
         border-color: transparent transparent #e5e6e7 transparent
         border-bottom-color: #fff
       &.pull-right
-        left: -8px
+        left: -7px
+        text-align: left
         &:before,
         &:after
           left: 8px
       &.pull-left
-        right: -8px
+        right: -11px
+        text-align: right
         &:before,
         &:after
           right: 8px
     + .dropdown-list-up
-      left: -8px
       bottom: 40px
-      text-align: left
       &:before,
       &:after
         top: 100%
-        left: 8px
         content: " "
         position: absolute
         border-width: 15px
@@ -63,7 +68,18 @@
       &:after
         border-color: #e5e6e7 transparent transparent transparent
         border-top-color: #fff
-
+      &.pull-right
+        left: -7px
+        text-align: left
+        &:before,
+        &:after
+          left: 8px
+      &.pull-left
+        right: -11px
+        text-align: right
+        &:before,
+        &:after
+          right: 8px
     i
       display: inline-block
       width: 30px
