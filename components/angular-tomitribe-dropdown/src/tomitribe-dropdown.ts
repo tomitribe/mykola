@@ -17,10 +17,11 @@ module tomitribe_dropdown {
                 dropdownDirection: '@?',
                 pullDirection: '@?',
                 opened: '=?openedStatus',
-                triggerHide: '@?'
+                triggerHide: '@?',
+                autoClose: '@?'
             },
             link: link,
-            controller: ['$scope', '$timeout', tribeDropdownController],
+            controller: ['$scope', '$timeout', '$document', tribeDropdownController],
             controllerAs: 'tribeDropdown',
             transclude: true,
             replace: true
@@ -32,19 +33,20 @@ module tomitribe_dropdown {
             scope.dropdownOver = false;
             scope.dynamicClass = 'closed';
             scope.triggerHide = !!scope.triggerHide || false;
+            scope.autoClose = !!scope.autoClose || false;
             scope.opened = scope.opened || false;
 
-            ctrl.init(scope.dropdownDirection, scope.pullDirection, scope.dropdownTrigger);
+            ctrl.init(scope.dropdownDirection, scope.pullDirection, scope.dropdownTrigger, element);
             ctrl.dropdownOpen(scope.opened);
         }
     }
 
-    function tribeDropdownController($scope, $timeout)
+    function tribeDropdownController($scope, $timeout, $document)
     {
         var tribeDropdown = this;
         tribeDropdown.init = init;
 
-        function init(_dropDirection, _pullDirection, _trigger)
+        function init(_dropDirection, _pullDirection, _trigger, el)
         {
             if(typeof _dropDirection !== "string") _dropDirection = "down";
             tribeDropdown.dropdownDirection = _dropDirection;
@@ -59,6 +61,20 @@ module tomitribe_dropdown {
             let _dropdownOpen = (_opened)=> {$scope[_trigger] = _opened};
             $scope.$watch('opened', _dropdownOpen);
             tribeDropdown.dropdownOpen = _dropdownOpen;
+
+            function handler(event) {
+                if (!el[0].contains(event.target)) {
+                    $scope[_trigger] = false;
+                    $scope.$apply();
+                }
+            }
+            $scope.handler = handler;
+
+            if($scope.autoClose){
+                $scope.$on('$destroy', function() {
+                    $document.off('click', $scope.handler);
+                });
+            }
         }
 
         function _checkStatus(newVal)
@@ -66,9 +82,15 @@ module tomitribe_dropdown {
             if(!!newVal){
                 $scope.opened = true;
                 $scope.dynamicClass = 'open';
+                if($scope.autoClose){
+                    $document.on('click', $scope.handler);
+                }
             } else {
                 $scope.opened = false;
                 $scope.dynamicClass = 'closed';
+                if($scope.autoClose){
+                    $document.off('click', $scope.handler);
+                }
             }
         }
 
