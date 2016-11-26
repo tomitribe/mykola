@@ -8,7 +8,7 @@
     .dropdown-list
       display: block
     .dropdown-primary .bimg
-      background-image: url(images/threeDots-icon-orange.svg)
+      background-image: url(images/ellipsis-icon-orange.svg)
   .dropdown-primary
     width: 30px
     height: 40px
@@ -18,9 +18,11 @@
       background-repeat: no-repeat
       background-position: center center
       background-size: 19px 4px
-      background-image: url(./images/threeDots-icon-grey.svg)
+      background-image: url(images/ellipsis-icon-grey.svg)
       &:hover
-        background-image: url(images/threeDots-icon-orange.svg)
+        background-image: url(images/ellipsis-icon-orange.svg)
+      &.lo:hover
+        background-image: url(images/ellipsis-icon-light-orange.svg)
     + .dropdown-list-down
       top: 40px
       &:before,
