@@ -7,6 +7,7 @@ div
     tribe-tags(ng-model="tags")
   section.pull-right
     div.clear.row
+      a(href="/bulk-edit") Check bulk edit
       div.column
         tribe-button(class="outside-trigger" ng-click="menuOneStatus = !menuOneStatus") Outside trigger
         div tribe-fab down click
@@ -56,7 +57,7 @@ div
             tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Copy', tribe-tooltip-position='bottom')
               i.fa.fa-copy
             tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Delete', tribe-tooltip-position='right')
-              i.fa.fa-trash
+              i.fa.fa-trash.
     div.clear.row
       div.column.pull-right
         tribe-dropdown(dropdown-direction='up' pull-direction='left'  dropdown-trigger='dropdownClick' opened-status='dropDownTwoStatus')

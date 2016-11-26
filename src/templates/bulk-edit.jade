@@ -1,0 +1,12 @@
+div
+    h1 Testing bottom bar
+    ul.items-list
+        li.item(ng-repeat="item in items", ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}")
+            input(type="checkbox" ng-model="item.$$selected" ng-hide="true")
+            span.title Name: {{item.name}}
+            | <br>
+            span.rate Rate: {{item.rate}}
+            | <br><br>
+    div {{ (items|filter:{$$selected: true}).length }}
+div.clear
+    tribe-bulkbar
