@@ -1,6 +1,10 @@
 div
   .top-background
   div(data-app-header)
+  section
+    h2 Tags
+    div Binding: {{tags}}
+    tribe-tags(ng-model="tags")
   section.pull-right
     div.clear.row
       div.column

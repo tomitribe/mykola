@@ -1,5 +1,6 @@
 var loaders = require("./loaders");
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
 
@@ -13,13 +14,14 @@ module.exports = {
         root: __dirname,
         extensions: ['', '.ts', '.js']
     },
-    devtool: "inline-eval-cheap-source-map",
+    devtool: "source-map",
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.jade',
             inject: 'body',
             hash: true
         }),
+        new CopyWebpackPlugin([{ from: './src/public' }]),
         new BrowserSyncPlugin({
             host: 'localhost',
             port: 8082,

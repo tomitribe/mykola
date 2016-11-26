@@ -3,18 +3,27 @@ import "angular-route";
 import "angular-cookies";
 import "angular-resource";
 import "angular-tomitribe-common";
+import "angular-sanitize/angular-sanitize";
+import "ui-select/dist/select";
 
 require("../components/angular-tomitribe-button/index");
 require("../components/angular-tomitribe-fab/index");
 require("../components/angular-tomitribe-tooltip/index");
 require("../components/angular-tomitribe-dropdown/index");
+require("../components/angular-tomitribe-tags/index");
 
 // load our default (non specific) css
+import "ui-select/dist/select.css";
+import "selectize/dist/css/selectize.css";
 import "font-awesome/css/font-awesome.css";
 import "./styles/app.sass";
 
 module index {
-    angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip', 'tomitribe-dropdown'])
+    angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip', 'tomitribe-dropdown', 'tomitribe-tags'])
+        .config(['uiSelectConfig', function (uiSelectConfig) {
+            uiSelectConfig.theme = 'selectize';
+            uiSelectConfig.resetSearchInput = true;
+        }])
         .config([
             '$locationProvider', '$routeProvider', '$httpProvider', '$logProvider',
             function ($locationProvider, $routeProvider, $httpProvider, $logProvider) {
@@ -32,6 +41,7 @@ module index {
                             $scope.menuOneStatus = true;
                             $scope.dropDownStatus = true;
                             $scope.dropDownTwoStatus = true;
+                            $scope.tags = [];
                         }]
                     })
                     .otherwise({

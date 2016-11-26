@@ -1,0 +1,5 @@
+ui-select(multiple, tagging="stringToTagReference", tagging-tokens="ENTER|,", ng-model="self.ngModel", sortable="true", style="width: 25%;")
+    ui-select-match(placeholder="Select tag...") {{$item.name}}
+    ui-select-choices(repeat="tag in availableTags | filter:{name: $select.search}")
+        span(ng-if="tag.isTag" ng-bind-html="(tag.name | highlight: $select.search) + ' (new)'")
+        span(ng-if="!tag.isTag" ng-bind-html="tag.name + tag.isTag| highlight: $select.search")
