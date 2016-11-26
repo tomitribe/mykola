@@ -1,0 +1,8 @@
+= angular-tomitribe-tags
+
+A simple wrapper of `ui-select` allowing to maintain a TagReference array width
+a predefined behavior.
+
+== Dependencies
+
+This components relies on `angular-ui-select` so don't forget to include it.

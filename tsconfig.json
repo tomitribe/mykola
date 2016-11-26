@@ -23,5 +23,7 @@
     "dist",
     "dev",
     "reports"
-  ]
+  ],
+  "atom": { "rewriteTsconfig": false },
+  "buildOnSave": false, "compileOnSave": false
 }
