@@ -64,11 +64,16 @@ module tomitribe_dropdown {
 
             function handler(event) {
                 if (!el[0].contains(event.target)) {
-                    $scope[_trigger] = false;
+                    closeDropdown();
                     $scope.$apply();
                 }
             }
             $scope.handler = handler;
+
+            function closeDropdown() {
+                $scope[_trigger] = false;
+            }
+            tribeDropdown.close = closeDropdown;
 
             if($scope.autoClose){
                 $scope.$on('$destroy', function() {
@@ -134,7 +139,7 @@ module tomitribe_dropdown {
 
         function link(scope, element, attrs, ctrl)
         {
-            scope.parentCtrl = ctrl;
+            scope.$dropdown = ctrl;
         }
     }
 }
