@@ -10,6 +10,7 @@ require("../components/angular-tomitribe-button/index");
 require("../components/angular-tomitribe-fab/index");
 require("../components/angular-tomitribe-tooltip/index");
 require("../components/angular-tomitribe-dropdown/index");
+require("../components/angular-tomitribe-bulkbar/index");
 require("../components/angular-tomitribe-tags/index");
 
 // load our default (non specific) css
@@ -19,7 +20,7 @@ import "font-awesome/css/font-awesome.css";
 import "./styles/app.sass";
 
 module index {
-    angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip', 'tomitribe-dropdown', 'tomitribe-tags'])
+    angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip', 'tomitribe-dropdown', 'tomitribe-bulkbar', 'tomitribe-tags'])
         .config(['uiSelectConfig', function (uiSelectConfig) {
             uiSelectConfig.theme = 'selectize';
             uiSelectConfig.resetSearchInput = true;
@@ -42,6 +43,21 @@ module index {
                             $scope.dropDownStatus = true;
                             $scope.dropDownTwoStatus = true;
                             $scope.tags = [];
+                        }]
+                    })
+                    .when('/bulk-edit', {
+                        template: require('./templates/bulk-edit.jade'),
+                        controller: ['$scope', ($scope) =>{
+                            $scope.items = [{
+                                name: 'FirstApp',
+                                rate: 5
+                            },
+                            {
+                                name: 'SecondApp',
+                                rate: 3
+                            }];
+                            $scope.footerCount = 0;
+                            $scope.items[0].$$selected = true;
                         }]
                     })
                     .otherwise({

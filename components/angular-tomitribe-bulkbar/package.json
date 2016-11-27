@@ -1,0 +1,11 @@
+{
+  "name": "angular-tomitribe-bulkbar",
+  "version": "0.0.1",
+  "description": "Tomitribe component for bulk edit",
+  "repository": "https://github.com/tomitribe/tree/master/components/angular-tomitribe-bulkbar",
+  "license": "MIT",
+  "main": "index.ts",
+  "dependencies": {
+    "angular-tomitribe-common": "^0.0.3"
+  }
+}
