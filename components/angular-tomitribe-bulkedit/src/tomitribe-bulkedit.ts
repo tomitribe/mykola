@@ -22,7 +22,7 @@ module tomitribe_bulkbar {
         {
             scope.selectState = false;
             scope.showAllChecker = true;
-            if(!scope.selectField) scope.selectField = "selected";
+            if(!scope.selectField) scope.selectField = "$$selected";
             if(!scope.phrase) scope.phrase = "shift+click to select, esc to deselect all";
         }
 

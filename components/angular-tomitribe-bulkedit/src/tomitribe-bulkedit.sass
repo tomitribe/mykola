@@ -1,10 +1,16 @@
+$green: #1FC281
+$white: #FFFFFF
+$grey: #697283
+$light-grey: #cccccc
+
 .tribe-bulkbar
   width: 100%
-  background: #fff
+  background: $white
   position: fixed
+  box-sizing: border-box
   bottom: -75px
   left: 0
-  height: 24px
+  height: 70px
   padding: 23px 0
   transition: all .3s ease
   box-shadow: 0 -1px 0 rgba(76,86,103,.2),0 -2px 35px rgba(31,37,50,.14)
@@ -18,7 +24,7 @@
     width: 100%
     text-align: left
     .bulk-check
-      border: 1px solid #cccccc
+      border: 1px solid $light-grey
       border-radius: 50%
       cursor: pointer
       text-align: center
@@ -29,17 +35,18 @@
       display: block
       float: left
       &.all-checked
-        border-color: #1FC281
-        background: #1FC281
+        border-color: $green
+        background: $green
         .fa
-          color: #ffffff
+          color: $white
       .fa
-        color: #ccc
+        color: $light-grey
         font-size: 20px
         line-height: 26px
-    .selected-apps
+
+    .selected-items
       font-size: 12px
-      color: #4a556b
+      color: $grey
       font-weight: 600
       text-transform: uppercase
       float: left
@@ -48,10 +55,11 @@
       strong
         font-size: 11px
         border-radius: 100px
-        background: #1FC281
-        color: #fff
+        background: $green
+        color: $white
         padding: 1px 10px 2px
         margin: 1px 6px 0 0
+
     .bulk-options
       margin: 3px 0 0 -93px
       position: absolute
@@ -61,11 +69,12 @@
         margin: 0 15px
         list-style: none
         .fa
-          color: #697283
+          color: $grey
+
     .instructions
       float: right
       margin: 7px 35px 0 0
-      color: #a0a8b7
+      color: $light-grey
       font-size: 11px
       font-style: italic
 .wrap

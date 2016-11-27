@@ -2,7 +2,7 @@ div.tribe-bulkbar.wrap(ng-class="{opened: (selectedCount > 0)}")
     div.inner-wrap
         div.bulk-check(ng-click="checkAll(!allChecked)" ng-class="{'all-checked': allChecked}" ng-if="showAllChecker")
             i.fa.fa-check
-        p.selected-apps
+        p.selected-items
             strong {{selectedCount}}
             span Items Selected
         ul.bulk-options
