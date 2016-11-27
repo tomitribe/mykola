@@ -63,19 +63,22 @@ module index {
                             $scope.items[0].$$selected = true;
                             $scope.operatorItems = [
                                 {
-                                    iconClass:"fa-2x fa-share",
-                                    itemClass:"class1",
+                                    iconClass: "fa-2x fa-share",
+                                    itemClass: "class1",
                                     invoke: function(items){console.log(items)},
+                                    tooltip: "share"
                                 },
                                 {
                                     iconClass:"fa-2x fa-inbox",
-                                    itemClass:"class1",
+                                    itemClass:"class2",
                                     invoke: function(items){console.log(items)},
+                                    tooltip: "archive"
                                 },
                                 {
                                     iconClass:"fa-2x fa-trash",
                                     invoke: function(items){console.log(items)},
-                                    applyAll: true
+                                    applyAll: true,
+                                    tooltip: "delete"
                                 },
                             ];
                         }]
