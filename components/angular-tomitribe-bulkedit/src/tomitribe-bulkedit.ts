@@ -22,6 +22,8 @@ module tomitribe_bulkbar {
         {
             scope.selectState = false;
             scope.showAllChecker = true;
+            scope.allChecked = false;
+            if(!scope.listItems) scope.listItems = [];
             if(!scope.selectField) scope.selectField = "$$selected";
             if(!scope.phrase) scope.phrase = "shift+click to select, esc to deselect all";
         }
@@ -40,7 +42,11 @@ module tomitribe_bulkbar {
                 },function(data){
                     $scope.selectedCount = data.length;
                     $scope.selectedItems = data;
-                    $scope.allChecked = (data.length === $scope.listItems.length);
+                    if (!$scope.listItems) {
+                        $scope.allChecked = false;
+                    } else {
+                        $scope.allChecked = (data.length === $scope.listItems.length);
+                    }
             }, true);
 
             $scope.checkAll = function(state){
@@ -67,7 +73,6 @@ module tomitribe_bulkbar {
                         });
                     }
                 }
-
             };
 
             $document.on('keyup', function (e) {
