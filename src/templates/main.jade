@@ -7,7 +7,7 @@ div
     tribe-tags(ng-model="tags")
   section
     div
-      h1 Bulk edit
+      h1 Bulk edit, all:{{checkedStatus | json}}
       ul.items-list
         li.item(ng-repeat="item in items", ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}")
           input(type="checkbox" ng-model="item.$$selected" ng-hide="true")
@@ -17,7 +17,7 @@ div
           | <br><br>
       div {{ (items|filter:{selected: true}).length }}
     div.clear
-      tribe-bulkedit(list-items="items" operator-items="operatorItems" select-field="$$selected")
+      tribe-bulkedit(list-items="items" operator-items="operatorItems" select-field="$$selected" all-checked="checkedStatus")
   section.pull-right
     div.clear.row
       a(href="/bulk-edit") Check bulk edit

@@ -81,6 +81,7 @@ module index {
                                     tooltip: "delete"
                                 },
                             ];
+                            $scope.checkedStatus = false;
                         }]
                     })
                     .otherwise({

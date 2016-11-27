@@ -14,7 +14,8 @@ module tomitribe_bulkbar {
                 operatorItems: '=',
                 listItems: '=',
                 phrase: '@?',
-                selectField: '@?'
+                selectField: '@?',
+                allChecked: '=?'
             },
             link:link
         };
@@ -22,7 +23,7 @@ module tomitribe_bulkbar {
         {
             scope.selectState = false;
             scope.showAllChecker = true;
-            scope.allChecked = false;
+            if(!scope.allChecked) scope.allChecked = false;
             if(!scope.listItems) scope.listItems = [];
             if(!scope.selectField) scope.selectField = "$$selected";
             if(!scope.phrase) scope.phrase = "shift+click to select, esc to deselect all";
@@ -31,23 +32,26 @@ module tomitribe_bulkbar {
         function bulkEditController($scope, $document) {
             $scope.$watchCollection(
                 function(){
-                    if(!$scope.listItems) return [];
                     var selectedItems = [];
-                    if($scope.listItems.length > 0){
+                    if(!$scope.listItems) {
+                        $scope.itemsCount = 0;
+                        return selectedItems;
+                    } else {
+                        $scope.itemsCount = $scope.listItems.length;
+                    }
+                    if($scope.itemsCount > 0){
                         angular.forEach($scope.listItems, function(item){
                             if(item[$scope.selectField]) selectedItems.push(item);
                         });
                     }
                     return selectedItems;
-                },function(data){
+                },function(data) {
                     $scope.selectedCount = data.length;
                     $scope.selectedItems = data;
-                    if (!$scope.listItems) {
-                        $scope.allChecked = false;
-                    } else {
-                        $scope.allChecked = (data.length === $scope.listItems.length);
+                    if ($scope.itemsCount > 0) {
+                        $scope.allChecked = (data.length === $scope.itemsCount);
                     }
-            }, true);
+                }, true);
 
             $scope.checkAll = function(state){
                 if(typeof state === "boolean"){
