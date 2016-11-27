@@ -1,30 +1,42 @@
-.bulk-bar
+.tribe-bulkbar
   width: 100%
   background: #fff
   position: fixed
-  bottom: 0
+  bottom: -75px
   left: 0
   height: 24px
   padding: 23px 0
-  -webkit-transition: -webkit-transform .3s ease
-  transition: transform .3s ease
+  transition: all .3s ease
   box-shadow: 0 -1px 0 rgba(76,86,103,.2),0 -2px 35px rgba(31,37,50,.14)
   z-index: 20
+  &.opened
+    bottom: 0
+    .inner-wrap
+      opacity: 1
   .inner-wrap
+    opacity: 0
     width: 100%
     text-align: left
     .bulk-check
-      border: 0
-      border-radius: 0
+      border: 1px solid #cccccc
+      border-radius: 50%
+      cursor: pointer
+      text-align: center
       z-index: 1
       height: 25px
       width: 25px
       margin: 0 0 0 35px
       display: block
       float: left
-      input
-        height: 25px
-        width: 25px
+      &.all-checked
+        border-color: #1FC281
+        background: #1FC281
+        .fa
+          color: #ffffff
+      .fa
+        color: #ccc
+        font-size: 20px
+        line-height: 26px
     .selected-apps
       font-size: 12px
       color: #4a556b
@@ -48,14 +60,14 @@
         float: left
         margin: 0 15px
         list-style: none
-        .fa-inbox, .fa-share, .fa-trash
+        .fa
           color: #697283
     .instructions
-      float: right;
-      margin: 7px 35px 0 0;
-      color: #a0a8b7;
-      font-size: 11px;
-      font-style: italic;
+      float: right
+      margin: 7px 35px 0 0
+      color: #a0a8b7
+      font-size: 11px
+      font-style: italic
 .wrap
   float: left
   clear: both

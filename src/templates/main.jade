@@ -5,6 +5,19 @@ div
     h2 Tags
     div Binding: {{tags}}
     tribe-tags(ng-model="tags")
+  section
+    div
+      h1 Bulk edit
+      ul.items-list
+        li.item(ng-repeat="item in items", ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}")
+          input(type="checkbox" ng-model="item.$$selected" ng-hide="true")
+          span.title Name: {{item.name}}
+          | <br>
+          span.rate Rate: {{item.rate}}
+          | <br><br>
+      div {{ (items|filter:{selected: true}).length }}
+    div.clear
+      tribe-bulkedit(list-items="items" operator-items="operatorItems" select-field="$$selected")
   section.pull-right
     div.clear.row
       a(href="/bulk-edit") Check bulk edit
@@ -43,7 +56,7 @@ div
             tribe-button(tribe-size='m', tribe-type='fab')
               i.fa.fa-cloud-upload
               div.text IMPORT PROFILE
-      div.column
+      div.column.dark
         div tribe-fab left
         div {{menuThreeStatus ? 'true' : 'false'}}
         tribe-fab(fab-direction='left' fab-trigger='fabOver' trigger-hide='true' opened-status='menuThreeStatus')

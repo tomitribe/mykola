@@ -3,11 +3,6 @@ body
   font-family: Montserrat, sans-serif
   font-weight: bold
   text-transform: uppercase
-  .column
-    &:nth-child(3)
-      background: repeating-linear-gradient(45deg, #333 0px, #333 3px, #000 3px, #000 6px)
-      > div
-        color: #FFF
 .alegreya
   font-family: 'Alegreya Sans', sans-serif
 .btn-primary.btn-l span
@@ -22,6 +17,10 @@ body
   box-sizing: border-box
   padding: 30px
   float: left
+  &.dark
+    background: repeating-linear-gradient(45deg, #333 0px, #333 3px, #000 3px, #000 6px)
+    > div
+      color: #FFF
 .column.pull-right
   float: right
 
@@ -40,7 +39,7 @@ body
     background-size: 19px 4px
     background-image: url(../images/ellipsis-icon.svg)
     &.trigger
-      right: 15px
+      right: 8px
       box-sizing: border-box
 .outside-trigger
   left: 0

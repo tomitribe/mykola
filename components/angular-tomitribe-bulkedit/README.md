@@ -1,4 +1,4 @@
-# angular-tomitribe-bulkbar
+# angular-tomitribe-bulkedit
 
-tribeBulkbar directive
+tribeBulkedit directive
     used to display different types of bulk commands
