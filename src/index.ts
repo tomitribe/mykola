@@ -10,6 +10,7 @@ require("../components/angular-tomitribe-button/index");
 require("../components/angular-tomitribe-fab/index");
 require("../components/angular-tomitribe-tooltip/index");
 require("../components/angular-tomitribe-dropdown/index");
+require("../components/angular-tomitribe-bulkedit/index");
 require("../components/angular-tomitribe-tags/index");
 
 // load our default (non specific) css
@@ -19,7 +20,7 @@ import "font-awesome/css/font-awesome.css";
 import "./styles/app.sass";
 
 module index {
-    angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip', 'tomitribe-dropdown', 'tomitribe-tags'])
+    angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip', 'tomitribe-dropdown', 'tomitribe-bulkedit', 'tomitribe-tags'])
         .config(['uiSelectConfig', function (uiSelectConfig) {
             uiSelectConfig.theme = 'selectize';
             uiSelectConfig.resetSearchInput = true;
@@ -42,6 +43,45 @@ module index {
                             $scope.dropDownStatus = true;
                             $scope.dropDownTwoStatus = true;
                             $scope.tags = [];
+
+                            $scope.items = [{
+                                name: 'FirstApp',
+                                rate: 5
+                            },
+                                {
+                                    name: 'SecondApp',
+                                    rate: 3
+                                },
+                                {
+                                    name: 'SecondApp',
+                                    rate: 4
+                                },
+                                {
+                                    name: 'SecondApp',
+                                    rate: 5
+                                }];
+                            $scope.items[0].$$selected = true;
+                            $scope.operatorItems = [
+                                {
+                                    iconClass: "fa-2x fa-share",
+                                    itemClass: "class1",
+                                    invoke: function(items){console.log(items)},
+                                    tooltip: "share"
+                                },
+                                {
+                                    iconClass:"fa-2x fa-inbox",
+                                    itemClass:"class2",
+                                    invoke: function(items){console.log(items)},
+                                    tooltip: "archive"
+                                },
+                                {
+                                    iconClass:"fa-2x fa-trash",
+                                    invoke: function(items){console.log(items)},
+                                    applyAll: true,
+                                    tooltip: "delete"
+                                },
+                            ];
+                            $scope.checkedStatus = false;
                         }]
                     })
                     .otherwise({

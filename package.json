@@ -5,7 +5,7 @@
   "repository": "https://github.com/tomitribe/mykola.git",
   "main": "/",
   "scripts": {
-    "start": "webpack --config webpack/webpack.dev.js --watch --NODE_ENV=dev",
+    "start": "webpack --config webpack/webpack.dev.js --watch --NODE_ENV=dev --historyApiFallback",
     "build": "webpack --config webpack/webpack.build.js --NODE_ENV=production",
     "postinstall": "typings i"
   },
@@ -23,7 +23,7 @@
     "selectize": "0.12.4"
   },
   "devDependencies": {
-    "angular-tomitribe-common": "^0.0.4",
+    "angular-tomitribe-common": "^0.0.5",
     "babel-core": "^6.18.2",
     "browser-sync": "^2.18.1",
     "browser-sync-webpack-plugin": "^1.1.3",

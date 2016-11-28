@@ -1,0 +1,13 @@
+div.tribe-bulkbar.wrap(ng-class="{opened: (selectedCount > 0)}")
+    div.inner-wrap
+        div.bulk-check(ng-click="checkAll(!allChecked)" ng-class="{'all-checked': allChecked}" ng-if="showAllChecker")
+            i.fa.fa-check
+        p.selected-items
+            strong {{selectedCount}}
+            span Items Selected
+        ul.bulk-options
+            li.list-item(ng-repeat="operator in operatorItems" ng-click="applyBulk(operator)")
+                a(class="{{operator.itemClass}}" tribe-tooltip="{{operator.tooltip}}" tribe-tooltip-position="top")
+                    i.fa(class="{{operator.iconClass}}")
+        p.instructions
+            span(style='color: #a0a8b7') {{phrase}}
