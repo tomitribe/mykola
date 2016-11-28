@@ -11,6 +11,10 @@ export class TagsController {
       return !!found.length ? found[0] : new TagReference(null, name, null);
     };
 
+    $scope.groupSuggestions = item => {
+      return 'Suggestions';
+    };
+
     $scope.availableTags = [];
     // load them remotely, todo: error handling
     tagService.findTags()
