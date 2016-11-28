@@ -3,14 +3,14 @@ div.tribe-bulkbar.wrap(ng-class="{opened: (selectedCount > 0)}")
         div.bulk-check(ng-click="checkAll(!allChecked)" ng-class="{'all-checked': allChecked}" ng-if="showAllChecker")
             i.fa.fa-check
             span.text Select all
-        p.selected-items
+        div.selected-items
             strong {{selectedCount}}
             span Items selected
         ul.bulk-options
             li.list-item(ng-repeat="operator in operatorItems" ng-click="applyBulk(operator)")
                 a(class="{{operator.itemClass}}" tribe-tooltip="{{operator.tooltip}}" tribe-tooltip-position="top")
                     i.fa(class="{{operator.iconClass}}")
-        p.instructions
+        div.instructions
             strong shift+click
             span to select,
             strong.click(ng-click="checkAll(false)") esc
