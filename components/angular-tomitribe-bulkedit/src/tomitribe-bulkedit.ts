@@ -12,10 +12,10 @@ module tomitribe_bulkbar {
             controller: ['$scope', '$document', bulkEditController],
             scope: {
                 operatorItems: '=',
+                allChecked: '=?',
                 listItems: '=',
-                phrase: '@?',
                 selectField: '@?',
-                allChecked: '=?'
+                itemsName: '@?'
             },
             link:link
         };
@@ -26,7 +26,7 @@ module tomitribe_bulkbar {
             if(!scope.allChecked) scope.allChecked = false;
             if(!scope.listItems) scope.listItems = [];
             if(!scope.selectField) scope.selectField = "$$selected";
-            if(!scope.phrase) scope.phrase = "shift+click to select, esc to deselect all";
+            if(!scope.itemsName) scope.itemsName = "Items";
         }
 
         function bulkEditController($scope, $document) {
@@ -73,7 +73,7 @@ module tomitribe_bulkbar {
                         operator.invoke(items);
                     }else{
                         angular.forEach($scope.selectedItems, function(item){
-                                operator.invoke(item);
+                            operator.invoke(item);
                         });
                     }
                 }
