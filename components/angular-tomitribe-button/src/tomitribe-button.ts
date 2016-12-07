@@ -1,6 +1,6 @@
 /**
  * @ngdoc directive
- * @name angular-diff.directive:tribeButton
+ * @name tomitribe-button:tribeButton
  * @function
  *
  * @description

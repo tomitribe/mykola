@@ -1,9 +1,0 @@
-.DS_Store
-node_modules/
-bower_modules/
-typings/
-*.log
-*.cache
-
-.idea/
-dist/

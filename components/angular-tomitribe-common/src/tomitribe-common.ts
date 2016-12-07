@@ -1,13 +1,13 @@
 /**
  * @ngdoc directive
- * @name angular-diff.directive:tribeButton
+ * @name angular-tomitribe-common
  * @function
  *
  * @description
- * Create a button with styles
+ * Adds custom styles and mixins to sass
  *
  * @example
-
+      @import '~angular-tomitribe-common/src/tomitribe-common.sass';
  */
 
 module tomitribe_common {

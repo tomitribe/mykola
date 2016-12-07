@@ -10,4 +10,10 @@ html
   body
     .container-fluid
       div(ng-app='demo-app')
-        <div ng-view></div>
+        nav.clear.row.pull-right
+            a.nav-item(href="/") Home
+            a.nav-item(href="/plus") Plus
+            a.nav-item(href="/bulk-edit") Bulk edit
+            a.nav-item(href="/dropdown") Dropdown
+            a.nav-item(href="/tags") Tags
+        div(ng-view)

@@ -3,8 +3,54 @@ module tomitribe_dropdown {
 
     angular
         .module('tomitribe-dropdown', [])
+
+        /**
+         * @ngdoc directive
+         * @name tomitribe-dropdown.directive:tribeDropdown
+         *
+         * @restrict 'E'
+         *
+         * @param {string}      [dropdownTrigger='dropdownClick']       Action which will trigger a dropdown dropdownOver, dropdownClick or <string>
+         * @param {string}      [dropdownDirection='down']              Direction of dropdown options ['up', 'down']
+         * @param {string}      [pullDirection='left']                  Pull allignment of dropdown ['left', 'right']
+         * @param {boolean}     [openedStatus=false]                    Two way opened status trigger
+         * @param {boolean}     [triggerHide=false]                     Hide trigger after opening
+         * @param {boolean}     [autoClose=false]                       Add closing hook on clicks outside of open dropdown
+         *
+         * @description
+         * Create dropdown menu with specific style
+         *
+         * @example
+
+         */
         .directive('tribeDropdown', tribeDropdown)
+
+        /**
+         * @ngdoc directive
+         * @name tomitribe-dropdown.directive:tribeDropdownTrigger
+         *
+         * @restrict 'E'
+         *
+         * @description
+         * Trigger item inside tribe-dropdown directive
+         *
+         * @example
+
+         */
         .directive('tribeDropdownTrigger', tribeDropdownTrigger)
+
+        /**
+         * @ngdoc directive
+         * @name tomitribe-dropdown.directive:tribeDropdownList
+         *
+         * @restrict 'E'
+         *
+         * @description
+         * Transcluded list of items inside tribe-dropdown directive
+         *
+         * @example
+
+         */
         .directive('tribeDropdownList', tribeDropdownList);
 
     function tribeDropdown()
@@ -51,7 +97,7 @@ module tomitribe_dropdown {
             if(typeof _dropDirection !== "string") _dropDirection = "down";
             tribeDropdown.dropdownDirection = _dropDirection;
 
-            if(typeof _pullDirection !== "string") _pullDirection = "down";
+            if(typeof _pullDirection !== "string") _pullDirection = "left";
             tribeDropdown.pullDirection = _pullDirection;
 
             if(typeof _trigger !== "string") _trigger = "dropdownClick";

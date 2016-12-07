@@ -1,10 +1,10 @@
 /**
  * @ngdoc directive
- * @name angular-diff.directive:tribeButton
+ * @name tomitribe-tooltip.directive:tribeTooltip
  * @function
  *
  * @description
- * Create a button with styles
+ * Create a tooltip
  *
  * @example
 
