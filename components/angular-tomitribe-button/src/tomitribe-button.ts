@@ -1,7 +1,13 @@
 /**
  * @ngdoc directive
- * @name angular-diff.directive:tribeButton
+ * @name tomitribe-button.directive:tribeButton
  * @function
+ *
+ * @restrict 'E'
+ *
+ * @param {string=}  [tribeSize='m']   Size
+ * @param {string=}  [tribeColor='primary']  Color
+ * @param {string=}  [tribeType='raised']   Type
  *
  * @description
  * Create a button with styles

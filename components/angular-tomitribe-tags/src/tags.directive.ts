@@ -1,6 +1,6 @@
 /**
  * @ngdoc directive
- * @name tribe-tags
+ * @name tomitribe-tags.directive:tribeTags
  * @function
  *
  * @description

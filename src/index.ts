@@ -1,22 +1,5 @@
-import "angular";
-import "angular-route";
-import "angular-cookies";
-import "angular-resource";
-import "angular-tomitribe-common";
-import "angular-sanitize/angular-sanitize";
-import "ui-select/dist/select";
+require('./vendors');
 
-require("../components/angular-tomitribe-button/index");
-require("../components/angular-tomitribe-fab/index");
-require("../components/angular-tomitribe-tooltip/index");
-require("../components/angular-tomitribe-dropdown/index");
-require("../components/angular-tomitribe-bulkedit/index");
-require("../components/angular-tomitribe-tags/index");
-
-// load our default (non specific) css
-import "ui-select/dist/select.css";
-import "selectize/dist/css/selectize.css";
-import "font-awesome/css/font-awesome.css";
 import "./styles/app.sass";
 
 module index {
@@ -37,13 +20,20 @@ module index {
 
                 $routeProvider
                     .when('/', {
-                        template: require('./templates/main.jade'),
-                        controller: ['$scope', ($scope) =>{
-                            $scope.menuOneStatus = true;
-                            $scope.dropDownStatus = true;
-                            $scope.dropDownTwoStatus = true;
-                            $scope.tags = [];
+                        template: require('./templates/home.jade'),
+                        controller: ['$scope', ($scope) => {
 
+                        }]
+                    })
+                    .when('/plus', {
+                        template: require('./templates/plus.jade'),
+                        controller: ['$scope', ($scope) => {
+                            $scope.menuOneStatus = true;
+                        }]
+                    })
+                    .when('/bulk-edit', {
+                        template: require('./templates/bulk-edit.jade'),
+                        controller: ['$scope', ($scope) => {
                             $scope.items = [{
                                 name: 'FirstApp',
                                 rate: 5
@@ -84,11 +74,24 @@ module index {
                             $scope.checkedStatus = false;
                         }]
                     })
+                    .when('/dropdown', {
+                        template: require('./templates/dropdown.jade'),
+                        controller: ['$scope', ($scope) => {
+                            $scope.dropDownStatus = true;
+                            $scope.dropDownTwoStatus = true;
+                        }]
+                    })
+                    .when('/tags', {
+                        template: require('./templates/tags.jade'),
+                        controller: ['$scope', ($scope) => {
+                            $scope.tags = [];
+                        }]
+                    })
                     .otherwise({
                         controller: ['$scope', '$location', ($scope, $location) => {
                             $scope.path = $location.path();
                         }],
-                        template: require('./templates/main.jade')
+                        template: require('./templates/home.jade')
                     });
             }
         ])

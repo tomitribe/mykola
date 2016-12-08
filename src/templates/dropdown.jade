@@ -1,0 +1,28 @@
+div
+  h2 Bulk Edit
+  section
+    div.clear.row.bulk-edit-row
+      div.column
+        div DropDown
+        div {{dropDownStatus ? 'true' : 'false'}}
+        tribe-dropdown(dropdown-direction='down' pull-direction='left'  dropdown-trigger='dropdownClick' opened-status='dropDownStatus' auto-close='true')
+          tribe-dropdown-trigger
+            i.bimg
+          tribe-dropdown-list
+            .item(ng-click="$dropdown.close()") Hello close
+            .item World
+            .item.disabled World
+            .separator
+            .item World2
+      div.column
+        tribe-dropdown(dropdown-direction='up' pull-direction='right'  dropdown-trigger='dropdownClick' opened-status='dropDownTwoStatus')
+          tribe-dropdown-trigger
+            i.bimg
+          tribe-dropdown-list
+            .item Hello
+            .item World
+            .item.disabled World
+            .separator
+            .item World2
+        div DropDown
+        div {{dropDownTwoStatus ? 'true' : 'false'}}

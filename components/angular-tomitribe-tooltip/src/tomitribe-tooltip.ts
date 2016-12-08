@@ -1,10 +1,15 @@
 /**
  * @ngdoc directive
- * @name angular-diff.directive:tribeButton
+ * @name tomitribe-tooltip.directive:tribeTooltip
  * @function
  *
+ * @restrict 'A'
+ *
  * @description
- * Create a button with styles
+ * Create a tooltip
+ *
+ * @param {string}      tribeTooltip            Tooltip text
+ * @param {string=}     tribeTooltipPosition    Tooltip box direction
  *
  * @example
 

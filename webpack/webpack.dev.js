@@ -1,5 +1,4 @@
 var loaders = require("./loaders");
-var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
@@ -21,14 +20,9 @@ module.exports = {
             inject: 'body',
             hash: true
         }),
-        new CopyWebpackPlugin([{ from: './src/public' }]),
-        new BrowserSyncPlugin({
-            host: 'localhost',
-            port: 8082,
-            server: {
-                baseDir: 'dist'
-            }
-        }),
+        new CopyWebpackPlugin([
+            { from: './src/public' },
+        ]),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
@@ -38,5 +32,13 @@ module.exports = {
     ],
     module:{
         loaders: loaders
+    },
+    devServer: {
+        contentBase: 'dist',
+        historyApiFallback: true,
+        port: 8082,
+        host: '0.0.0.0',
+        hot: true
+       // inline: true
     }
 };

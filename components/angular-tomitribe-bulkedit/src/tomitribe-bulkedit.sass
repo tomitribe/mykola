@@ -1,19 +1,20 @@
-$green: #1FC281
+$green: #34bc77
 $white: #FFFFFF
 $grey: #697283
-$light-grey: #cccccc
+$light-grey: #a0a8b7
 
 .tribe-bulkbar
   width: 100%
-  background: $white
+  background: #fafafa
   position: fixed
   box-sizing: border-box
-  bottom: -75px
+  bottom: -65px
   left: 0
-  height: 70px
-  padding: 23px 0
+  height: 60px
+  padding: 15px 0
+  -webkit-transition: all .3s ease
   transition: all .3s ease
-  box-shadow: 0 -1px 0 rgba(76,86,103,.2),0 -2px 35px rgba(31,37,50,.14)
+  box-shadow: 0 -1px 5px rgba(76, 86, 103, 0.2)
   z-index: 1
   &.opened
     bottom: 0
@@ -23,35 +24,42 @@ $light-grey: #cccccc
     opacity: 0
     width: 100%
     text-align: left
+    line-height: 30px
     .bulk-check
-      border: 1px solid $light-grey
-      border-radius: 50%
       cursor: pointer
       text-align: center
       z-index: 1
-      height: 30px
-      width: 30px
-      margin: 0 0 0 35px
+      margin-left: 25px
       display: block
       float: left
+      height: 30px
+      box-sizing: border-box
+      padding: 7px 0
       &.all-checked
-        border-color: $green
-        background: $green
         .fa
+          border-color: $green
+          background: $green
           color: $white
+      .fa, .text
+        color: $grey
+        vertical-align: top
+        line-height: 19px
       .fa
+        border: 1px solid $light-grey
+        border-radius: 50%
+        height: 16px
+        width: 16px
+        line-height: 14px
+        font-size: 9px
         color: $light-grey
-        font-size: 18px
-        line-height: 31px
+        margin-right: 7px
 
     .selected-items
       font-size: 12px
       color: $grey
-      font-weight: 600
-      text-transform: uppercase
       float: left
-      margin: 5px 0 0 21px
-      line-height: 22px
+      margin-left: 21px
+      line-height: 30px
       strong
         font-size: 11px
         border-radius: 100px
@@ -61,22 +69,36 @@ $light-grey: #cccccc
         margin: 1px 6px 0 0
 
     .bulk-options
-      margin: 3px 0 0 -93px
+      margin: 0
       position: absolute
-      left: 50%
+      left: 0
+      right: 0
+      text-align: center
+      z-index: -1
       .list-item
-        float: left
+        display: inline-block
         margin: 0 15px
         list-style: none
-        .fa
+        .fa, .fa-2x
           color: $grey
+          line-height: 30px
+          font-size: 1.2em
 
     .instructions
       float: right
-      margin: 7px 35px 0 0
+      margin-right: 35px
       color: $light-grey
       font-size: 11px
       font-style: italic
-.wrap
-  float: left
-  clear: both
+      line-height: 30px
+    strong, span
+      height: 100%
+      margin-left: 2px
+      vertical-align: middle
+
+
+  &.wrap
+    float: left
+    clear: both
+    .click
+      cursor: pointer

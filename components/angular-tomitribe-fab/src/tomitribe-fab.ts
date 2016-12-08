@@ -1,6 +1,6 @@
 /**
  * @ngdoc directive
- * @name angular-diff.directive:tribeButton
+ * @name tomitribe-fab.directive:tribeFab
  * @function
  *
  * @description
@@ -27,10 +27,11 @@ module tomitribe_fab {
                 fabTrigger: '@?',
                 fabDirection: '@?',
                 opened: '=?openedStatus',
-                triggerHide: '@?'
+                triggerHide: '@?',
+                autoClose: '@?'
             },
             link: link,
-            controller: ['$scope', '$timeout', tribeFabController],
+            controller: ['$scope', '$timeout', '$document', tribeFabController],
             controllerAs: 'tribeFab',
             transclude: true,
             replace: true
@@ -42,20 +43,21 @@ module tomitribe_fab {
             scope.fabOver = false;
             scope.dynamicClass = 'closed';
             scope.triggerHide = !!scope.triggerHide || false;
+            scope.autoClose = !!scope.autoClose || false;
             scope.opened = scope.opened || false;
 
-            ctrl.init(scope.fabDirection, scope.fabTrigger);
+            ctrl.init(scope.fabDirection, scope.fabTrigger, element);
             ctrl.toggleOpen(scope.opened);
         }
     }
 
-    function tribeFabController($scope, $timeout)
+    function tribeFabController($scope, $timeout, $document)
     {
         var tribeFab = this;
 
         tribeFab.init = init;
 
-        function init(_direction, _trigger)
+        function init(_direction, _trigger, el)
         {
             if(typeof _direction !== "string") _direction = "down";
             tribeFab.fabDirection = _direction;
@@ -67,6 +69,25 @@ module tomitribe_fab {
             let _toggleOpen = (_opened)=> {$scope[_trigger] = _opened};
             $scope.$watch('opened', _toggleOpen);
             tribeFab.toggleOpen = _toggleOpen;
+
+            function handler(event) {
+                if (!el[0].contains(event.target)) {
+                    closeFab();
+                    $scope.$apply();
+                }
+            }
+            $scope.handler = handler;
+
+            function closeFab() {
+                $scope[_trigger] = false;
+            }
+            tribeFab.close = closeFab;
+
+            if($scope.autoClose){
+                $scope.$on('$destroy', function() {
+                    $document.off('click', $scope.handler);
+                });
+            }
         }
 
         function _checkStatus(newVal)
@@ -74,9 +95,15 @@ module tomitribe_fab {
             if(!!newVal){
                 $scope.opened = true;
                 $scope.dynamicClass = 'open';
+                if($scope.autoClose){
+                    $document.on('click', $scope.handler);
+                }
             } else {
                 $scope.opened = false;
                 $scope.dynamicClass = 'closed';
+                if($scope.autoClose){
+                    $document.off('click', $scope.handler);
+                }
             }
         }
 
