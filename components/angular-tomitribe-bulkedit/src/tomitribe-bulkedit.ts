@@ -7,15 +7,15 @@
  * @param {Object[]}    listItems                       List of all items that could be selected
  *
  * @param {Object[]}    operatorItems                   Operation used for each selected item
- * @param {string}      operatorItems[].itemClass       Operation item classes
- * @param {string}      operatorItems[].iconClass       Operation icon classes
- * @param {string}      operatorItems[].tooltip         Operation item tooltip
- * @param {function}    operatorItems[].invoke          Operation function which will be invoked
- * @param {boolean=}    operatorItems[].applyAll        Operation function apply all items at once
+ * @property {string=}   operatorItems[].itemClass      Operation item classes
+ * @property {string=}   operatorItems[].iconClass      Operation icon classes
+ * @property {string=}   operatorItems[].tooltip        Operation item tooltip
+ * @property {function} operatorItems[].invoke          Operation function which will be invoked
+ * @property {boolean=} operatorItems[].applyAll        Operation function apply all items at once
  *
- * @param {boolean}    [allChecked=false]               All checked two way flag
- * @param {string}     [selectField='$$selected']       Field that is used for select property
- * @param {string}     [itemsName='Items']              Field that is used in counter in bulk bar
+ * @param {boolean=}    [allChecked=false]              All checked two way flag
+ * @param {string=}     [selectField='$$selected']      Field that is used as select property
+ * @param {string=}     [itemsName='Items']             Field that is used in counter in bulk bar
  *
  * @description
  * Create bulk edit bar, used for applying operator actions on selected items

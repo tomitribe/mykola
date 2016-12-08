@@ -10,12 +10,12 @@ module tomitribe_dropdown {
          *
          * @restrict 'E'
          *
-         * @param {string}      [dropdownTrigger='dropdownClick']       Action which will trigger a dropdown dropdownOver, dropdownClick or <string>
-         * @param {string}      [dropdownDirection='down']              Direction of dropdown options ['up', 'down']
-         * @param {string}      [pullDirection='left']                  Pull allignment of dropdown ['left', 'right']
-         * @param {boolean}     [openedStatus=false]                    Two way opened status trigger
-         * @param {boolean}     [triggerHide=false]                     Hide trigger after opening
-         * @param {boolean}     [autoClose=false]                       Add closing hook on clicks outside of open dropdown
+         * @param {string=}      [dropdownTrigger='dropdownClick']       Action which will trigger a dropdown dropdownOver, dropdownClick or <string>
+         * @param {string=}      [dropdownDirection='down']              Direction of dropdown options ['up', 'down']
+         * @param {string=}      [pullDirection='left']                  Pull allignment of dropdown ['left', 'right']
+         * @param {boolean=}     [openedStatus=false]                    Two way opened status trigger
+         * @param {boolean=}     [triggerHide=false]                     Hide trigger after opening
+         * @param {boolean=                                                                                                                                                                                                                                                                                                                                                                    }     [autoClose=false]                       Add closing hook on clicks outside of open dropdown
          *
          * @description
          * Create dropdown menu with specific style

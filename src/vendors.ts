@@ -17,4 +17,3 @@ require('../components/angular-tomitribe-tags/index');
 import "ui-select/dist/select.css";
 import "selectize/dist/css/selectize.css";
 import "font-awesome/css/font-awesome.css";
-import "./styles/app.sass";

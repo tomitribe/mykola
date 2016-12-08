@@ -1,5 +1,7 @@
 require('./vendors');
 
+import "./styles/app.sass";
+
 module index {
     angular.module("demo-app", ['ngRoute', 'tomitribe-button', 'tomitribe-fab', 'tomitribe-tooltip', 'tomitribe-dropdown', 'tomitribe-bulkedit', 'tomitribe-tags'])
         .config(['uiSelectConfig', function (uiSelectConfig) {

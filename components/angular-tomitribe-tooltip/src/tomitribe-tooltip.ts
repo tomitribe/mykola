@@ -3,8 +3,13 @@
  * @name tomitribe-tooltip.directive:tribeTooltip
  * @function
  *
+ * @restrict 'A'
+ *
  * @description
  * Create a tooltip
+ *
+ * @param {string}      tribeTooltip            Tooltip text
+ * @param {string=}     tribeTooltipPosition    Tooltip box direction
  *
  * @example
 
