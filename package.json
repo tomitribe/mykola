@@ -6,7 +6,8 @@
   "main": "/",
   "scripts": {
     "start": "webpack-dev-server --config webpack/webpack.dev.js --watch --NODE_ENV=dev",
-    "build": "webpack --config webpack/webpack.build.js --NODE_ENV=production",
+    "build": "webpack --config  webpack/webpack.dev.js --NODE_ENV=production",
+    "bundle": "rimraf dist && webpack --config  webpack/webpack.dev.js && node bundle.ts",
     "postinstall": "typings i"
   },
   "author": "Andrii M.",
@@ -17,10 +18,12 @@
     "angular-resource": "^1.5.8",
     "angular-route": "^1.5.8",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.1.1",
+    "jquery": "2.1.4",
     "angular-sanitize": "^1.5.8",
     "ui-select": "0.19.6",
-    "selectize": "0.12.4"
+    "selectize": "0.12.4",
+    "bootstrap": "3.3.6",
+    "bootstrap-admin-ui": "1.2.0"
   },
   "devDependencies": {
     "angular-tomitribe-common": "^0.0.5",
@@ -45,7 +48,11 @@
     "typescript": "^2.0.10",
     "typings": "^2.0.0",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.3"
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "1.16.2",
+    "archiver": "1.2.0",
+    "rimraf": "2.5.1",
+    "fs-extra": "1.0.0"
   },
   "engine": "node >= 6.0.0"
 }

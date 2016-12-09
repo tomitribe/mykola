@@ -1,8 +1,25 @@
 div
-  h2 Bulk Edit
-  section
+  div.row.header
+    div.meta
+      div.title Dropdown Menu
+  div.panel
     div.clear.row.bulk-edit-row
-      div.column
+      div.col-sm-6
+        h3 Up direction
+        div(style="padding-top: 150px;")
+          tribe-dropdown(dropdown-direction='up' pull-direction='right'  dropdown-trigger='dropdownClick' opened-status='dropDownTwoStatus')
+            tribe-dropdown-trigger
+              i.bimg
+            tribe-dropdown-list
+              .item Hello
+              .item World
+              .item.disabled World
+              .separator
+              .item World2
+          div DropDown
+          div {{dropDownTwoStatus ? 'true' : 'false'}}
+      div.col-sm-6
+        h3 Down direction
         div DropDown
         div {{dropDownStatus ? 'true' : 'false'}}
         tribe-dropdown(dropdown-direction='down' pull-direction='left'  dropdown-trigger='dropdownClick' opened-status='dropDownStatus' auto-close='true')
@@ -14,15 +31,3 @@ div
             .item.disabled World
             .separator
             .item World2
-      div.column
-        tribe-dropdown(dropdown-direction='up' pull-direction='right'  dropdown-trigger='dropdownClick' opened-status='dropDownTwoStatus')
-          tribe-dropdown-trigger
-            i.bimg
-          tribe-dropdown-list
-            .item Hello
-            .item World
-            .item.disabled World
-            .separator
-            .item World2
-        div DropDown
-        div {{dropDownTwoStatus ? 'true' : 'false'}}

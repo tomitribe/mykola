@@ -35,3 +35,10 @@ gulp
 
 Check docs page at:
 http://localhost:8083/
+
+# Bundle (deployment)
+
+    export NODE_ENV=bundle
+    npm run bundle
+
+Then deploy ~/.m2/repository/org/tomitribe/mykola/mykola/current/mykola-current.war on any Servlet server as /mykola context.

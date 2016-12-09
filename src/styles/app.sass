@@ -3,24 +3,13 @@ body
   font-family: Montserrat, sans-serif
   font-weight: bold
   text-transform: uppercase
+  background: #e8ebf1
 .alegreya
   font-family: 'Alegreya Sans', sans-serif
 .btn-primary.btn-l span
   font-size: 30px
 .btn-primary.btn-m span.rt
   font-size: 13px
-.column
-  margin: 0
-  display: inline-block
-  height: 300px
-  width: 300px
-  box-sizing: border-box
-  padding: 30px
-  float: left
-  &.dark
-    background: repeating-linear-gradient(45deg, #333 0px, #333 3px, #000 3px, #000 6px)
-    > div
-      color: #FFF
 .column.pull-right
   float: right
 
@@ -41,10 +30,6 @@ body
     &.trigger
       right: 8px
       box-sizing: border-box
-.outside-trigger
-  left: 0
-  position: absolute
-  z-index: 1
 .dropdown .dropdown-list .item
   font-size: 11px
   font-family: Lato, sans-serif
@@ -52,12 +37,15 @@ body
   text-transform: none
 .clear
   clear: both
-.row
-  display: inline-block
-.selectize-dropdown-content
-  display: flex
-  flex-direction: column-reverse
-.nav-item
-  display: inherit
-.bulk-edit-row
-  padding: 70px 0 0 150px
+.panel
+  min-height: 300px
+  > div
+    padding-left: 30px
+
+.tribe-bulkbar
+  left: 250px !important
+
+.sidebar
+  overflow-y: hidden !important
+.col-sm-12
+  padding-left: 0 !important
