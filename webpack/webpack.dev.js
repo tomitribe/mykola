@@ -10,7 +10,7 @@ module.exports = {
     output: {
         filename: 'build.js',
         path: isBundle ? 'dist/mykola' : 'dist/build',
-        publicPath: isBundle ? '/mykola' : ''
+        publicPath: isBundle ? '/mykola/' : ''
     },
     resolve: {
         root: __dirname,

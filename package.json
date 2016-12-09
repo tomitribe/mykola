@@ -50,8 +50,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.3",
     "webpack-dev-server": "1.16.2",
-    "tar.gz": "1.0.5",
-    "ncp": "2.0.0",
+    "archiver": "1.2.0",
     "rimraf": "2.5.1",
     "fs-extra": "1.0.0"
   },
