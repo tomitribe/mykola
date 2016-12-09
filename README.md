@@ -35,3 +35,14 @@ gulp
 
 Check docs page at:
 http://localhost:8083/
+
+# Bundle (deployment)
+
+    export NODE_ENV=bundle
+    npm run bundle
+
+Then deploy ~/.m2/repository/org/tomitribe/mykola/mykola/current/mykola-current.tar.gz. The archive contains a script mykola/main.ts
+serving on /mykola the showcase:
+
+    cd mykola
+    npm i && node main.ts
