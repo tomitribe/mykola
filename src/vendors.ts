@@ -17,7 +17,6 @@ require('../components/angular-tomitribe-tags/index');
 require('../components/angular-tomitribe-sortable/index');
 
 import 'bootstrap/dist/js/bootstrap.js';
-import 'bootstrap/dist/js/bootstrap.js';
 
 // load our default (non specific) css
 import "ui-select/dist/select.css";
