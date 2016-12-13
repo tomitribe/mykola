@@ -10,9 +10,8 @@
 
  */
 
-import * as sortable from 'html5sortable';
-
 module tomitribe_fab {
+    let sortable = require('html5sortable');
 
     angular
         .module('tomitribe-sortable', [])
