@@ -1,24 +1,25 @@
 div
   div.row.header
-    div.meta
-      div.title Bulk Edit
-  div.panel
-    div
-      p All are selected: {{checkedStatus | json}}
-      div.col-sm-6
-        h3 Selectable items
-        ul.items-list
-          li.item(ng-repeat="item in items", ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}")
-            input(type="checkbox" ng-model="item.$$selected" ng-hide="true")
-            span Name: {{item.name}},  Rate: {{item.rate}}
-        div {{ (items|filter:{selected: true}).length }}
-      div(ng-if="selectedAction").col-sm-6
-        div
-          h3 Clicked action
-          div {{selectedAction}}
-        div
-          h3 Selected items
-          ul
-            li(ng-repeat="item in selectedItems") {{item.name}}
-    div.clear
-      tribe-bulkedit(list-items="items" operator-items="operatorItems" select-field="$$selected" all-checked="checkedStatus")
+    div.col-xs-12
+      div.meta
+        div.title Bulk Edit
+        div.hero All are selected: {{checkedStatus | json}}
+  div.page
+    div.panel
+      div.row
+        div.col-sm-6
+          h3 Selectable items
+          ul.items-list
+            li.item(ng-repeat="item in items", ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}")
+              input(type="checkbox" ng-model="item.$$selected" ng-hide="true")
+              span Name: {{item.name}},  Rate: {{item.rate}}
+        div(ng-if="selectedAction").col-sm-6
+          div
+            h3 Clicked action
+            div {{selectedAction}}
+          div
+            h3 Selected items
+            ul
+              li(ng-repeat="item in selectedItems") {{item.name}}
+      div.clear
+        tribe-bulkedit(list-items="items" operator-items="operatorItems" select-field="$$selected" all-checked="checkedStatus")

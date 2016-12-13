@@ -1,0 +1,11 @@
+{
+  "name": "angular-tomitribe-sortable",
+  "version": "0.0.1",
+  "description": "Tomitribe sortable list direvtive",
+  "repository": "https://github.com/tomitribe/mykola/tree/master/components/@tomitribe/angular-sortable-list",
+  "license": "MIT",
+  "main": "index.ts",
+  "dependencies": {
+    "html5sortable": "0.4.3"
+  }
+}

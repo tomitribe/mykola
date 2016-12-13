@@ -15,11 +15,11 @@ html
           li.sidebar-main
             a Tomitribe
             //span.menu-icon.fa.fa-bars
-          li.sidebar-title COMPONENTS
           li.sidebar-list
             a(href="{{baseFullPath}}")
               | Home
-              span.menu-icon.fa.fa-tachometer
+              span.menu-icon.fa.fa-home
+          li.sidebar-title COMPONENTS
           li.sidebar-list
             a(href="{{baseFullPath}}plus")
               | Plus
@@ -27,19 +27,23 @@ html
           li.sidebar-list
             a(href="{{baseFullPath}}bulk-edit")
               | Bulk Edit
-              span.menu-icon.fa.fa-tachometer
+              span.menu-icon.fa.fa-clone
           li.sidebar-list
             a(href="{{baseFullPath}}dropdown")
               | Dropdown
-              span.menu-icon.fa.fa-tachometer
+              span.menu-icon.fa.fa-caret-square-o-down
           li.sidebar-list
             a(href="{{baseFullPath}}tags")
               | Tags
-              span.menu-icon.fa.fa-tachometer
+              span.menu-icon.fa.fa-tags
+          li.sidebar-list
+            a(href="{{baseFullPath}}sortable")
+              | Sortable
+              span.menu-icon.fa.fa-bars
           div.sidebar-footer
             div.col-xs-12
               a Tomitribe Components
 
       div(id="content-wrapper", ng-cloak)
-          div(ng-view).col-sm-12.page-content
+          div.page-content(ng-view)
           div.clear

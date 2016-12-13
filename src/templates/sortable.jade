@@ -1,0 +1,29 @@
+div
+  div.row.header
+    .col-xs-12
+      div.meta
+        div.title Sortable items
+  div.page
+    div.panel
+      div.row
+        div.col-sm-6
+          h4 Sortable items
+          h5 with default function
+          ul.items-list(tribe-sortable, ng-model='data1')
+            li.item(ng-repeat="item in data1")
+              span Name: {{item.name}},  ID: {{item.id}}
+        div.col-sm-6
+          h4 Data
+          div
+            pre(ng-bind-html="data1 | json | prettify")
+      div.row
+        div.col-sm-6
+          h4 Sortable items
+          h5 with custom callback and options
+          ul.list-group(tribe-sortable, ng-model='data2', tribe-sortable-options="{placeholderClass: 'list-group-item item-placeholder'}", tribe-sortable-callback='sortableCallback(from, to, model, replaceFn)')
+            li.list-group-item(ng-repeat="item in data2")
+              span Name: {{item.name}},  ID: {{item.id}}
+        div.col-sm-6
+          h4 Data
+          div
+            pre(ng-bind-html="data2 | json | prettify")
