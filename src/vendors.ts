@@ -1,3 +1,4 @@
+import "jquery";
 import "angular";
 import "angular-route";
 import "angular-cookies";
@@ -13,6 +14,7 @@ require('../components/angular-tomitribe-tooltip/index');
 require('../components/angular-tomitribe-dropdown/index');
 require('../components/angular-tomitribe-bulkedit/index');
 require('../components/angular-tomitribe-tags/index');
+require('../components/angular-tomitribe-sortable/index');
 
 import 'bootstrap/dist/js/bootstrap.js';
 

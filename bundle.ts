@@ -39,7 +39,7 @@ archive.append(`<?xml version="1.0" encoding="ISO-8859-1"?>
         </servlet-mapping>
 `).join('\n') +
     '\n   <!-- html5 routing mapping -->\n' +
-    ['/', '/tags', '/bulk-edit', '/dropdown', '/plus'].map(m =>
+    ['/', '/tags', '/bulk-edit', '/dropdown', '/plus', '/sortable'].map(m =>
 `   <servlet-mapping>
       <servlet-name>index</servlet-name>
       <url-pattern>` + m + `</url-pattern>

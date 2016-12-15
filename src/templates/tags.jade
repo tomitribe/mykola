@@ -1,14 +1,16 @@
 div
   div.row.header
-    div.meta
-      div.title Tags
-  div.panel
-    div
-      div.col-sm-6
-        h3 Select some tags or create new ones
-        tribe-tags(ng-model="tags").col-sm-12
-      div(ng-if="tags.length").col-sm-6
-        h3 Selected Tags
-        ul
-          li(ng-repeat="t in tags") {{t.name}} ({{t.id || '-'}})
-    div.clear
+    div.col-xs-12
+      div.meta
+        div.title Tags
+  div.page
+    div.panel
+      div.row
+        div.col-sm-6
+          h3 Select some tags or create new ones
+          tribe-tags(ng-model="tags").col-sm-12
+        div(ng-if="tags.length").col-sm-6
+          h3 Selected Tags
+          ul
+            li(ng-repeat="t in tags") {{t.name}} ({{t.id || '-'}})
+      div.clear
