@@ -13,4 +13,5 @@ div
           h3 Selected Tags
           ul
             li(ng-repeat="t in tags") {{t.name}} ({{t.id || '-'}})
+              code [{{t | json}}]
       div.clear
