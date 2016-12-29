@@ -4,6 +4,8 @@ import {TagsController} from './tags.controller';
 import {TagsDirective} from './tags.directive';
 import {TagsOnBlurDirective} from './tags-onblur.directive';
 
+import * as angular from 'angular';
+
 angular.module('tomitribe-tags', ['ui.select', 'ngSanitize'])
   .service('TribeTagsService', TagsService)
   .service('TribeTagsConfigurer', TagsConfigurer)

@@ -17,8 +17,6 @@
     "node_modules/bs-recipes/",
     "node_modules/popsicle/",
     "node_modules/popsicle-retry/",
-    "node_modules/typings/",
-    "node_modules/typings-core/",
     "out",
     "dist",
     "dev",

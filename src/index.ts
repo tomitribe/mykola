@@ -1,4 +1,5 @@
-require('./vendors');
+import './vendors';
+import * as angular from 'angular';
 
 import "./styles/app.sass";
 

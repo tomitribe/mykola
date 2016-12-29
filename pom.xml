@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://maven.apache.org/POM/4.0.0           http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.tomitribe</groupId>
+  <artifactId>mykola-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Tomitribe :: MyKola</name>
+  <description>Maven helper to run npm commands</description>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>dist</directory>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin> <!-- avoid to have to do the setup manually of node/npm, each execution can be called directly (see each one for the command) -->
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution> <!-- mvn frontend:install-node-and-npm@binaries -->
+            <id>binaries</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <configuration>
+              <nodeVersion>v6.9.2</nodeVersion>
+              <npmVersion>3.10.9</npmVersion>
+            </configuration>
+          </execution>
+          <execution> <!-- mvn frontend:npm@install -->
+            <id>install</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>
+          <execution> <!-- mvn frontend:npm@start -->
+            <id>start</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>start</arguments>
+            </configuration>
+          </execution>
+          <execution> <!-- mvn frontend:npm@bundle -->
+            <id>bundle</id>
+            <phase>none</phase>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>run bundle</arguments>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <installDirectory>${user.home}/.tribe-mykola/node/</installDirectory>
+          <workingDirectory>.</workingDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
