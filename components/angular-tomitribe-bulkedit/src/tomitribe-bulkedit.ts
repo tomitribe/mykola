@@ -26,20 +26,20 @@
  *
  * @example
  * <example module="tribeBulkeditEx">
- <file name="index.html">
- <div ng-controller="TribeBulkeditCtrl">
- <ul class="items-list">
- <li class="item" ng-repeat="item in listItems" ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}">
- {{item.name}}, {{item.rate}}, {{item.$$selected | json}}
- </li>
- </ul>
- <tribe-bulkedit list-items="listItems" operator-items="operatorItems" select-field="$$selected" all-checked="allChecked">
- </tribe-bulkedit>
- </div>
- </file>
- <file name="script.js">
- angular.module('tribeBulkeditEx', ['tomitribe-bulkedit', 'tomitribe-tooltip'])
- .controller('TribeBulkeditCtrl', ['$scope', function($scope){
+     <file name="index.html">
+         <div ng-controller="TribeBulkeditCtrl">
+            <ul class="items-list">
+                <li class="item" ng-repeat="item in listItems" ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}">
+                    {{item.name}}, {{item.rate}}, {{item.$$selected | json}}
+                </li>
+            </ul>
+            <tribe-bulkedit list-items="listItems" operator-items="operatorItems" select-field="$$selected" all-checked="allChecked">
+            </tribe-bulkedit>
+         </div>
+     </file>
+     <file name="script.js">
+    angular.module('tribeBulkeditEx', ['tomitribe-bulkedit', 'tomitribe-tooltip'])
+        .controller('TribeBulkeditCtrl', ['$scope', function($scope){
             $scope.listItems = [{
                     name: 'FirstApp',
                     rate: 5
@@ -79,8 +79,8 @@
             ];
             $scope.allChecked = false;
       }]);
- </file>
- </example>
+     </file>
+   </example>
  */
 module tomitribe_bulkbar {
     require('./tomitribe-bulkedit.sass');
