@@ -21,5 +21,14 @@ div
             h3 Selected items
             ul
               li(ng-repeat="item in selectedItems") {{item.name}}
+      div.row
+        div.col-sm-6
+          h3 Selectable items Object of arrays in prop
+          ul.items-list(ng-repeat="key in itemsProp")
+            li.item(ng-repeat="item in itemsObject[key]", ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}")
+              input(type="checkbox" ng-model="item.$$selected" ng-hide="true")
+              span Name: {{item.name}}, Rate: {{item.rate}}, Type: {{item.$$type}}
       div.clear
         tribe-bulkedit(list-items="items" operator-items="operatorItems" select-field="$$selected" all-checked="checkedStatus")
+      div.clear
+        tribe-bulkedit(list-items="itemsObject" list-prop="itemsProp" select-field="$$selected")
