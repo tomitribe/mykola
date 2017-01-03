@@ -91,23 +91,31 @@ module index {
                                     }
                                 ],
                                 'arr2': [
-                                    {
-                                        name: 'arr2 1 App',
-                                        rate: 22
-                                    }
+                                    [
+                                        {
+                                            name: 'arr2 1 App',
+                                            rate: 22
+                                        }
+                                    ]
                                 ],
-                                'arr3': [
-                                    {
-                                        name: 'arr3 1 App',
-                                        rate: 7
-                                    },
-                                    {
-                                        name: 'arr3 2 App',
-                                        rate: 15
-                                    }
-                                ]
+                                'arr3': {
+                                    'items': [
+                                        {
+                                            name: 'arr3 1 App',
+                                            rate: 7
+                                        },
+                                        {
+                                            name: 'arr3 2 App',
+                                            rate: 15
+                                        }
+                                    ]
+                                }
                             };
-                            $scope.itemsProp = ['arr1', 'arr3'];
+                            $scope.itemsProp = [
+                                {path: 'arr1', type: 'array 1 $$type'},
+                                {path: ['arr2',0]},
+                                {path: 'arr3.items'}
+                            ];
 
                             $scope.items = [{
                                 name: 'First App',
@@ -154,7 +162,14 @@ module index {
                                     tooltip: "delete"
                                 },
                             ];
+
                             $scope.checkedStatus = false;
+
+                            $scope.getDescendantProp = (obj, path) => {
+                                if(!Array.isArray(path))
+                                    path = (typeof path === 'string' && (path.indexOf('.') > -1))? path.split('.') : [path];
+                                return path.reduce((acc, part) => acc && acc[part], obj);
+                            };
                         }]
                     })
                     .when('/dropdown', {
