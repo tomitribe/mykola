@@ -5,7 +5,10 @@
  * @restrict 'E'
  *
  * @param {(Object[]|Object)}   listItems                       List of all items (could be array(list) of objects(items) or object with different lists in properties)
- * @param {String[]}            [listProp=[]]                   List of properties if listItems is an object
+ *
+ * @param {Object[]}            [listProp=[]]                   List of properties if listItems is an object
+ * @property {(string|Array)=}  listProp[].path                 Dot separated descendant path 'a.0.b' or an array descendant path ['a', 0, 'b']
+ * @param {string=}            [listProp[].type]                Type to be written into a multiField
  *
  * @param {Object[]}            operatorItems                   Operation used for each selected item
  * @property {string=}          operatorItems[].itemClass      Operation item classes
@@ -117,6 +120,12 @@ module tomitribe_bulkbar {
             scope.itemsCount = 0;
         }
 
+        function getDescendantProp(obj, path) {
+            if(!Array.isArray(path))
+                path = (typeof path === 'string' && (path.indexOf('.') > -1))? path.split('.') : [path];
+            return path.reduce((acc, part) => acc && acc[part], obj);
+        }
+
         function bulkEditController($scope, $document) {
             $scope.$watchCollection(
                 function () {
@@ -126,12 +135,13 @@ module tomitribe_bulkbar {
                             if ($scope.listProp.length) {
                                 $scope.itemsCount = 0;
                                 angular.forEach($scope.listProp, function (prop) {
-                                    if ($scope.listItems[prop] && angular.isArray($scope.listItems[prop])) {
-                                        $scope.listItems[prop].map(function (item) {
-                                            if ($scope.multiField) item[$scope.multiField] = prop;
+                                    let arr = getDescendantProp($scope.listItems, prop.path);
+                                    if (arr && angular.isArray(arr)) {
+                                        arr.map(function (item) {
+                                            if ($scope.multiField && prop.type) item[$scope.multiField] = prop.type;
                                             if (item[$scope.selectField]) selectedItems.push(item);
                                         });
-                                        $scope.itemsCount += $scope.listItems[prop].length;
+                                        $scope.itemsCount += arr.length;
                                     }
                                 });
                             } else {
@@ -159,8 +169,9 @@ module tomitribe_bulkbar {
                 }
                 if ($scope.listProp.length) {
                     angular.forEach($scope.listProp, function (prop) {
-                        if ($scope.listItems[prop] && angular.isArray($scope.listItems[prop])) {
-                            angular.forEach($scope.listItems[prop], function (item) {
+                        let arr = getDescendantProp($scope.listItems, prop.path);
+                        if (arr && angular.isArray(arr)) {
+                            angular.forEach(arr, function (item) {
                                 item[$scope.selectField] = state;
                             });
                         }
