@@ -75,6 +75,39 @@ module index {
                                 $scope.selectedAction = action;
                                 $scope.selectedItems = items.constructor == Array ? items : [items];
                             };
+                            $scope.itemsObject = {
+                                'arr1': [
+                                    {
+                                        name: 'arr1 1 App',
+                                        rate: 6
+                                    },
+                                    {
+                                        name: 'arr1 2 App',
+                                        rate: 3
+                                    },
+                                    {
+                                        name: 'arr1 3 App',
+                                        rate: 1
+                                    }
+                                ],
+                                'arr2': [
+                                    {
+                                        name: 'arr2 1 App',
+                                        rate: 22
+                                    }
+                                ],
+                                'arr3': [
+                                    {
+                                        name: 'arr3 1 App',
+                                        rate: 7
+                                    },
+                                    {
+                                        name: 'arr3 2 App',
+                                        rate: 15
+                                    }
+                                ]
+                            };
+                            $scope.itemsProp = ['arr1', 'arr3'];
 
                             $scope.items = [{
                                 name: 'First App',
@@ -92,7 +125,7 @@ module index {
                                     name: 'Last App',
                                     rate: 5
                                 }];
-                            $scope.items[0].$$selected = true;
+                            //$scope.items[0].$$selected = true;
                             $scope.operatorItems = [
                                 {
                                     iconClass: "fa-2x fa-share",
@@ -141,17 +174,17 @@ module index {
                         template: require('./templates/sortable.jade'),
                         controller: ['$scope', ($scope) => {
                             $scope.data1 = [
-                                { id: 1, name: 'A' },
-                                { id: 2, name: 'B' },
-                                { id: 3, name: 'C' },
-                                { id: 4, name: 'D' }
+                                {id: 1, name: 'A'},
+                                {id: 2, name: 'B'},
+                                {id: 3, name: 'C'},
+                                {id: 4, name: 'D'}
                             ];
 
                             $scope.data2 = [
-                                { id: 5, name: 'E' },
-                                { id: 6, name: 'F' },
-                                { id: 7, name: 'J' },
-                                { id: 8, name: 'H' }
+                                {id: 5, name: 'E'},
+                                {id: 6, name: 'F'},
+                                {id: 7, name: 'J'},
+                                {id: 8, name: 'H'}
                             ];
 
                             $scope.add = function () {
@@ -159,7 +192,7 @@ module index {
                             };
 
                             $scope.sortableCallback = function (from, to, model, fn) {
-                                console.log('Can call standard function or our own ('+from + ' -> ' + to + ')');
+                                console.log('Can call standard function or our own (' + from + ' -> ' + to + ')');
                                 return fn(from, to, model);
                             };
                         }]
