@@ -68,4 +68,16 @@ div
                   i.fa.fa-copy
                 tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Delete', tribe-tooltip-position='right')
                   i.fa.fa-trash.
+        div.col-sm-3
+          h3 FAB left one item
+          div.col-sm-12
+            div tribe-fab left
+            div {{menuThreeStatus ? 'true' : 'false'}}
+          div.col-sm-12
+            tribe-fab(fab-direction='left' fab-trigger='fabOver' trigger-hide='true' opened-status='menuThreeStatus')
+              tribe-fab-trigger
+                i.trigger.bimg
+              tribe-fab-actions
+                tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='User', tribe-tooltip-position='left')
+                  i.fa.fa-id-card
       div.clear
