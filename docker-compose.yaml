@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+
+  npm:
+    build: "./docker"
+    entrypoint: ["npm"]
+    volumes:
+      - .:/home/mykola/project
