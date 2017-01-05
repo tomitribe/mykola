@@ -1,6 +1,6 @@
 /**
  * @ngdoc directive
- * @name tomitribe-fab.directive:tribeFab
+ * @name angular-diff.directive:tribeButton
  * @function
  *
  * @description
@@ -43,8 +43,19 @@ module tomitribe_fab {
             scope.fabOver = false;
             scope.dynamicClass = 'closed';
             scope.triggerHide = !!scope.triggerHide || false;
-            scope.autoClose = !!scope.autoClose || false;
             scope.opened = scope.opened || false;
+
+            if(scope.autoClose === 'true'){
+                //if 'true' use our default styles
+                scope.ignoreSelector = '.modal-backdrop, .modal';
+            } else {
+                //if not string or string is empty(or not exist) make it false
+                if(typeof scope.autoClose !== 'string' || !scope.autoClose){
+                    scope.ignoreSelector = '';
+                } else {
+                    scope.ignoreSelector = scope.autoClose;
+                }
+            }
 
             ctrl.init(scope.fabDirection, scope.fabTrigger, element);
             ctrl.toggleOpen(scope.opened);
@@ -71,7 +82,15 @@ module tomitribe_fab {
             tribeFab.toggleOpen = _toggleOpen;
 
             function handler(event) {
-                if (!el[0].contains(event.target)) {
+                let els = document.querySelectorAll($scope.ignoreSelector) || [],
+                    ignore = el[0].contains(event.target);
+
+                // if target is inside one of ignore elements ignore becomes true
+                for (let i = 0; i < els.length; ++i) {
+                    ignore = ignore || els[i].contains(event.target);
+                }
+
+                if (!ignore) {
                     closeFab();
                     $scope.$apply();
                 }
