@@ -10,4 +10,5 @@ typings
 out
 .idea/
 docs
-mykola-parent.iml
+*.iml
+target

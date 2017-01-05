@@ -9,7 +9,7 @@ module.exports = {
     entry: ['./src/index.ts'],
     output: {
         filename: 'build.js',
-        path: isBundle ? 'dist/mykola' : 'dist/build',
+        path: isBundle ? 'target/noderesources' : 'target/build',
         publicPath: isBundle ? '/mykola/' : ''
     },
     resolve: {
@@ -49,7 +49,7 @@ module.exports = {
         loaders: loaders
     },
     devServer: {
-        contentBase: 'dist/build',
+        contentBase: 'target/build',
         historyApiFallback: true,
         port: 8082,
         host: '0.0.0.0',

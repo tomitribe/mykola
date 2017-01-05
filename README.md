@@ -38,19 +38,20 @@ http://localhost:8083/
 
 # Bundle (deployment)
 
-    export NODE_ENV=bundle
-    npm run bundle
-
-Then deploy ~/.m2/repository/org/tomitribe/mykola/mykola/current/mykola-current.war on any Servlet server as /mykola context.
+This fully rely on maven build
 
 # if you are a java guy
 
 If you use maven just running:
 
-    mvn clean compile
+    mvn clean
+    mvn frontend:npm@install
+    mvn frontend:npm@start
 
 will download/setup node and npm, install dependencies and launch
 
     npm start
 
 Then you can access the demo page at http://localhost:8082/
+
+See the pom for commented executions wrapping npm commands.
