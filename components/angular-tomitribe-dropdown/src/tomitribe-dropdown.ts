@@ -10,12 +10,12 @@ module tomitribe_dropdown {
          *
          * @restrict 'E'
          *
-         * @param {string=}      [dropdownTrigger='dropdownClick']       Action which will trigger a dropdown dropdownOver, dropdownClick or <string>
-         * @param {string=}      [dropdownDirection='down']              Direction of dropdown options ['up', 'down']
-         * @param {string=}      [pullDirection='left']                  Pull allignment of dropdown ['left', 'right']
-         * @param {boolean=}     [openedStatus=false]                    Two way opened status trigger
-         * @param {boolean=}     [triggerHide=false]                     Hide trigger after opening
-         * @param {boolean=                                                                                                                                                                                                                                                                                                                                                                    }     [autoClose=false]                       Add closing hook on clicks outside of open dropdown
+         * @param {string=}                 [dropdownTrigger='dropdownClick']       Action which will trigger a dropdown dropdownOver, dropdownClick or <string>
+         * @param {string=}                 [dropdownDirection='down']              Direction of dropdown options ['up', 'down']
+         * @param {string=}                 [pullDirection='left']                  Pull allignment of dropdown ['left', 'right']
+         * @param {boolean=}                [openedStatus=false]                    Two way opened status trigger
+         * @param {boolean=}                [triggerHide=false]                     Hide trigger after opening
+         * @param {(string)=}               [autoClose='']                          Close item on any click outside of dropdown, ignores clicks inside dropdown (string comma separated selectors to ignore click, if 'true' == '.modal-backdrop, .modal')                                                                                                                                                                                                                                                                                                                                 }     [autoClose=false]                       Add closing hook on clicks outside of open dropdown
          *
          * @description
          * Create dropdown menu with specific style
@@ -79,8 +79,19 @@ module tomitribe_dropdown {
             scope.dropdownOver = false;
             scope.dynamicClass = 'closed';
             scope.triggerHide = !!scope.triggerHide || false;
-            scope.autoClose = !!scope.autoClose || false;
             scope.opened = scope.opened || false;
+
+            if(scope.autoClose === 'true'){
+                //if 'true' use our default styles
+                scope.ignoreSelector = '.modal-backdrop, .modal';
+            } else {
+                //if not string or string is empty(or not exist) make it false
+                if(typeof scope.autoClose !== 'string' || !scope.autoClose){
+                    scope.ignoreSelector = '';
+                } else {
+                    scope.ignoreSelector = scope.autoClose;
+                }
+            }
 
             ctrl.init(scope.dropdownDirection, scope.pullDirection, scope.dropdownTrigger, element);
             ctrl.dropdownOpen(scope.opened);
@@ -109,7 +120,15 @@ module tomitribe_dropdown {
             tribeDropdown.dropdownOpen = _dropdownOpen;
 
             function handler(event) {
-                if (!el[0].contains(event.target)) {
+                let els = document.querySelectorAll($scope.ignoreSelector) || [],
+                    ignore = el[0].contains(event.target);
+
+                // if target is inside one of ignore elements ignore becomes true
+                for (let i = 0; i < els.length; ++i) {
+                    ignore = ignore || els[i].contains(event.target);
+                }
+
+                if (!ignore) {
                     closeDropdown();
                     $scope.$apply();
                 }
