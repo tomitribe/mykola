@@ -6,7 +6,7 @@
  *
  * @param {(Object[]|Object)}   listItems                       List of all items (could be array(list) of objects(items) or object with different lists in properties)
  *
- * @param {Object[]}            [listProp=[]]                   List of properties if listItems is an object
+ * @param {Object[]}            [listProp]                   List of properties if listItems is an object
  * @property {(string|Array)=}  listProp[].path                 Dot separated descendant path 'a.0.b' or an array descendant path ['a', 0, 'b']
  * @param {string=}            [listProp[].type]                Type to be written into a multiField
  *
