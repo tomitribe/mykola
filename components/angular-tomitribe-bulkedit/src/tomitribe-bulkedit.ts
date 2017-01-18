@@ -11,16 +11,18 @@
  * @param {string=}            [listProp[].type]                Type to be written into a multiField
  *
  * @param {Object[]}            operatorItems                   Operation used for each selected item
- * @property {string=}          operatorItems[].itemClass      Operation item classes
- * @property {string=}          operatorItems[].iconClass      Operation icon classes
- * @property {string=}          operatorItems[].tooltip        Operation item tooltip
+ * @property {string=}          operatorItems[].itemClass       Operation item classes
+ * @property {string=}          operatorItems[].iconClass       Operation icon classes
+ * @property {string=}          operatorItems[].tooltip         Operation item tooltip
  * @property {function}         operatorItems[].invoke          Operation function which will be invoked
  * @property {boolean=}         operatorItems[].applyAll        Operation function apply all items at once
  *
- * @param {boolean=}            [allChecked=false]              All checked two way flag
  * @param {string=}             [selectField='$$selected']      Field that is used as select property
  * @param {string=}             [multiField='$$type']           Field that is used as additional multiField property
  * @param {string=}             [itemsName='Items']             Field that is used in counter in bulk bar
+ *
+ * @param {Object=}             [options]                       Other options
+ * @param {boolean=}            [options.allChecked=false]      All checked two way flag
  *
  * @description
  * Create bulk edit bar, used for applying operator actions on selected items
@@ -29,61 +31,61 @@
  *
  * @example
  * <example module="tribeBulkeditEx">
-     <file name="index.html">
-         <div ng-controller="TribeBulkeditCtrl">
-            <ul class="items-list">
-                <li class="item" ng-repeat="item in listItems" ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}">
-                    {{item.name}}, {{item.rate}}, {{item.$$selected | json}}
-                </li>
-            </ul>
-            <tribe-bulkedit list-items="listItems" operator-items="operatorItems" select-field="$$selected" all-checked="allChecked">
-            </tribe-bulkedit>
-         </div>
-     </file>
-     <file name="script.js">
-    angular.module('tribeBulkeditEx', ['tomitribe-bulkedit', 'tomitribe-tooltip'])
-        .controller('TribeBulkeditCtrl', ['$scope', function($scope){
-            $scope.listItems = [{
-                    name: 'FirstApp',
-                    rate: 5
-                },
-                {
-                    name: 'SecondApp',
-                    rate: 3
-                },
-                {
-                    name: 'SecondApp',
-                    rate: 4
-                },
-                {
-                    name: 'SecondApp',
-                    rate: 5
-                }];
-            $scope.listItems[0].$$selected = true;
-            $scope.operatorItems = [
-                {
-                    iconClass: "fa-share",
-                    itemClass: "class1",
-                    invoke: function(items){console.log(items)},
-                    tooltip: "share"
-                },
-                {
-                    iconClass:"fa-inbox",
-                    itemClass:"class2",
-                    invoke: function(items){console.log(items)},
-                    tooltip: "archive"
-                },
-                {
-                    iconClass:"fa-trash",
-                    invoke: function(items){console.log(items)},
-                    applyAll: true,
-                    tooltip: "delete"
-                },
-            ];
-            $scope.allChecked = false;
+ <file name="index.html">
+     <div ng-controller="TribeBulkeditCtrl">
+         <ul class="items-list">
+             <li class="item" ng-repeat="item in listItems" ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}">
+             {{item.name}}, {{item.rate}}, {{item.$$selected | json}}
+             </li>
+         </ul>
+        <tribe-bulkedit list-items="listItems" operator-items="operatorItems" select-field="$$selected" options="bulkOptions">
+        </tribe-bulkedit>
+     </div>
+ </file>
+ <file name="script.js">
+ angular.module('tribeBulkeditEx', ['tomitribe-bulkedit', 'tomitribe-tooltip'])
+    .controller('TribeBulkeditCtrl', ['$scope', function($scope){
+        $scope.listItems = [{
+                name: 'FirstApp',
+                rate: 5
+            },
+            {
+                name: 'SecondApp',
+                rate: 3
+            },
+            {
+                name: 'SecondApp',
+                rate: 4
+            },
+            {
+                name: 'SecondApp',
+                rate: 5
+            }];
+        $scope.listItems[0].$$selected = true;
+        $scope.operatorItems = [
+            {
+                iconClass: "fa-share",
+                itemClass: "class1",
+                invoke: function(items){console.log(items)},
+                tooltip: "share"
+            },
+            {
+                iconClass:"fa-inbox",
+                itemClass:"class2",
+                invoke: function(items){console.log(items)},
+                tooltip: "archive"
+            },
+            {
+                iconClass:"fa-trash",
+                invoke: function(items){console.log(items)},
+                applyAll: true,
+                tooltip: "delete"
+            },
+        ];
+        $scope.bulkOptions = {allChecked: false};
       }]);
-     </file>
-   </example>
+ </file>
+ </example>
  */
 module tomitribe_bulkbar {
     require('./tomitribe-bulkedit.sass');
@@ -99,25 +101,28 @@ module tomitribe_bulkbar {
             controller: ['$scope', '$document', bulkEditController],
             scope: {
                 operatorItems: '=',
-                allChecked: '=?',
                 listItems: '=',
                 listProp: '=?',
                 selectField: '@?',
                 multiField: '@?',
-                itemsName: '@?'
+                itemsName: '@?',
+                options: '=?'
             },
             link: link
         };
         function link(scope) {
-            if (!scope.allChecked) scope.allChecked = false;
+            scope.selectState = false;
+            scope.showAllChecker = true;
+            scope.itemsCount = 0;
+            scope.allChecked = false;
+            if (scope.options && !angular.isObject(scope.options)) {
+                scope.options = {};
+            }
             if (!scope.listItems) scope.listItems = [];
             if (!scope.listProp) scope.listProp = [];
             if (!scope.selectField) scope.selectField = "$$selected";
             if (!scope.multiField) scope.multiField = "$$type";
             if (!scope.itemsName) scope.itemsName = "Items";
-            scope.selectState = false;
-            scope.showAllChecker = true;
-            scope.itemsCount = 0;
         }
 
         function getDescendantProp(obj, path) {
@@ -158,6 +163,9 @@ module tomitribe_bulkbar {
                     $scope.selectedItems = data;
                     if ($scope.itemsCount > 0) {
                         $scope.allChecked = (data.length === $scope.itemsCount);
+                        if($scope.options && $scope.options.allChecked !== $scope.allChecked){
+                            $scope.options.allChecked = $scope.allChecked
+                        }
                     }
                 }, true);
 
