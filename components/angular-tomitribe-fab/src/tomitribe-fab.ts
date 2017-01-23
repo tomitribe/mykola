@@ -16,7 +16,7 @@ module tomitribe_fab {
         .module('tomitribe-fab', [])
         .directive('tribeFab', ['$timeout', tribeFab])
         .directive('tribeFabTrigger', tribeFabTrigger)
-        .directive('tribeFabActions', tribeFabActions);
+        .directive('tribeFabActions', ['$timeout', tribeFabActions]);
 
     function tribeFab($timeout)
     {
@@ -68,6 +68,16 @@ module tomitribe_fab {
 
         tribeFab.init = init;
 
+        // It checks if the fabAction has more than one action.
+        // If it has only one action, the ellipsis aren't necessary.
+        function checkOneAction() {
+            if($scope.isOneAction && $scope.fabDirection === 'left') {
+                $timeout(() => $scope.$apply(() => {
+                    $scope.dynamicClass = 'open';
+                }));
+            }
+        }
+
         function init(_direction, _trigger, el)
         {
             if(typeof _direction !== "string") _direction = "down";
@@ -76,7 +86,9 @@ module tomitribe_fab {
             if(typeof _trigger !== "string") _trigger = "favClick";
             if(!!$scope.trigger) $scope.trigger();
             $scope.trigger = $scope.$watch(_trigger, _checkStatus);
-
+            $scope.$watch('isOneAction', () => {
+                checkOneAction();
+            });
             let _toggleOpen = (_opened)=> {$scope[_trigger] = _opened};
             $scope.$watch('opened', _toggleOpen);
             tribeFab.toggleOpen = _toggleOpen;
@@ -124,6 +136,7 @@ module tomitribe_fab {
                     $document.off('click', $scope.handler);
                 }
             }
+            checkOneAction();
         }
 
         var timer;
@@ -140,6 +153,12 @@ module tomitribe_fab {
                 $scope.fabOver = false;
             }, 200);
         };
+
+        tribeFab.setIsOneAction = (isOneAction) => {
+            $timeout(() => $scope.$apply(() => {
+                $scope.isOneAction = isOneAction;
+            }));
+        };
     }
 
     function tribeFabTrigger()
@@ -153,13 +172,20 @@ module tomitribe_fab {
         };
     }
 
-    function tribeFabActions()
+    function tribeFabActions($timeout)
     {
         return {
             restrict: 'E',
             require: '^tribeFab',
             template: require('./tomitribe-fab-actions.jade'),
-            link: link,
+            link: (scope, el, attrs, ctrl) => {
+                link(scope, el, attrs, ctrl);
+                $timeout(() => {
+                    if(el.find('> a').length < 2) {
+                        scope.parentCtrl.setIsOneAction(true);
+                    }
+                });
+            },
             transclude: true,
             replace: true
         };
