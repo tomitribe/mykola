@@ -176,6 +176,7 @@ module tomitribe_fab {
                 tooltip
                     .append(tooltipBackground)
                     .append(tooltipLabel)
+                    .css('z-index', 1)
                     //todo: tribeDepthService.getDepth()
                     .appendTo('body');
 

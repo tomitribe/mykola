@@ -1,6 +1,6 @@
 {
   "name": "angular-tomitribe-components",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "description": "Angular UI Component library named after famous Ukrainian composer, Mykola Leontovych",
   "repository": "https://github.com/tomitribe/mykola.git",
   "main": "/",
