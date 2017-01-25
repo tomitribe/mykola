@@ -15,7 +15,8 @@ module tomitribe_dropdown {
          * @param {string=}                 [pullDirection='left']                  Pull allignment of dropdown ['left', 'right']
          * @param {boolean=}                [openedStatus=false]                    Two way opened status trigger
          * @param {boolean=}                [triggerHide=false]                     Hide trigger after opening
-         * @param {string=}               [autoClose='']                          Close item on any click outside of dropdown, ignores clicks inside dropdown (string comma separated selectors to ignore click, if 'true' == '.modal-backdrop, .modal')                                                                                                                                                                                                                                                                                                                                 }     [autoClose=false]                       Add closing hook on clicks outside of open dropdown
+         * @param {string=}                 [autoClose='']                          Close item on any click outside of dropdown, ignores clicks inside dropdown (string comma separated selectors to ignore click, if 'true' == '.modal-backdrop, .modal')                                                                                                                                                                                                                                                                                                                                 }     [autoClose=false]                       Add closing hook on clicks outside of open dropdown
+         * @param {string=}                 [ignoreClasses='option']                Ignores clicks on specific elements like option (which is removed before event trigger starts)                                                                                                                                                                                                                                                                                                                          }     [autoClose=false]                       Add closing hook on clicks outside of open dropdown
          *
          * @description
          * Create dropdown menu with specific style
@@ -64,7 +65,8 @@ module tomitribe_dropdown {
                 pullDirection: '@?',
                 opened: '=?openedStatus',
                 triggerHide: '@?',
-                autoClose: '@?'
+                autoClose: '@?',
+                ignoreClasses: '@?'
             },
             link: link,
             controller: ['$scope', '$timeout', '$document', tribeDropdownController],
@@ -92,6 +94,8 @@ module tomitribe_dropdown {
                     scope.ignoreSelector = scope.autoClose;
                 }
             }
+
+            scope.ignoreClasses = scope.ignoreClasses || 'option';
 
             ctrl.init(scope.dropdownDirection, scope.pullDirection, scope.dropdownTrigger, element);
             ctrl.dropdownOpen(scope.opened);
@@ -121,14 +125,24 @@ module tomitribe_dropdown {
 
             function handler(event) {
                 let els = document.querySelectorAll($scope.ignoreSelector) || [],
-                    ignore = el[0].contains(event.target);
+                    cls = $scope.ignoreClasses.split(','),
+                    toClose = el[0].contains(event.target);
 
-                // if target is inside one of ignore elements ignore becomes true
-                for (let i = 0; i < els.length; ++i) {
-                    ignore = ignore || els[i].contains(event.target);
+                // if target is inside one of ignore elements toClose becomes true
+                if(event.target){
+                    if (els) {
+                        for (let i = 0; i < els.length; ++i) {
+                            toClose = toClose || els[i].contains(event.target);
+                        }
+                    }
+
+                    if (cls) {
+                        cls.map((cl) => {
+                            toClose = toClose || event.target.classList.contains(cl.trim());
+                        })
+                    }
                 }
-
-                if (!ignore) {
+                if (!toClose) {
                     closeDropdown();
                     $scope.$apply();
                 }
