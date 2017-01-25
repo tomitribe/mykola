@@ -28,7 +28,8 @@ module tomitribe_fab {
                 fabDirection: '@?',
                 opened: '=?openedStatus',
                 triggerHide: '@?',
-                autoClose: '@?'
+                autoClose: '@?',
+                ignoreClasses: '@?'
             },
             link: link,
             controller: ['$scope', '$timeout', '$document', tribeFabController],
@@ -57,6 +58,8 @@ module tomitribe_fab {
                 }
             }
 
+            scope.ignoreClasses = scope.ignoreClasses || 'option';
+
             ctrl.init(scope.fabDirection, scope.fabTrigger, element);
             ctrl.toggleOpen(scope.opened);
         }
@@ -83,14 +86,24 @@ module tomitribe_fab {
 
             function handler(event) {
                 let els = document.querySelectorAll($scope.ignoreSelector) || [],
-                    ignore = el[0].contains(event.target);
+                    cls = $scope.ignoreClasses.split(','),
+                    toClose = el[0].contains(event.target);
 
-                // if target is inside one of ignore elements ignore becomes true
-                for (let i = 0; i < els.length; ++i) {
-                    ignore = ignore || els[i].contains(event.target);
+                // if target is inside one of ignore elements toClose becomes true
+                if(event.target){
+                    if (els) {
+                        for (let i = 0; i < els.length; ++i) {
+                            toClose = toClose || els[i].contains(event.target);
+                        }
+                    }
+
+                    if (cls) {
+                        cls.map((cl) => {
+                            toClose = toClose || event.target.classList.contains(cl.trim());
+                        })
+                    }
                 }
-
-                if (!ignore) {
+                if (!toClose) {
                     closeFab();
                     $scope.$apply();
                 }
