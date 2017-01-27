@@ -18,8 +18,7 @@ module tomitribe_fab {
         .directive('tribeFabTrigger', tribeFabTrigger)
         .directive('tribeFabActions', tribeFabActions);
 
-    function tribeFab($timeout)
-    {
+    function tribeFab($timeout) {
         return {
             restrict: 'E',
             template: require('./tomitribe-fab.jade'),
@@ -29,7 +28,7 @@ module tomitribe_fab {
                 opened: '=?openedStatus',
                 triggerHide: '@?',
                 autoClose: '@?',
-                ignoreClasses: '@?'
+                closeSelector: '@?'
             },
             link: link,
             controller: ['$scope', '$timeout', '$document', tribeFabController],
@@ -38,102 +37,114 @@ module tomitribe_fab {
             replace: true
         };
 
-        function link(scope, element, attrs, ctrl)
-        {
+        function link(scope, element, attrs, ctrl) {
             scope.fabClick = false;
             scope.fabOver = false;
             scope.dynamicClass = 'closed';
             scope.triggerHide = !!scope.triggerHide || false;
             scope.opened = scope.opened || false;
 
-            if(scope.autoClose === 'true'){
+            if (scope.autoClose === 'true') {
                 //if 'true' use our default styles
-                scope.ignoreSelector = '.modal-backdrop, .modal';
+                scope.ignoreSelector = 'body.modal-open, .modal-backdrop, .modal';
             } else {
                 //if not string or string is empty(or not exist) make it false
-                if(typeof scope.autoClose !== 'string' || !scope.autoClose){
+                if (typeof scope.autoClose !== 'string' || !scope.autoClose) {
                     scope.ignoreSelector = '';
                 } else {
                     scope.ignoreSelector = scope.autoClose;
                 }
             }
 
-            scope.ignoreClasses = scope.ignoreClasses || 'option';
+            scope.closeSelector = scope.closeSelector || '.closeFab';
 
             ctrl.init(scope.fabDirection, scope.fabTrigger, element);
             ctrl.toggleOpen(scope.opened);
         }
     }
 
-    function tribeFabController($scope, $timeout, $document)
-    {
+    function tribeFabController($scope, $timeout, $document) {
         var tribeFab = this;
 
         tribeFab.init = init;
 
-        function init(_direction, _trigger, el)
-        {
-            if(typeof _direction !== "string") _direction = "down";
+        function init(_direction, _trigger, el) {
+            if (typeof _direction !== "string") _direction = "down";
             tribeFab.fabDirection = _direction;
 
-            if(typeof _trigger !== "string") _trigger = "favClick";
-            if(!!$scope.trigger) $scope.trigger();
+            if (typeof _trigger !== "string") _trigger = "favClick";
+            if (!!$scope.trigger) $scope.trigger();
             $scope.trigger = $scope.$watch(_trigger, _checkStatus);
 
-            let _toggleOpen = (_opened)=> {$scope[_trigger] = _opened};
+            let _toggleOpen = (_opened)=> {
+                $scope[_trigger] = _opened
+            };
             $scope.$watch('opened', _toggleOpen);
             tribeFab.toggleOpen = _toggleOpen;
 
             function handler(event) {
-                let els = document.querySelectorAll($scope.ignoreSelector) || [],
-                    cls = $scope.ignoreClasses.split(','),
-                    toClose = el[0].contains(event.target);
+                let els = $scope.ignoreSelector
+                        && document.querySelectorAll($scope.ignoreSelector)
+                        || [],
+                    cls = $scope.closeSelector
+                        && document.querySelectorAll($scope.closeSelector)
+                        || [],
+                    toStay = el[0].contains(event.target),
+                    toClose = false;
 
-                // if target is inside one of ignore elements toClose becomes true
-                if(event.target){
-                    if (els) {
+                // if target is inside one of ignore elements toStay becomes true
+                if (event.target) {
+                    // don't close if targets are removed or dettached from body
+                    if (!document.body.contains(event.target)) {
+                        toStay = true;
+                    }
+                    // don't close if target is inside one of ignore elements
+                    if ($scope.ignoreSelector && els) {
                         for (let i = 0; i < els.length; ++i) {
-                            toClose = toClose || els[i].contains(event.target);
+                            toStay = toStay || els[i].contains(event.target);
                         }
                     }
-
-                    if (cls) {
-                        cls.map((cl) => {
-                            toClose = toClose || event.target.classList.contains(cl.trim());
-                        })
+                    // close if target is inside one of close elements
+                    // (higher priority)
+                    if ($scope.closeSelector && cls) {
+                        for (let i = 0; i < cls.length; ++i) {
+                            toClose = toClose || cls[i].contains(event.target);
+                        }
+                        toStay = toStay && !toClose;
                     }
                 }
-                if (!toClose) {
+                if (!toStay) {
                     closeFab();
                     $scope.$apply();
                 }
             }
+
             $scope.handler = handler;
 
             function closeFab() {
                 $scope[_trigger] = false;
             }
+
             tribeFab.close = closeFab;
 
-            if($scope.autoClose){
-                $scope.$on('$destroy', function() {
+            if ($scope.autoClose) {
+                $scope.$on('$destroy', function () {
                     $document.off('click', $scope.handler);
                 });
             }
         }
 
-        function _checkStatus(newVal)
-        {
-            if(!!newVal){
+        function _checkStatus(newVal) {
+            if (!!newVal) {
                 $scope.opened = true;
                 $scope.dynamicClass = 'open';
-                if($scope.autoClose){
+                if ($scope.autoClose) {
                     $document.on('click', $scope.handler);
                 }
             } else {
                 $scope.opened = false;
                 $scope.dynamicClass = 'closed';
-                if($scope.autoClose){
+                if ($scope.autoClose) {
                     $document.off('click', $scope.handler);
                 }
             }
@@ -155,8 +166,7 @@ module tomitribe_fab {
         };
     }
 
-    function tribeFabTrigger()
-    {
+    function tribeFabTrigger() {
         return {
             restrict: 'E',
             require: '^tribeFab',
@@ -166,8 +176,7 @@ module tomitribe_fab {
         };
     }
 
-    function tribeFabActions()
-    {
+    function tribeFabActions() {
         return {
             restrict: 'E',
             require: '^tribeFab',
@@ -177,8 +186,7 @@ module tomitribe_fab {
             replace: true
         };
 
-        function link(scope, element, attrs, ctrl)
-        {
+        function link(scope, element, attrs, ctrl) {
             scope.parentCtrl = ctrl;
         }
     }
