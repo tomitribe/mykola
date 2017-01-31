@@ -92,7 +92,8 @@ module tomitribe_bulkbar {
 
     angular
         .module('tomitribe-bulkedit', [])
-        .directive('tribeBulkedit', tribebulkbar);
+        .directive('tribeBulkedit', tribebulkbar)
+        .directive('tribeClick', tribeclick);
 
     function tribebulkbar() {
         return {
@@ -212,6 +213,28 @@ module tomitribe_bulkbar {
                     $scope.$apply();
                 }
             });
+        }
+    }
+
+    function tribeclick() {
+        return {
+            restrict: 'A',
+            scope: {
+                item: '=tribeClick',
+                selectField: '@?'
+            },
+            link: link
+        };
+        function link(scope, element) {
+            if (!scope.selectField) scope.selectField = "$$selected";
+            if (scope.item) {
+                element.bind('click', (e)=> {
+                    if (e.ctrlKey) {
+                        scope.item[scope.selectField] = !scope.item[scope.selectField];
+                        scope.$apply();
+                    }
+                });
+            }
         }
     }
 
