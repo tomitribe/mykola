@@ -56,7 +56,7 @@ module tomitribe_fab {
                 }
             }
 
-            scope.closeSelector = scope.closeSelector || '.closeFab';
+            scope.closeSelector = scope.closeSelector || '.closeFab,.cancel';
 
             ctrl.init(scope.fabDirection, scope.fabTrigger, element);
             ctrl.toggleOpen(scope.opened);
