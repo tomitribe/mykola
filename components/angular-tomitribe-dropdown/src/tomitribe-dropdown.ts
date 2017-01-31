@@ -93,7 +93,7 @@ module tomitribe_dropdown {
                 }
             }
 
-            scope.closeSelector = scope.closeSelector || '.closeDropdown';
+            scope.closeSelector = scope.closeSelector || '.closeDropdown,.cancel';
 
             ctrl.init(scope.dropdownDirection, scope.pullDirection, scope.dropdownTrigger, element);
             ctrl.dropdownOpen(scope.opened);
