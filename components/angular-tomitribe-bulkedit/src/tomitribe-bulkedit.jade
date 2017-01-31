@@ -11,7 +11,7 @@ div.tribe-bulkbar.wrap(ng-class="{opened: (selectedCount > 0)}")
                 a(class="{{operator.itemClass}}" tribe-tooltip="{{operator.tooltip}}" tribe-tooltip-position="top")
                     i.fa(class="{{operator.iconClass}}")
         div.instructions
-            strong shift+click
+            strong ctrl+click
             span to select,
             strong.click(ng-click="checkAll(false)") esc
             span to deselect all
