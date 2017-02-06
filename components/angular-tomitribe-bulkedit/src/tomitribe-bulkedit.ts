@@ -23,6 +23,7 @@
  *
  * @param {Object=}             [options]                       Other options
  * @param {boolean=}            [options.allChecked=false]      All checked two way flag
+ * @param {boolean=}            [options.noneChecked]           None checked two way flag
  *
  * @description
  * Create bulk edit bar, used for applying operator actions on selected items
@@ -82,7 +83,7 @@
                 tooltip: "delete"
             },
         ];
-        $scope.bulkOptions = {allChecked: false};
+        $scope.bulkOptions = {allChecked: false, noneChecked: false};
       }]);
  </file>
  </example>
@@ -164,8 +165,14 @@ module tomitribe_bulkbar {
                     $scope.selectedItems = data;
                     if ($scope.itemsCount > 0) {
                         $scope.allChecked = (data.length === $scope.itemsCount);
-                        if($scope.options && $scope.options.allChecked !== $scope.allChecked){
-                            $scope.options.allChecked = $scope.allChecked
+                        $scope.noneChecked = (data.length === 0);
+                        if ($scope.options.hasOwnProperty('allChecked')
+                            && $scope.options.allChecked !== $scope.allChecked) {
+                            $scope.options.allChecked = $scope.allChecked;
+                        }
+                        if ($scope.options.hasOwnProperty('noneChecked')
+                            && $scope.options.noneChecked !== $scope.noneChecked) {
+                            $scope.options.noneChecked = $scope.noneChecked;
                         }
                     }
                 }, true);
