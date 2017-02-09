@@ -166,13 +166,15 @@ module tomitribe_bulkbar {
                     if ($scope.itemsCount > 0) {
                         $scope.allChecked = (data.length === $scope.itemsCount);
                         $scope.noneChecked = (data.length === 0);
-                        if ($scope.options.hasOwnProperty('allChecked')
-                            && $scope.options.allChecked !== $scope.allChecked) {
-                            $scope.options.allChecked = $scope.allChecked;
-                        }
-                        if ($scope.options.hasOwnProperty('noneChecked')
-                            && $scope.options.noneChecked !== $scope.noneChecked) {
-                            $scope.options.noneChecked = $scope.noneChecked;
+                        if (typeof $scope.options === 'object'){
+                            if ($scope.options.hasOwnProperty('allChecked')
+                                && $scope.options.allChecked !== $scope.allChecked) {
+                                $scope.options.allChecked = $scope.allChecked;
+                            }
+                            if ($scope.options.hasOwnProperty('noneChecked')
+                                && $scope.options.noneChecked !== $scope.noneChecked) {
+                                $scope.options.noneChecked = $scope.noneChecked;
+                            }
                         }
                     }
                 }, true);
