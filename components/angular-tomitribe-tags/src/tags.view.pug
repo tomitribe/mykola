@@ -1,4 +1,4 @@
-ui-select(multiple, tagging="stringToTagReference", tagging-tokens="ENTER|,", ng-model="self.ngModel", sortable="true", tribe-tags-on-blur name="tags" tribe-tags-validator displayed-property="name")
+ui-select(multiple, tagging="stringToTagReference", tagging-tokens="ENTER|,", ng-model="self.ngModel", sortable="true", tribe-tags-on-blur name="tags" tribe-tagging-validator displayed-property="name")
   ui-select-match(class="{{$item.$$invalid ? 'invalid' : ''}}", placeholder="Select tag...") {{$item.name}}
   ui-select-choices(repeat="tag in availableTags | filter:{name: $select.search} | orderBy:'name'", group-by="groupSuggestions", ng-show="$select.items.length &&")
     span(ng-if="!tag.isTag", ng-bind-html="tag.name + tag.isTag| highlight: $select.search")

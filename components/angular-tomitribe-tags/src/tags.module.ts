@@ -5,7 +5,7 @@ import {TagsDirective} from './tags.directive';
 import {TagsOnBlurDirective} from './tags-onblur.directive';
 
 import * as angular from 'angular';
-import {TagsValidatorDirective} from "./tags.validator.directive";
+import {TaggingValidatorDirective} from "./tagging.validator.directive";
 
 angular.module('tomitribe-tags', ['ui.select', 'ngSanitize'])
   .service('TribeTagsService', TagsService)
@@ -13,4 +13,4 @@ angular.module('tomitribe-tags', ['ui.select', 'ngSanitize'])
   .controller('TribeTagsController', TagsController)
   .directive('tribeTags', [function () { return new TagsDirective(); }])
   .directive('tribeTagsOnBlur', ['$timeout', t => new TagsOnBlurDirective(t)])
-  .directive('tribeTagsValidator', [()=> { return new TagsValidatorDirective(); }]);
+  .directive('tribeTaggingValidator', [()=> { return new TaggingValidatorDirective(); }]);

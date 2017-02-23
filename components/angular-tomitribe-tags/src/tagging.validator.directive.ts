@@ -1,5 +1,5 @@
-import {TagsValidator} from "./tags.validator";
-export class TagsValidatorDirective implements ng.IDirective {
+import {TaggingValidator} from "./tagging.validator";
+export class TaggingValidatorDirective implements ng.IDirective {
     require = "ngModel";
 
     constructor() {
@@ -9,7 +9,7 @@ export class TagsValidatorDirective implements ng.IDirective {
         ctrl.$validators.tagging = function (modelValue, viewValue) {
             if (modelValue) {
                 for (let model of modelValue) {
-                    if (!TagsValidator.isValid(model[attrs.displayedProperty])) return false;
+                    if (!TaggingValidator.isValid(model[attrs.displayedProperty])) return false;
                 }
             }
 

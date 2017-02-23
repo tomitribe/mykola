@@ -1,4 +1,4 @@
-export class TagsValidator {
+export class TaggingValidator {
     private static pattern: string = "^[A-Za-z0-9 ._-]*$";
     private static maxLength: number = 64;
 
