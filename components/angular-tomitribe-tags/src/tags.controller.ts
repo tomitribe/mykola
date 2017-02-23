@@ -1,19 +1,18 @@
 import {TagReference} from './tags.service';
-import {TaggingValidator} from "./tagging.validator";
 
 export class TagsController {
-  static $inject = ['$scope', 'TribeTagsService'];
+  static $inject = ['$scope', 'TribeTagsService', 'TribeTagsConfigurer'];
 
-  constructor($scope, tagService) {
+  constructor($scope, tagService, tagConfigurer) {
     $scope.self = $scope; // this is weird right but then we reference with a dot and binding works cause angular doesn't copy it all
 
-    $scope.validationErrorMessage = TaggingValidator.errorMessage;
+    $scope.validationErrorMessage = tagConfigurer.errorMessage;
 
     $scope.stringToTagReference = name => {
       const found = $scope.availableTags.filter(t => t.name === name);
       var tag = !!found.length ? found[0] : new TagReference(null, name, null);
 
-      tag['$$invalid'] = !TaggingValidator.isValid(name);
+      tag['$$invalid'] = !tagConfigurer.isValid(name);
 
       return tag;
     };
