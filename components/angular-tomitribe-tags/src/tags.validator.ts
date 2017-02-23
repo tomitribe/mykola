@@ -8,6 +8,6 @@ export class TagsValidator {
     }
 
     static get errorMessage(): string {
-        return "Inputs must be alphanumeric, dot, space, scores and cannot exceed " + this.maxLength + " chars"
+        return "Inputs must be alphanumeric, dot, space, scores and cannot exceed " + this.maxLength + " chars. Please remove the invalid entry."
     }
 }
