@@ -7,8 +7,9 @@ div
     div.panel
       div.row
         div.col-sm-6
-          h3 Select some tags or create new ones
-          tribe-tags(ng-model="tags").col-sm-12
+          form(name="tagsForm")
+            h3 Select some tags or create new ones
+            tribe-tags(ng-model="tags").col-sm-12
         div(ng-if="tags.length").col-sm-6
           h3 Selected Tags
           ul
