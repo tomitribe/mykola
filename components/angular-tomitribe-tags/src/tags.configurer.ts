@@ -1,6 +1,13 @@
 export class TagsConfigurer {
     tagsEndpoint = 'api/label/available';
 
+    /*
+        TODO:
+        If we add more validations, we might need to do something like this
+        < ... tribe-tagging-validator ... > (meaning default)
+        or < ... tribe-tagging-validator='numberPositive' ... > (meaning another future validation positive number)
+     */
+
     validation = {
         default: {
             pattern: "^[A-Za-z0-9 ._-]*$",
