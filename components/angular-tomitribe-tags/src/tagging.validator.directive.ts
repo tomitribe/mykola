@@ -10,7 +10,7 @@ export class TaggingValidatorDirective implements ng.IDirective {
         ctrl.$validators.tagging = function (modelValue, viewValue) {
             if (modelValue) {
                 for (let model of modelValue) {
-                    if (!me.tagConfigurer.isValid(model[attrs.displayedProperty])) return false;
+                    if (!me.tagConfigurer.validation.default.isValid(model[attrs.displayedProperty])) return false;
                 }
             }
 
