@@ -6,3 +6,9 @@ a predefined behavior.
 ## Dependencies
 
 This components relies on `angular-ui-select` so don't forget to include it.
+
+## Refreshing
+
+If you need to refresh the tags without reloading the page you can trigger the event:
+
+    tribe-tags:refresh
