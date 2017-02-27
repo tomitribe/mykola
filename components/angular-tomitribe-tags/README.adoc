@@ -12,3 +12,7 @@ This components relies on `angular-ui-select` so don't forget to include it.
 If you need to refresh the tags without reloading the page you can trigger the event:
 
     tribe-tags:refresh
+
+If this event is not enough or not granular enough you can use this one to add a single tag (don't forget to pass the tag as event parameter):
+
+    tribe-tags:addtag

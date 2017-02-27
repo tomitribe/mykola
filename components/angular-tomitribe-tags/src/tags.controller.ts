@@ -24,6 +24,7 @@ export class TagsController {
     $scope.availableTags = [];
     $scope.$on('tribe-tags:refresh', () => this.loadTags());
     this.loadTags();
+    $scope.$on('tribe-tags:addtag', tag => this.$scope.availableTags.push(tag));
   }
 
   private loadTags() {
