@@ -52,7 +52,40 @@ module tomitribe_dropdown {
          * @example
 
          */
-        .directive('tribeDropdownList', tribeDropdownList);
+        .directive('tribeDropdownList', tribeDropdownList)
+
+        /**
+         * @ngdoc directive
+         * @name addable-option.directive:tribeDropdownListAddableOption
+         *
+         * @restrict 'A'
+         *
+         * @param {ngModel=}                 [ng-model='showTags']       This model will be watched for changes, in order to udpate the item "status": enabled or disabled
+         *
+         * @description
+         * Add the disabled css when the option is selected
+         *
+         * @example
+         */
+        .directive('addableOption', tribeDropdownListAddableOption);
+
+    function tribeDropdownListAddableOption() {
+        return {
+            restrict: 'A',
+            scope: {
+                ngModel: '=',
+            },
+            link: link
+        };
+
+        function link(scope, element) {
+            scope.$watch("ngModel", function (newValue, oldValue) {
+                if(oldValue != undefined && newValue != undefined) {
+                    newValue ? element.removeClass('disabled') : element.addClass('disabled')
+                }
+            });
+        }
+    }
 
     function tribeDropdown() {
         return {
