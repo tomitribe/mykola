@@ -20,11 +20,13 @@ module tomitribe_select {
         };
 
         function link(scope, element, attrs, ctrl) {
-            element.on("mouseenter", ()=> {
-                $timeout(() => {
-                    scope.$select.activeIndex = scope.$select.items.indexOf(scope.$parent[attrs.activateHover]);
+            if(attrs.activateHover && scope.$parent[attrs.activateHover]) {
+                element.on("mouseenter", ()=> {
+                    $timeout(() => {
+                        scope.$select.activeIndex = scope.$select.items.indexOf(scope.$parent[attrs.activateHover]);
+                    });
                 });
-            });
+            }
         }
     }
 }
