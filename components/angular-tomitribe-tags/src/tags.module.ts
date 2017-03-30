@@ -7,7 +7,7 @@ import {TagsOnBlurDirective} from './tags-onblur.directive';
 import * as angular from 'angular';
 import {TaggingValidatorDirective} from "./tagging.validator.directive";
 
-angular.module('tomitribe-tags', ['ui.select', 'ngSanitize'])
+angular.module('tomitribe-tags', ['ui.select', 'ngSanitize', 'tomitribe-select'])
   .service('TribeTagsService', TagsService)
   .service('TribeTagsConfigurer', TagsConfigurer)
   .controller('TribeTagsController', TagsController)
