@@ -13,11 +13,12 @@ div
               tribe-dropdown-trigger
                 i.bimg
               tribe-dropdown-list
-                .item Hello
-                .item World
-                .item.disabled World
+                .item(addable-option ng-init="isOption1Addable = true", ng-model="isOption1Addable" ng-click="isOption1Addable && doSomething();isOption1Addable = false") Addable Item Enabled
+                .item(addable-option ng-init="isOption2Addable = false", ng-model="isOption2Addable") Addable Item Disabled
+                .item Enabled
+                .item.disabled Disabled using CSS
                 .separator
-                .item World2
+                .item Copy
             div DropDown
             div {{dropDownTwoStatus ? 'true' : 'false'}}
         div.col-sm-6

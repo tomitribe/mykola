@@ -177,6 +177,9 @@ module index {
                         controller: ['$scope', ($scope) => {
                             $scope.dropDownStatus = true;
                             $scope.dropDownTwoStatus = true;
+                            $scope.doSomething = () => {
+                                window.alert("on click");
+                            }
                         }]
                     })
                     .when('/tags', {
