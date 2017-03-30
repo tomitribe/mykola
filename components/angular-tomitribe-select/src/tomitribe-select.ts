@@ -20,10 +20,10 @@ module tomitribe_select {
         };
 
         function link(scope, element, attrs, ctrl) {
-            if(attrs.activateHover && scope.$parent[attrs.activateHover]) {
+            if(attrs.tribeActivateHover && scope.$parent[attrs.tribeActivateHover]) {
                 element.on("mouseenter", ()=> {
                     $timeout(() => {
-                        scope.$select.activeIndex = scope.$select.items.indexOf(scope.$parent[attrs.activateHover]);
+                        scope.$select.activeIndex = scope.$select.items.indexOf(scope.$parent[attrs.tribeActivateHover]);
                     });
                 });
             }
