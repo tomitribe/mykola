@@ -15,6 +15,7 @@ require('../components/angular-tomitribe-dropdown/index');
 require('../components/angular-tomitribe-bulkedit/index');
 require('../components/angular-tomitribe-tags/index');
 require('../components/angular-tomitribe-sortable/index');
+require('../components/angular-tomitribe-select/index');
 
 import 'bootstrap/dist/js/bootstrap.js';
 
