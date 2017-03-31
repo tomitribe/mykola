@@ -1,8 +1,7 @@
-ui-select(multiple, tagging="stringToTagReference", tagging-tokens="ENTER|,", ng-model="self.ngModel", sortable="true", tribe-tags-on-blur name="tags" tribe-tagging-validator displayed-property="name")
+ui-select(multiple, tagging="stringToTagReference", tagging-tokens="ENTER|,", ng-model="self.ngModel", sortable="true", tribe-tags-on-blur name="tags" tribe-tagging-validator displayed-property="name", tabindex="0")
   ui-select-match(class="{{$item.$$invalid ? 'invalid' : ''}}", placeholder="Select tag...") {{$item.name}}
   ui-select-choices(repeat="tag in availableTags | filter:{name: $select.search} | orderBy:'name'", group-by="groupSuggestions", ng-show="$select.items.length &&")
     div(tribe-activate-hover="tag")
       span(ng-if="!tag.isTag", ng-bind-html="tag.name + tag.isTag| highlight: $select.search")
       span(ng-if="tag.isTag", ng-bind-html="(tag.name | highlight: $select.search) + ' (new)'")
 p(class="validation-message" ng-show="form.tags.$error.tagging && (!form.tags.$pristine || form.$submitted)") {{validationErrorMessage}}
-
