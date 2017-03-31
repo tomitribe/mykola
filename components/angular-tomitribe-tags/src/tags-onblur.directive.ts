@@ -15,13 +15,16 @@ export class TagsOnBlurDirective {
   link = (scope, element, attributes, controller) => {
     controller.searchInput.on('blur', () => {
       this.$timeout(() => {
-        let newItem = controller.search;
-        if (newItem == '') {
+        if (controller.search == '') {
           return;
         }
-        controller.searchInput.triggerHandler('tagged');
-        controller.tagging.fct && (newItem = controller.tagging.fct(newItem));
-        newItem && controller.select(newItem, true);
+
+        //Item is already created.
+        var item = controller.items[controller.activeIndex];
+        if(item) {
+          //Its there, so select it
+          controller.select(item, true);
+        }
       });
     });
   };
