@@ -1,0 +1,18 @@
+div
+    div.row.header
+        div.col-xs-12
+            div.meta
+                div.title Tooltip
+    div.page
+        div.panel
+            div.row
+                div.col-sm-12
+                    h4 Simple Tooltip Example
+                    p
+                        span Move the mouse over the following text:
+                        span(tribe-tooltip='This is a simple tooltip' style="margin-left: 30px") Hover me
+
+                    h4 Tooltip with Updatable Text
+                    p
+                        span Move the mouse over the following text (the tooltip text will change in 3s):
+                        span(tribe-tooltip='{{message}}' style="margin-left: 30px") Hover me

@@ -43,6 +43,8 @@ module tomitribe_fab {
                 attrs.$observe('tribeTooltip', function(newValue)
                 {
                     ctrl.updateTooltipText(newValue);
+                    //The text length my change so we need to recalculate the tooltip position.
+                    ctrl.calcTooltipPosition();
                 });
             }
 
@@ -76,6 +78,8 @@ module tomitribe_fab {
         tribeTooltip.hideTooltip = hideTooltip;
         tribeTooltip.showTooltip = showTooltip;
         tribeTooltip.updateTooltipText = updateTooltipText;
+        tribeTooltip.calcTooltipPosition = calcTooltipPosition;
+
 
         tribeTooltip.position = angular.isDefined(tribeTooltip.position) ? tribeTooltip.position : 'top';
 
@@ -108,17 +112,13 @@ module tomitribe_fab {
             }
         }
 
-        function setTooltipPosition()
-        {
+        function calcTooltipPosition() {
+            if (!angular.isDefined(tribeTooltip) || !angular.isDefined(tooltip)) return;
+
             var width = $element.outerWidth(),
                 height = $element.outerHeight(),
                 top = $element.offset().top,
                 left = $element.offset().left;
-
-            tooltip
-                .append(tooltipBackground)
-                .append(tooltipLabel)
-                .appendTo('body');
 
             if (tribeTooltip.position === 'top')
             {
@@ -152,6 +152,16 @@ module tomitribe_fab {
                         top: top + (height / 2) - (tooltip.outerHeight() / 2)
                     });
             }
+        }
+
+        function setTooltipPosition()
+        {
+            tooltip
+                .append(tooltipBackground)
+                .append(tooltipLabel)
+                .appendTo('body');
+
+            calcTooltipPosition();
         }
 
         function showTooltip()
