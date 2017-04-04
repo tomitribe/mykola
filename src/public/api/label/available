@@ -1,10 +1,1 @@
-{"items":[
-{"name": "First", "id": "uno"},
-{"name": "Second", "id": "due"},
-{"name": "Third", "id": "tres"},
-{"name": "Fourth", "id": "quatro"},
-{"name": "Fifth", "id": "piat"},
-{"name": "Six", "id": "shist"},
-{"name": "Seventh", "id": "sim"},
-{"name": "Eight", "id": "visim"},
-{"name": "Nine", "id": "deviat"}]}
+{"items":[{"name":"TAG-1","id":"TAG-1"},{"name":"TAG-2","id":"TAG-2"},{"name":"TAG-3","id":"TAG-3"},{"name":"TAG-4","id":"TAG-4"}]}
