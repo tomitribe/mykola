@@ -188,6 +188,15 @@ module index {
                             $scope.tags = [];
                         }]
                     })
+                    .when('/tooltip', {
+                        template: require('./templates/tooltip.jade'),
+                        controller: ['$scope', '$timeout', ($scope, $timeout) => {
+                            $scope.message = "First Content";
+                            $timeout(function () {
+                                $scope.message = "Has you may notice, the content is now different";
+                            }, 3000)
+                        }]
+                    })
                     .when('/sortable', {
                         template: require('./templates/sortable.jade'),
                         controller: ['$scope', ($scope) => {
