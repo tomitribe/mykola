@@ -1,16 +1,18 @@
 /**
  * @ngdoc directive
- * @name tomitribe-select.directive:tribeActivateHover
+ * @name tomitribe-select.directive
  * @function
  *
  * @description
- * Set option active, onmouseenter event, in ui-select
+ * tribeActivateHover: Set option active, onmouseenter event, in ui-select
+ * tribeSelectOpenOnFocus: his directive set the select active, on focus (tab)
  *
  */
 module tomitribe_select {
     angular
         .module('tomitribe-select', [])
-        .directive('tribeActivateHover', ['$timeout', tribeActivateHover]);
+        .directive('tribeActivateHover', ['$timeout', tribeActivateHover])
+        .directive('tribeSelectOpenOnFocus', [tribeSelectOpenOnFocus]);
 
     function tribeActivateHover($timeout) {
         return {
@@ -27,6 +29,20 @@ module tomitribe_select {
                     });
                 });
             }
+        }
+    }
+
+    function tribeSelectOpenOnFocus() {
+        return {
+            require: 'uiSelect',
+            replace: false,
+            link: link
+        };
+
+        function link(scope, element, attrs, uiSelect) {
+            angular.element(uiSelect.focusInput).on('focus', function () {
+                uiSelect.activate();
+            });
         }
     }
 }
