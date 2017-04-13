@@ -43,6 +43,15 @@ module tomitribe_select {
             angular.element(uiSelect.focusInput).on('focus', function () {
                 uiSelect.activate();
             });
+
+            angular.element(uiSelect.focusInput).on('blur', function() {
+                //On blur when we don't have element, we must force the uiSelect to close
+                if(uiSelect.items && uiSelect.items.length === 0) {
+                    uiSelect.close();
+                }
+            });
+
+
         }
     }
 }
