@@ -12,7 +12,8 @@ module index {
             'tomitribe-dropdown',
             'tomitribe-bulkedit',
             'tomitribe-tags',
-            'tomitribe-sortable'
+            'tomitribe-sortable',
+            'tomitribe-select'
         ])
         .filter('prettify', function () {
 
@@ -222,6 +223,12 @@ module index {
                                 console.log('Can call standard function or our own (' + from + ' -> ' + to + ')');
                                 return fn(from, to, model);
                             };
+                        }]
+                    })
+                    .when('/select', {
+                        template: require('./templates/select.jade'),
+                        controller: ['$scope', ($scope) => {
+                            $scope.ages = [1, 2, 5, 10, 25, 35, 100];
                         }]
                     })
                     .otherwise({
