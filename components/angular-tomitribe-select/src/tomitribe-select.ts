@@ -43,7 +43,7 @@ module tomitribe_select {
             var autoOpen = true;
 
             angular.element(uiSelect.focusInput).on('focus', ()=> {
-                if (autoOpen) uiSelect.activate();
+                if (autoOpen) $timeout(()=> uiSelect.activate());
             });
 
             angular.element(uiSelect.focusInput).on('blur', ()=> {
