@@ -5,14 +5,39 @@
  *
  * @description
  * tribeActivateHover: Set option active, onmouseenter event, in ui-select
- * tribeSelectOpenOnFocus: his directive set the select active, on focus (tab)
+ * tribeSelectOpenOnFocus: this directive set the select active, on focus (tab)
+ * tribeSelectPreventTab: this directive prevent tab selection
  *
  */
 module tomitribe_select {
     angular
         .module('tomitribe-select', [])
         .directive('tribeActivateHover', ['$timeout', tribeActivateHover])
-        .directive('tribeSelectOpenOnFocus', ['$timeout', tribeSelectOpenOnFocus]);
+        .directive('tribeSelectOpenOnFocus', ['$timeout', tribeSelectOpenOnFocus])
+        .directive('tribeSelectPreventTab', tribeSelectPreventTab);
+
+    function tribeSelectPreventTab() {
+        return {
+            restrict: 'A',
+            require: 'uiSelect',
+            replace: false,
+            link: link
+        };
+
+        function link(scope, element, attrs, uiSelect) {
+            if (uiSelect.searchInput) {
+                uiSelect.searchInput.bindFirst('keydown', function (e) {
+                    if (e.keyCode === 9) {
+                        if (!scope.$select.multiple) {
+                            scope.$select.activeIndex = -1
+                        } else {
+                            uiSelect.close();
+                        }
+                    }
+                });
+            }
+        }
+    }
 
     function tribeActivateHover($timeout) {
         return {
@@ -59,4 +84,13 @@ module tomitribe_select {
 
         }
     }
+
+    $.fn.bindFirst = function (name, fn) {
+        this.on(name, fn);
+        this.each(function () {
+            var handlers = $["_data"](this, 'events')[name.split('.')[0]];
+            var handler = handlers.pop();
+            handlers.splice(0, 0, handler);
+        });
+    };
 }

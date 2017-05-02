@@ -16,3 +16,9 @@ Directives to use in ui-select.
 
          Ex:
             ui-select(tribe-select-open-on-focus)
+
+    * tribe-select-prevent-tab
+                This directive prevent tab selection
+
+             Ex:
+                ui-select(tribe-select-prevent-tab)
