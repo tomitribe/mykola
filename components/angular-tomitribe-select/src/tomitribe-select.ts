@@ -25,14 +25,22 @@ module tomitribe_select {
         };
 
         function link(scope, element, attrs, uiSelect) {
+            var singleSelectInitialIndex;
+
             if (uiSelect.searchInput) {
                 uiSelect.searchInput.bindFirst('keydown', function (e) {
                     if (e.keyCode === 9) {
                         if (!scope.$select.multiple) {
-                            scope.$select.activeIndex = -1
+                            scope.$select.activeIndex = singleSelectInitialIndex || -1;
                         } else {
                             uiSelect.close();
                         }
+                    }
+                });
+
+                scope.$on('uis:activate', ()=> {
+                    if (!scope.$select.multiple) {
+                        singleSelectInitialIndex = scope.$select.activeIndex;
                     }
                 });
             }
