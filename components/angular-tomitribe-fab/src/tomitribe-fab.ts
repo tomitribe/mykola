@@ -15,7 +15,7 @@ module tomitribe_fab {
     angular
         .module('tomitribe-fab', [])
         .directive('tribeFab', ['$timeout', tribeFab])
-        .directive('tribeFabTrigger', tribeFabTrigger)
+        .directive('tribeFabTrigger', ['$timeout', tribeFabTrigger])
         .directive('tribeFabActions', tribeFabActions);
 
     function tribeFab($timeout) {
@@ -164,16 +164,112 @@ module tomitribe_fab {
                 $scope.fabOver = false;
             }, 200);
         };
+
+        $scope.isOpen = function () {
+            return $scope.fabOver || $scope.fabClick;
+        }
     }
 
-    function tribeFabTrigger() {
+    function tribeFabTrigger($timeout) {
         return {
             restrict: 'E',
             require: '^tribeFab',
             template: require('./tomitribe-fab-trigger.jade'),
             transclude: true,
-            replace: true
+            replace: true,
+            link: link
         };
+
+        function link(scope, el, attrs, ctrl) {
+            scope.selectedIndex = 0;
+            setInitialState(false);
+
+            function getFocusableElement(index) {
+                return el.find('.fab-actions a:nth-child(' + index + ')');
+            }
+
+            function isFocusOnTrigger() {
+                return el.is(':focus');
+            }
+
+            function setInitialState(focus) {
+                el.focus();
+                if (focus) scope.selectedIndex = 0;
+            }
+
+            function hasNextFocusableElement() {
+                return getFocusableElement(scope.selectedIndex + 1).length;
+            }
+
+            function moveDown($event) {
+                if (hasNextFocusableElement()) {
+                    scope.selectedIndex++;
+                    getFocusableElement(scope.selectedIndex).focus();
+                }
+                $event.preventDefault();
+            }
+
+            function moveUp($event) {
+                if (scope.selectedIndex !== 1 && !isFocusOnTrigger()) {
+                    scope.selectedIndex--;
+                    getFocusableElement(scope.selectedIndex).focus();
+                } else {
+                    //Focus trigger
+                    setInitialState(true);
+                }
+
+                $event.preventDefault();
+            }
+
+            function openMenu($event) {
+                //Arrow down || Arrow right || Enter -> Open
+                if (scope.$parent.fabTrigger === 'fabOver') {
+                    scope.$parent.showIt();
+                } else if (scope.$parent.fabTrigger === 'fabClick') {
+                    scope.$parent.fabClick = true;
+                }
+                setInitialState(true);
+                $event.preventDefault();
+            }
+
+            function closeMenu($event) {
+                if (scope.$parent.fabTrigger === 'fabOver') {
+                    scope.$parent.hideIt();
+                } else if (scope.$parent.fabTrigger === 'fabClick') {
+                    scope.$parent.fabClick = false;
+                }
+                $event.preventDefault();
+            }
+
+            function clickElement($event) {
+                $timeout(()=>getFocusableElement(scope.selectedIndex).click());
+                $event.preventDefault();
+            }
+
+            if (scope.$parent.fabTrigger) {
+                scope.onKeyDown = function ($event) {
+                    if (($event.keyCode === 40 && !scope.$parent.isOpen()) || ($event.keyCode === 39 || $event.keyCode === 13 && isFocusOnTrigger())) {
+                        openMenu($event);
+
+                    } else if (($event.keyCode === 40 && scope.$parent.isOpen()) || ($event.keyCode === 9 && !$event.shiftKey && (isFocusOnTrigger() || hasNextFocusableElement()))) {
+                        //Arrow down || TAB -> Navigate down through menu items
+                        moveDown($event);
+
+                    } else if (($event.keyCode === 38 && scope.$parent.isOpen()) || $event.shiftKey && $event.keyCode === 9 && scope.selectedIndex !== 0) {
+                        //Arrow up Shift-TAB -> Navigate up through menu items
+                        moveUp($event);
+
+                    } else if ($event.keyCode === 37 || $event.keyCode === 38 || $event.keyCode === 27) {
+                        //Arrow left || Arrow Up || ESC  -> Close
+                        closeMenu($event);
+
+                    } else if ($event.keyCode === 13 && !isFocusOnTrigger()) {
+                        //Enter->  "click" in a menu option
+                        clickElement($event);
+                    }
+                };
+            }
+        }
     }
 
     function tribeFabActions() {
