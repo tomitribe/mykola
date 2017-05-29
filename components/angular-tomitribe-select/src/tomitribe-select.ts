@@ -10,39 +10,59 @@
  *
  */
 module tomitribe_select {
+    let _ = require('underscore');
+
     angular
         .module('tomitribe-select', [])
         .directive('tribeActivateHover', ['$timeout', tribeActivateHover])
         .directive('tribeSelectOpenOnFocus', ['$timeout', tribeSelectOpenOnFocus])
-        .directive('tribeSelectPreventTab', tribeSelectPreventTab);
+        .directive('tribeSelectPreventTab', ['$timeout', tribeSelectPreventTab]);
 
-    function tribeSelectPreventTab() {
+    function tribeSelectPreventTab($timeout) {
         return {
             restrict: 'A',
-            require: 'uiSelect',
+            require: ['uiSelect', 'ngModel'],
             replace: false,
             link: link
         };
 
-        function link(scope, element, attrs, uiSelect) {
-            var singleSelectInitialIndex;
+        function link(scope, element, attrs, crtl) {
+            let uiSelectCtrl = crtl[0];
 
-            if (uiSelect.searchInput) {
-                uiSelect.searchInput.bindFirst('keydown', function (e) {
+            if (crtl[0].searchInput) {
+                let ngModelCtrl = crtl[1], singleSelectInitialIndex;
+
+                crtl[0].searchInput.bindFirst('keydown', function (e) {
                     if (e.keyCode === 9) {
                         if (!scope.$select.multiple) {
-                            scope.$select.activeIndex = singleSelectInitialIndex || -1;
+                            scope.$select.activeIndex = singleSelectInitialIndex;
                         } else {
-                            uiSelect.close();
+                            uiSelectCtrl.close();
                         }
                     }
                 });
 
                 scope.$on('uis:activate', ()=> {
-                    if (!scope.$select.multiple) {
-                        singleSelectInitialIndex = scope.$select.activeIndex;
-                    }
+                    $timeout(()=> {
+                        if (!scope.$select.multiple) {
+                            $timeout(()=> {
+                                singleSelectInitialIndex = findIndex(ngModelCtrl.$viewValue, ngModelCtrl, uiSelectCtrl);
+                            });
+                        }
+                    });
                 });
+            }
+        }
+
+        function findIndex (initial, ngModelCtrl, uiSelectCtrl) {
+            if(!ngModelCtrl.$viewValue) {
+                return -1;
+            }
+
+            if(initial.hasOwnProperty("id")) {
+                return _.findIndex(uiSelectCtrl.items, {id: initial.id})
+            } else {
+                return _.indexOf(uiSelectCtrl.items, initial)
             }
         }
     }
