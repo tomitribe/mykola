@@ -26,10 +26,10 @@ div
                   tribe-fab-trigger
                     tribe-button(tribe-size='l', tribe-type='fab')
                       span.alegreya.rt +
-                    tribe-fab-actions
-                      tribe-button(ng-repeat="action in actions", tribe-size='m', tribe-type='fab', ng-click="action.invoke()")
-                        i(ng-class="'fa-' + action.icon").fa
-                        div.text {{::action.name}}
+                  tribe-fab-actions
+                    tribe-button(ng-repeat="action in actions", tribe-size='m', tribe-type='fab', ng-click="action.invoke()")
+                      i(ng-class="'fa-' + action.icon").fa
+                      div.text {{::action.name}}
         div.col-sm-3
           h3 Down over
           div.col-sm-12
@@ -40,16 +40,16 @@ div
               tribe-fab-trigger
                 tribe-button(tribe-size='l', tribe-type='fab')
                   span.alegreya.rt +
-                tribe-fab-actions
-                  tribe-button(tribe-size='m', tribe-type='fab')
-                    span.rt OA2
-                    div.text OAUTH 2.0 PROFILE
-                  tribe-button(tribe-size='m', tribe-type='fab')
-                    span.rt HS
-                    div.text CREATE HTTP SIGNATURES PROFILE
-                  tribe-button(tribe-size='m', tribe-type='fab')
-                    i.fa.fa-cloud-upload
-                    div.text IMPORT PROFILE
+              tribe-fab-actions
+                tribe-button(tribe-size='m', tribe-type='fab')
+                  span.rt OA2
+                  div.text OAUTH 2.0 PROFILE
+                tribe-button(tribe-size='m', tribe-type='fab')
+                  span.rt HS
+                  div.text CREATE HTTP SIGNATURES PROFILE
+                tribe-button(tribe-size='m', tribe-type='fab')
+                  i.fa.fa-cloud-upload
+                  div.text IMPORT PROFILE
         div.col-sm-3
           h3 FAB left
           div.col-sm-12
@@ -59,13 +59,13 @@ div
             tribe-fab(fab-direction='left' fab-trigger='fabOver' trigger-hide='true' opened-status='menuThreeStatus')
               tribe-fab-trigger
                 i.trigger.bimg
-                tribe-fab-actions
-                  tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='User', tribe-tooltip-position='left')
-                    i.fa.fa-id-card
-                  tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Edit', tribe-tooltip-position='top')
-                    i.fa.fa-edit
-                  tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Copy', tribe-tooltip-position='bottom')
-                    i.fa.fa-copy
-                  tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Delete', tribe-tooltip-position='right')
-                    i.fa.fa-trash.
+              tribe-fab-actions
+                tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='User', tribe-tooltip-position='left')
+                  i.fa.fa-id-card
+                tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Edit', tribe-tooltip-position='top')
+                  i.fa.fa-edit
+                tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Copy', tribe-tooltip-position='bottom')
+                  i.fa.fa-copy
+                tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Delete', tribe-tooltip-position='right')
+                  i.fa.fa-trash.
       div.clear

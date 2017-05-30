@@ -5,6 +5,11 @@
   vertical-align: top
   position: relative
 
+  &.closed
+    &:focus
+      .btn-fab.btn-primary
+        background-color: $primary-hue-1
+
   &.open
     .fab-primary
       .rt, .fa
