@@ -24,7 +24,8 @@
     "selectize": "0.12.4",
     "bootstrap": "3.3.6",
     "bootstrap-admin-ui": "1.2.0",
-    "html5sortable": "0.4.3"
+    "html5sortable": "0.4.3",
+    "underscore": "1.8.3"
   },
   "devDependencies": {
     "angular-tomitribe-common": "0.0.5",
