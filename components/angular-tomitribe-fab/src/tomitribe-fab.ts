@@ -15,7 +15,7 @@ module tomitribe_fab {
     angular
         .module('tomitribe-fab', [])
         .directive('tribeFab', ['$timeout', tribeFab])
-        .directive('tribeFabTrigger', ['$timeout', tribeFabTrigger])
+        .directive('tribeFabTrigger', tribeFabTrigger)
         .directive('tribeFabActions', tribeFabActions);
 
     function tribeFab($timeout) {
@@ -43,6 +43,7 @@ module tomitribe_fab {
             scope.dynamicClass = 'closed';
             scope.triggerHide = !!scope.triggerHide || false;
             scope.opened = scope.opened || false;
+            scope.selectedIndex = 0;
 
             if (scope.autoClose === 'true') {
                 //if 'true' use our default styles
@@ -60,6 +61,105 @@ module tomitribe_fab {
 
             ctrl.init(scope.fabDirection, scope.fabTrigger, element);
             ctrl.toggleOpen(scope.opened);
+
+            //Keyboard navigation
+            if (scope.fabTrigger) {
+                if (!scope.opened) {
+                    //Remove options tabindex if closed
+                    $timeout(()=> element.find('.fab-actions a').attr('tabindex', -1));
+                }
+
+                //Remove tabindex from fab-primary
+                element.find('.fab-primary a').attr("tabindex", -1);
+
+                scope.onKeyDown = function ($event) {
+                    if (($event.keyCode === 40 && !isOpen()) || ($event.keyCode === 39 && !isOpen()) || ($event.keyCode === 13 && isFocusOnTrigger())) {
+                        //Arrow down || Arrow right || Enter -> Open
+                        openMenu($event);
+
+                    } else if (isOpen() && (($event.keyCode === 40) || ($event.keyCode === 9 && !$event.shiftKey && (isFocusOnTrigger() || hasNextFocusableElement())))) {
+                        //Arrow down || TAB -> Navigate down through menu items
+                        moveDown($event);
+
+                    } else if (($event.keyCode === 38 && isOpen()) || $event.shiftKey && $event.keyCode === 9 && scope.selectedIndex !== 0) {
+                        //Arrow up Shift-TAB -> Navigate up through menu items
+                        moveUp($event);
+
+                    } else if ($event.keyCode === 37 || $event.keyCode === 38 || $event.keyCode === 27) {
+                        //Arrow left || Arrow Up || ESC  -> Close
+                        closeMenu($event);
+
+                    } else if ($event.keyCode === 13 && !isFocusOnTrigger()) {
+                        //Enter->  "click" in a menu option
+                        clickElement($event);
+                    }
+                };
+            }
+
+            function getFocusableElement(index) {
+                return element.find('.fab-actions a:nth-child(' + index + ')');
+            }
+
+            function isFocusOnTrigger() {
+                return element.is(':focus');
+            }
+
+            function setInitialState(focus) {
+                element.focus();
+                if (focus) scope.selectedIndex = 0;
+            }
+
+            function hasNextFocusableElement() {
+                return getFocusableElement(scope.selectedIndex + 1).length;
+            }
+
+            function moveDown($event) {
+                if (hasNextFocusableElement()) {
+                    scope.selectedIndex++;
+                    getFocusableElement(scope.selectedIndex).focus();
+                }
+                $event.preventDefault();
+            }
+
+            function moveUp($event) {
+                if (scope.selectedIndex !== 1 && !isFocusOnTrigger()) {
+                    scope.selectedIndex--;
+                    getFocusableElement(scope.selectedIndex).focus();
+                } else {
+                    //Focus trigger
+                    setInitialState(true);
+                }
+
+                $event.preventDefault();
+            }
+
+            function openMenu($event) {
+                if (scope.fabTrigger === 'fabOver') {
+                    scope.showIt();
+                } else if (scope.fabTrigger === 'fabClick') {
+                    scope.fabClick = true;
+                }
+                setInitialState(true);
+                $event.preventDefault();
+            }
+
+            function closeMenu($event) {
+                if (scope.fabTrigger === 'fabOver') {
+                    scope.hideIt();
+                } else if (scope.fabTrigger === 'fabClick') {
+                    scope.fabClick = false;
+                }
+                $event.preventDefault();
+            }
+
+            function isOpen() {
+                return scope.fabOver || scope.fabClick;
+            }
+
+            function clickElement($event) {
+                $timeout(()=>getFocusableElement(scope.selectedIndex).click());
+                $event.preventDefault();
+            }
         }
     }
 
@@ -77,7 +177,8 @@ module tomitribe_fab {
             $scope.trigger = $scope.$watch(_trigger, _checkStatus);
 
             let _toggleOpen = (_opened)=> {
-                $scope[_trigger] = _opened
+                $scope[_trigger] = _opened;
+                $timeout(el.find('.fab-actions a').attr("tabindex", _opened ? 0 : -1))
             };
             $scope.$watch('opened', _toggleOpen);
             tribeFab.toggleOpen = _toggleOpen;
@@ -164,112 +265,16 @@ module tomitribe_fab {
                 $scope.fabOver = false;
             }, 200);
         };
-
-        $scope.isOpen = function () {
-            return $scope.fabOver || $scope.fabClick;
-        }
     }
 
-    function tribeFabTrigger($timeout) {
+    function tribeFabTrigger() {
         return {
             restrict: 'E',
             require: '^tribeFab',
             template: require('./tomitribe-fab-trigger.jade'),
             transclude: true,
-            replace: true,
-            link: link
+            replace: true
         };
-
-        function link(scope, el, attrs, ctrl) {
-            scope.selectedIndex = 0;
-            setInitialState(false);
-
-            function getFocusableElement(index) {
-                return el.find('.fab-actions a:nth-child(' + index + ')');
-            }
-
-            function isFocusOnTrigger() {
-                return el.is(':focus');
-            }
-
-            function setInitialState(focus) {
-                el.focus();
-                if (focus) scope.selectedIndex = 0;
-            }
-
-            function hasNextFocusableElement() {
-                return getFocusableElement(scope.selectedIndex + 1).length;
-            }
-
-            function moveDown($event) {
-                if (hasNextFocusableElement()) {
-                    scope.selectedIndex++;
-                    getFocusableElement(scope.selectedIndex).focus();
-                }
-                $event.preventDefault();
-            }
-
-            function moveUp($event) {
-                if (scope.selectedIndex !== 1 && !isFocusOnTrigger()) {
-                    scope.selectedIndex--;
-                    getFocusableElement(scope.selectedIndex).focus();
-                } else {
-                    //Focus trigger
-                    setInitialState(true);
-                }
-
-                $event.preventDefault();
-            }
-
-            function openMenu($event) {
-                //Arrow down || Arrow right || Enter -> Open
-                if (scope.$parent.fabTrigger === 'fabOver') {
-                    scope.$parent.showIt();
-                } else if (scope.$parent.fabTrigger === 'fabClick') {
-                    scope.$parent.fabClick = true;
-                }
-                setInitialState(true);
-                $event.preventDefault();
-            }
-
-            function closeMenu($event) {
-                if (scope.$parent.fabTrigger === 'fabOver') {
-                    scope.$parent.hideIt();
-                } else if (scope.$parent.fabTrigger === 'fabClick') {
-                    scope.$parent.fabClick = false;
-                }
-                $event.preventDefault();
-            }
-
-            function clickElement($event) {
-                $timeout(()=>getFocusableElement(scope.selectedIndex).click());
-                $event.preventDefault();
-            }
-
-            if (scope.$parent.fabTrigger) {
-                scope.onKeyDown = function ($event) {
-                    if (($event.keyCode === 40 && !scope.$parent.isOpen()) || ($event.keyCode === 39 || $event.keyCode === 13 && isFocusOnTrigger())) {
-                        openMenu($event);
-
-                    } else if (($event.keyCode === 40 && scope.$parent.isOpen()) || ($event.keyCode === 9 && !$event.shiftKey && (isFocusOnTrigger() || hasNextFocusableElement()))) {
-                        //Arrow down || TAB -> Navigate down through menu items
-                        moveDown($event);
-
-                    } else if (($event.keyCode === 38 && scope.$parent.isOpen()) || $event.shiftKey && $event.keyCode === 9 && scope.selectedIndex !== 0) {
-                        //Arrow up Shift-TAB -> Navigate up through menu items
-                        moveUp($event);
-
-                    } else if ($event.keyCode === 37 || $event.keyCode === 38 || $event.keyCode === 27) {
-                        //Arrow left || Arrow Up || ESC  -> Close
-                        closeMenu($event);
-
-                    } else if ($event.keyCode === 13 && !isFocusOnTrigger()) {
-                        //Enter->  "click" in a menu option
-                        clickElement($event);
-                    }
-                };
-            }
-        }
     }
 
     function tribeFabActions() {
