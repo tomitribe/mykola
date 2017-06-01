@@ -79,6 +79,10 @@ module tomitribe_fab {
 
                     } else if (isOpen() && (($event.keyCode === 40) || ($event.keyCode === 9 && !$event.shiftKey && (isFocusOnTrigger() || hasNextFocusableElement())))) {
                         //Arrow down || TAB -> Navigate down through menu items
+                        if(isFocusOnTrigger()) {
+                            //reset index
+                            scope.selectedIndex = 0;
+                        }
                         moveDown($event);
 
                     } else if (($event.keyCode === 38 && isOpen()) || $event.shiftKey && $event.keyCode === 9 && scope.selectedIndex !== 0) {
