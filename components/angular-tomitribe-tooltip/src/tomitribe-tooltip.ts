@@ -74,6 +74,7 @@ module tomitribe_fab {
         var tribeTooltip = this;
         var timer1;
         var timer2;
+        var timer3;
         var tooltip;
         var tooltipBackground;
         var tooltipLabel;
@@ -96,6 +97,7 @@ module tomitribe_fab {
 
             $timeout.cancel(timer1);
             $timeout.cancel(timer2);
+            $timeout.cancel(timer3);
         });
 
         function hideTooltip()
@@ -169,7 +171,7 @@ module tomitribe_fab {
 
         function showTooltip()
         {
-            $timeout(() => {
+            timer3 = $timeout(() => {
                 if (angular.isUndefined(tooltip))
                 {
                     //tribeDepthService.register();
@@ -186,12 +188,6 @@ module tomitribe_fab {
                         });
 
                     setTooltipPosition();
-
-                    tooltip
-                        .append(tooltipBackground)
-                        .append(tooltipLabel)
-                        //todo: tribeDepthService.getDepth()
-                        .appendTo('body');
 
                     timer2 = $timeout(function()
                     {
