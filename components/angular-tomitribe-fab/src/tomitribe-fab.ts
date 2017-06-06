@@ -62,6 +62,25 @@ module tomitribe_fab {
             ctrl.init(scope.fabDirection, scope.fabTrigger, element);
             ctrl.toggleOpen(scope.opened);
 
+
+            //When we hover into an element, we fire focus
+            $timeout(()=> {
+                element.find('.fab-primary a').on('click', ($event)=> {
+                    //trigger
+                    setInitialState(true);
+                });
+                element.find('.fab-actions a').on('mouseover', ($event)=> {
+                    //Get the element index
+                    var index = findOptionIndex($event.currentTarget);
+                    if (index >= 0) {
+                        //update selected index
+                        scope.selectedIndex = index;
+                        //focus the element
+                        getFocusableElement(scope.selectedIndex).focus();
+                    }
+                });
+            });
+
             //Keyboard navigation
             if (scope.fabTrigger) {
                 if (!scope.opened) {
@@ -79,7 +98,7 @@ module tomitribe_fab {
 
                     } else if (isOpen() && (($event.keyCode === 40) || ($event.keyCode === 9 && !$event.shiftKey && (isFocusOnTrigger() || hasNextFocusableElement())))) {
                         //Arrow down || TAB -> Navigate down through menu items
-                        if(isFocusOnTrigger()) {
+                        if (isFocusOnTrigger()) {
                             //reset index
                             scope.selectedIndex = 0;
                         }
@@ -98,6 +117,19 @@ module tomitribe_fab {
                         clickElement($event);
                     }
                 };
+            }
+
+            function findOptionIndex(target): number {
+                let elements = element.find('.fab-actions a');
+
+                var index = 1;
+                for (let currentElement of elements) {
+                    if (currentElement === target) {
+                        return index;
+                    }
+                    index++;
+                }
+                return -1;
             }
 
             function getFocusableElement(index) {
