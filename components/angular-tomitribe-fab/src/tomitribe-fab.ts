@@ -190,7 +190,7 @@ module tomitribe_fab {
             }
 
             function isOpen() {
-                return scope.fabOver || scope.fabClick;
+                return scope.opened;
             }
 
             function clickElement($event) {
