@@ -28,7 +28,8 @@ module tomitribe_fab {
             scope:
             {
                 tooltip: '@tribeTooltip',
-                position: '@?tribeTooltipPosition'
+                position: '@?tribeTooltipPosition',
+                showDelay: '=?tribeTooltipShowDelay'
             },
             link: link,
             controller: ['$element', '$scope', '$timeout', tribeTooltipController], //'tribeDepthService',
@@ -55,6 +56,8 @@ module tomitribe_fab {
                     scope.tribeTooltip.position = newValue;
                 });
             }
+
+            scope.showDelay = angular.isDefined(attrs.tribeTooltipShowDelay) ? attrs.tribeTooltipShowDelay : 0;
 
             element.on('mouseenter', ctrl.showTooltip);
             element.on('mouseleave', ctrl.hideTooltip);
@@ -166,34 +169,36 @@ module tomitribe_fab {
 
         function showTooltip()
         {
-            if (angular.isUndefined(tooltip))
-            {
-                //tribeDepthService.register();
-
-                tooltip = angular.element('<div/>',
-                    {
-                        class: 'tooltip tooltip-' + tribeTooltip.position
-                    });
-
-                tooltipLabel = angular.element('<span/>',
-                    {
-                        class: 'tooltip__label',
-                        text: tribeTooltip.tooltip
-                    });
-
-                setTooltipPosition();
-
-                tooltip
-                    .append(tooltipBackground)
-                    .append(tooltipLabel)
-                    //todo: tribeDepthService.getDepth()
-                    .appendTo('body');
-
-                timer2 = $timeout(function()
+            $timeout(() => {
+                if (angular.isUndefined(tooltip))
                 {
-                    tooltip.addClass('tooltip-is-active');
-                });
-            }
+                    //tribeDepthService.register();
+
+                    tooltip = angular.element('<div/>',
+                        {
+                            class: 'tooltip tooltip-' + tribeTooltip.position
+                        });
+
+                    tooltipLabel = angular.element('<span/>',
+                        {
+                            class: 'tooltip__label',
+                            text: tribeTooltip.tooltip
+                        });
+
+                    setTooltipPosition();
+
+                    tooltip
+                        .append(tooltipBackground)
+                        .append(tooltipLabel)
+                        //todo: tribeDepthService.getDepth()
+                        .appendTo('body');
+
+                    timer2 = $timeout(function()
+                    {
+                        tooltip.addClass('tooltip-is-active');
+                    });
+                }
+            }, $scope.showDelay)
         }
 
         function updateTooltipText(_newValue)
