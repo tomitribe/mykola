@@ -111,7 +111,6 @@ module tomitribe_select {
             if (!uiSelect.multiple && uiSelect.tagging) {
                 scope.$on('uis:activate', ()=> {
                     $timeout(()=> {
-                        console.log(uiSelect.items);
                         if(uiSelect.activeIndex === -1 && uiSelect.items && uiSelect.items.length >= 1) {
                             uiSelect.activeIndex = 0;
                         }
