@@ -36,6 +36,14 @@ div
                                         span {{$item}}
                                     ui-select-choices(repeat="age in (ages | filter: $select.search)")
                                         span(ng-bind-html="age | highlight: $select.search")
+
+                            p
+                                h4 Select simple with tagging
+                                ui-select(ng-model="myAge3", tagging="taggingCallback", tagging-label="false", reset-search-input="false", tabindex=0, tribe-select-open-on-focus, tribe-select-prevent-tab)
+                                    ui-select-match(placeholder="Select Age...")
+                                        span {{$select.selected}}
+                                    ui-select-choices(repeat="age in (ages | filter: $select.search)", allow-clear="true")
+                                        span(ng-bind-html="age | highlight: $select.search")
                             p
                                 h4 Select multiple with tagging
                                 tribe-tags(ng-model="myAge3")

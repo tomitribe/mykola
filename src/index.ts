@@ -230,6 +230,10 @@ module index {
                         controller: ['$scope', ($scope) => {
                             $scope.ages = [1, 2, 5, 10, 25, 35, 100];
                             $scope.myAge11 = 2;
+
+                            $scope.taggingCallback = (v) => {
+                                console.log(v);
+                            }
                         }]
                     })
                     .otherwise({
