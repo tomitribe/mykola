@@ -232,7 +232,7 @@ module index {
                             $scope.myAge11 = 2;
 
                             $scope.taggingCallback = (v) => {
-                                console.log(v);
+
                             }
                         }]
                     })
