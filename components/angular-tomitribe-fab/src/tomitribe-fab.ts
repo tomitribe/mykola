@@ -94,7 +94,7 @@ module tomitribe_fab {
                 scope.onKeyDown = function ($event) {
                     if (($event.keyCode === 40 && !isOpen()) || ($event.keyCode === 39 && !isOpen()) || ($event.keyCode === 13 && isFocusOnTrigger())) {
                         //Arrow down || Arrow right || Enter -> Open
-                        openMenu($event);
+                        setMenuStatus(true, $event);
 
                     } else if (isOpen() && (($event.keyCode === 40) || ($event.keyCode === 9 && !$event.shiftKey && (isFocusOnTrigger() || hasNextFocusableElement())))) {
                         //Arrow down || TAB -> Navigate down through menu items
@@ -110,7 +110,7 @@ module tomitribe_fab {
 
                     } else if ($event.keyCode === 37 || $event.keyCode === 38 || $event.keyCode === 27) {
                         //Arrow left || Arrow Up || ESC  -> Close
-                        closeMenu($event);
+                        setMenuStatus(false, $event);
 
                     } else if ($event.keyCode === 13 && !isFocusOnTrigger()) {
                         //Enter->  "click" in a menu option
@@ -169,28 +169,14 @@ module tomitribe_fab {
                 $event.preventDefault();
             }
 
-            function openMenu($event) {
-                if (scope.fabTrigger === 'fabOver') {
-                    scope.showIt();
-                } else if (scope.fabTrigger === 'fabClick') {
-                    scope.fabClick = true;
-                }
-                setInitialState(true);
-                $event.preventDefault();
-            }
-
-            function closeMenu($event) {
-                if (scope.fabTrigger === 'fabOver') {
-                    scope.hideIt();
-                } else if (scope.fabTrigger === 'fabClick') {
-                    scope.fabClick = false;
-                }
+            function setMenuStatus(opened, $event) {
+                scope.opened = opened;
                 setInitialState(true);
                 $event.preventDefault();
             }
 
             function isOpen() {
-                return scope.fabOver || scope.fabClick;
+                return scope.opened;
             }
 
             function clickElement($event) {

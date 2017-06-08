@@ -29,13 +29,17 @@ module tomitribe_select {
         function link(scope, element, attrs, crtl) {
             let uiSelectCtrl = crtl[0];
 
-            if (crtl[0].searchInput) {
+            if (uiSelectCtrl.searchInput) {
                 let ngModelCtrl = crtl[1], singleSelectInitialIndex;
 
-                crtl[0].searchInput.bindFirst('keydown', function (e) {
+                uiSelectCtrl.searchInput.bindFirst('keydown', function (e) {
                     if (e.keyCode === 9) {
-                        if (!scope.$select.multiple) {
-                            scope.$select.activeIndex = singleSelectInitialIndex;
+                        if (!uiSelectCtrl.multiple) {
+                            uiSelectCtrl.activeIndex = singleSelectInitialIndex;
+
+                            if(uiSelectCtrl.tagging) {
+                                uiSelectCtrl.close(true);
+                            }
                         } else {
                             uiSelectCtrl.close();
                         }
@@ -44,7 +48,7 @@ module tomitribe_select {
 
                 scope.$on('uis:activate', ()=> {
                     $timeout(()=> {
-                        if (!scope.$select.multiple) {
+                        if (!uiSelectCtrl.multiple) {
                             $timeout(()=> {
                                 singleSelectInitialIndex = findIndex(ngModelCtrl.$viewValue, ngModelCtrl, uiSelectCtrl);
                             });
@@ -103,6 +107,16 @@ module tomitribe_select {
                 //On blur when we don't have element, we must force the uiSelect to close
                 if (uiSelect.items && uiSelect.items.length === 0) uiSelect.close();
             });
+
+            if (!uiSelect.multiple && uiSelect.tagging) {
+                scope.$on('uis:activate', ()=> {
+                    $timeout(()=> {
+                        if(uiSelect.activeIndex === -1 && uiSelect.items && uiSelect.items.length >= 1) {
+                            uiSelect.activeIndex = 0;
+                        }
+                    });
+                });
+            }
 
             // Re-enable the auto open after the select element has been closed
             scope.$on('uis:close', ()=> {
