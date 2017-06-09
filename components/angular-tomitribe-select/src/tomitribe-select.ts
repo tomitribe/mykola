@@ -98,12 +98,18 @@ module tomitribe_select {
 
         function link(scope, element, attrs, uiSelect) {
             var autoOpen = true;
+            scope.openOnFocusDelay = angular.isDefined(attrs.openOnFocusDelay) ? attrs.openOnFocusDelay : 0;
+            var timer;
 
             angular.element(uiSelect.focusInput).on('focus', ()=> {
-                if (autoOpen) $timeout(()=> uiSelect.activate());
+                if (autoOpen) {
+                    timer = $timeout(()=> uiSelect.activate(), scope.openOnFocusDelay);
+                }
             });
 
             angular.element(uiSelect.focusInput).on('blur', ()=> {
+                destroyTimer();
+
                 //On blur when we don't have element, we must force the uiSelect to close
                 if (uiSelect.items && uiSelect.items.length === 0) uiSelect.close();
             });
@@ -123,6 +129,16 @@ module tomitribe_select {
                 autoOpen = false;
                 $timeout(()=> autoOpen = true);
             });
+
+            scope.$on('$destroy', () => {
+                destroyTimer();
+            });
+
+            function destroyTimer() {
+                if(timer) {
+                    $timeout.cancel(timer);
+                }
+            }
 
         }
     }
