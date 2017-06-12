@@ -14,8 +14,14 @@ export class TagsDirective {
     require = '?^form';
     template = require('./tags.view.pug');
     controller = 'TribeTagsController';
-    scope = {ngModel: '='};
+    scope = {
+        ngModel: '=',
+        position: '@?'
+    };
     link: ng.IDirectiveLinkFn = (scope: any, el: any, attrs: any, ctrl: any): void => {
         scope.form = ctrl;
+        if(!scope.position) {
+            scope.position = 'auto';
+        }
     };
 }
