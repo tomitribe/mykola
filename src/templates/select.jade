@@ -45,6 +45,14 @@ div
                                         span(ng-bind-html="age | highlight: $select.search")
 
                             p
+                                h4 Select multiple (with 1500 ms delay to open on-focus, only the first time that it opens)
+                                ui-select(multiple ng-model="myAge3", tabindex="0", tribe-select-open-on-focus, tribe-select-prevent-tab, open-on-focus-delay="1500", open-on-focus-delay-once="true")
+                                    ui-select-match(placeholder="Select Age...")
+                                        span {{$item}}
+                                    ui-select-choices(repeat="age in (ages | filter: $select.search)")
+                                        span(ng-bind-html="age | highlight: $select.search")
+
+                            p
                                 h4 Select simple with tagging
                                 ui-select(ng-model="myAge3", tagging="taggingCallback", tagging-label="false", reset-search-input="false", tabindex=0, tribe-select-open-on-focus, tribe-select-prevent-tab)
                                     ui-select-match(placeholder="Select Age...")
