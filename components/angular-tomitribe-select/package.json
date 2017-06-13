@@ -1,6 +1,6 @@
 {
   "name": "angular-tomitribe-select",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Tomitribe select directives",
   "repository": "https://github.com/tomitribe/mykola/tree/master/components/angular-tomitribe-select",
   "license": "MIT",

@@ -99,11 +99,19 @@ module tomitribe_select {
         function link(scope, element, attrs, uiSelect) {
             var autoOpen = true;
             scope.openOnFocusDelay = angular.isDefined(attrs.openOnFocusDelay) ? attrs.openOnFocusDelay : 0;
+            scope.openOnFocusDelayOnce = angular.isDefined(attrs.openOnFocusDelayOnce) ? attrs.openOnFocusDelayOnce : false;
             var timer;
+            var runCounter = 0;
 
             angular.element(uiSelect.focusInput).on('focus', ()=> {
                 if (autoOpen) {
-                    timer = $timeout(()=> uiSelect.activate(), scope.openOnFocusDelay);
+                    if(!scope.openOnFocusDelayOnce || (scope.openOnFocusDelayOnce && runCounter === 0)) {
+                        timer = $timeout(()=> uiSelect.activate(), scope.openOnFocusDelay);
+                    } else {
+                        uiSelect.activate();
+                    }
+
+                    runCounter++;
                 }
             });
 
