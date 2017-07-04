@@ -32,3 +32,18 @@ div
         tribe-bulkedit(list-items="items" operator-items="operatorItems" select-field="$$selected" all-checked="checkedStatus")
       div.clear
         tribe-bulkedit(list-items="itemsObject" list-prop="itemsProp" select-field="$$selected")
+
+      div.row
+        div.col-sm-6
+          h3 Selectable items (selecting using tribe-click: first element disabled)
+          ul.items-list
+            li.item(ng-repeat="item in items2" tribe-click="item" tribe-click-disabled="$first" ng-class="{selected: item.$$selected}")
+              input(type="checkbox" ng-model="item.$$selected" ng-hide="true")
+              span Name: {{item.name}},  Rate: {{item.rate}}
+
+      div.clear
+        tribe-bulkedit(list-items="items2" operator-items="operatorItems" select-field="$$selected" all-checked="checkedStatus2")
+
+
+
+
