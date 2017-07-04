@@ -151,7 +151,8 @@ module tomitribe_select {
         }
     }
 
-    $.fn.bindFirst = function (name, fn) {
+    // todo: fix proper interfacing
+    (<any>$).fn.bindFirst = function (name, fn) {
         this.on(name, fn);
         this.each(function () {
             var handlers = $["_data"](this, 'events')[name.split('.')[0]];
