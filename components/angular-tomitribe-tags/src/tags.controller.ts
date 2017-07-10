@@ -28,6 +28,7 @@ export class TagsController {
                 $scope.availableTags = data.map(t => {
                     return new TagReference(t.id, t.name, {});
                 })
+                .sort((a,b) => a.name.localeCompare(b.name));
             }
         );
     }
