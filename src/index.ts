@@ -135,6 +135,21 @@ module index {
                                     rate: 5
                                 }];
                             //$scope.items[0].$$selected = true;
+
+                            $scope.items2 = [
+                                {
+                                    name: 'First App',
+                                    rate: 5
+                                },
+                                {
+                                    name: 'Second App',
+                                    rate: 5
+                                },
+                                {
+                                    name: 'Third App',
+                                    rate: 5
+                                }];
+
                             $scope.operatorItems = [
                                 {
                                     iconClass: "fa-2x fa-share",

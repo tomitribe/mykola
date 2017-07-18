@@ -235,15 +235,18 @@ module tomitribe_bulkbar {
             restrict: 'A',
             scope: {
                 item: '=tribeClick',
-                selectField: '@?'
+                selectField: '@?',
+                disabled: '=?tribeClickDisabled'
             },
             link: link
         };
         function link(scope, element) {
             if (!scope.selectField) scope.selectField = "$$selected";
+            scope.disabled = scope.disabled !== undefined ? scope.disabled : false;
+
             if (scope.item) {
                 element.bind('click', (e)=> {
-                    if (e.ctrlKey) {
+                    if (e.ctrlKey && !scope.disabled) {
                         scope.item[scope.selectField] = !scope.item[scope.selectField];
                         scope.$apply();
                     }
@@ -251,5 +254,4 @@ module tomitribe_bulkbar {
             }
         }
     }
-
 }
