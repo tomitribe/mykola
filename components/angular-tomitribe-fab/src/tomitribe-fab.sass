@@ -15,7 +15,7 @@
       .rt, .fa
         &:nth-of-type(1)
           opacity: 1
-          @include transform(rotate(45deg))
+          transform: rotate(45deg)
       .btn
         background-color: $accent
         color: $white
@@ -26,34 +26,34 @@
         opacity: 1
 
       &.fab-actions-up .btn
-        @include transform(scale(1) translateY(0))
+        transform: scale(1) translateY(0)
 
       &.fab-actions-right
         background-color: rgba(255,255,255,0.2)
         box-shadow: 0 0 2px rgba(255,255,255,0.2)
         .btn
-          @include transform(scale(1) translateY(0))
+          transform: scale(1) translateY(0)
 
       &.fab-actions-down .btn
-        @include transform(scale(1) translateY(0))
+        transform: scale(1) translateY(0)
 
       &.fab-actions-left
         background-color: rgba(255,255,255,0.2)
         box-shadow: 0 0 2px rgba(255,255,255,0.2)
         .btn
-          @include transform(scale(1) translateY(0))
+          transform: scale(1) translateY(0)
 
   // FAB primary button
   .fab-primary
     .rt, .fa, .trigger
       @include position(absolute, 0 0 0 0)
-      @include transition-property(opacity, transform)
-      @include transition-duration(0.4s)
-      @include transition-timing-function($ease-out-quint)
+      transition-property: opacity, transform
+      transition-duration: 0.4s
+      transition-timing-function: $ease-out-quint
 
       &:nth-of-type(1)
         opacity: 1
-        @include transform(rotate(0deg))
+        transform: rotate(0deg)
 
   // FAB actions
   .fab-actions
@@ -63,10 +63,10 @@
     .btn
       display: block
       opacity: 0
-      @include transform(scale(0.6) translateY(-($base-spacing-unit * 1.5)))
-      @include transition-property(opacity, transform)
-      @include transition-duration(0.4s)
-      @include transition-timing-function($ease-out-quint)
+      transform: scale(0.6) translateY(-($base-spacing-unit * 1.5))
+      transition-property: opacity, transform
+      transition-duration: 0.4s
+      transition-timing-function: $ease-out-quint
 
   // FAB actions directions
   .fab-actions-up,
@@ -74,22 +74,22 @@
     .btn
       @for $i from 1 through 10
         &:nth-child(#{$i})
-          @include transition-delay(0.02s * (10 / $i))
+          transition-delay: 0.02s * (10 / $i)
 
   .fab-actions-down,
   .fab-actions-right
     .btn
       @for $i from 1 through 10
         &:nth-child(#{$i})
-          @include transition-delay(0.05s * $i)
+          transition-delay: 0.05s * $i
 
   .fab-actions-left,
   .fab-actions-right
     height: 100%
-    @include display(flex)
-    @include flex-direction(row)
-    @include flex-wrap(nowrap)
-    @include align-items(center)
+    display: flex
+    flex-direction: row
+    flex-wrap: nowrap
+    align-items: center
 
     @each $key, $size in $sizes
       .btn-fab.btn-#{$key}
@@ -106,10 +106,10 @@
   .fab-actions-up,
   .fab-actions-down
     width: 100%
-    @include display(flex)
-    @include flex-direction(column)
-    @include flex-wrap(nowrap)
-    @include align-items(center)
+    display: flex
+    flex-direction: column
+    flex-wrap: nowrap
+    align-items: center
 
     @each $key, $size in $sizes
       .btn-fab.btn-#{$key}

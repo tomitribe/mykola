@@ -19,16 +19,14 @@ module.exports = {
     devtool: "source-map",
     plugins: [
         {
-          apply: (compiler) => {
-              compiler.plugin('compilation', function(compilation) { // copy html file replacing base value
-                  compilation.plugin('html-webpack-plugin-after-html-processing', (object, callback) => {
-                      if (isBundle) {
-                        object.html = object.html.replace('<base href="/">', '<base href="/mykola/">');
-                      }
-                      callback(null, object);
-                  });
-              });
-          }
+            apply: function (compiler) {
+                compiler.plugin('compilation', function (compilation) { // copy html file replacing base value
+                    compilation.plugin('html-webpack-plugin-after-html-processing', function (object, callback) {
+                        if (isBundle) object.html = object.html.replace('<base href="/">', '<base href="/mykola/">');
+                        callback(null, object);
+                    });
+                });
+            }
         },
         new HtmlWebpackPlugin({
             template: './src/index.jade',
@@ -36,7 +34,7 @@ module.exports = {
             hash: true
         }),
         new CopyWebpackPlugin([
-            { from: './src/public' },
+            { from: './src/public' }
         ]),
         new webpack.ProvidePlugin({
             $: 'jquery',
