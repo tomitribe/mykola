@@ -46,7 +46,7 @@
 @mixin btn-size($size, $type: null)
   padding-left: map-get($btn-padding, $size)
   padding-right: map-get($btn-padding, $size)
-  @include font-size(map-get($btn-font-size, $size))
+  font-size: map-get($btn-font-size, $size)
   line-height: map-get($sizes, $size)
 
   @if $type == 'icon' or $type == 'fab'
@@ -62,10 +62,10 @@
       font-size: map-get($sizes, $size)*0.9
 
   @if $type == 'icon'
-    @include font-size((map-get($btn-icon-size, $size)))
+    font-size: map-get($btn-icon-size, $size)
 
   @if $type == 'fab'
-    @include font-size((map-get($btn-font-size, $size)) + 4)
+    font-size: map-get($btn-font-size, $size)+4
 
 @mixin btn-color($color, $type)
   @if $type == 'raised' or $type == 'fab'
@@ -86,13 +86,13 @@
     border-radius: $base-round
   @if $type == 'raised' or $type == 'fab'
     @include z-depth(1)
-    @include transition-property(box-shadow)
-    @include transition-duration(0.2s)
+    transition-property: box-shadow
+    transition-duration: 0.2s
     &:hover
       @include z-depth(2)
   @if $type == 'flat' or $type == 'icon'
-    @include transition-property(background-color)
-    @include transition-duration(0.2s)
+    transition-property: background-color
+    transition-duration: 0.2s
   @if $type == 'icon' or $type == 'fab'
     border-radius: 50%
 

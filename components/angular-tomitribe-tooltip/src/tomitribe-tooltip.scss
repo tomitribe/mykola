@@ -7,28 +7,28 @@
   opacity: 0;
   overflow: visible;
   pointer-events: none;
-  @include transition-property(opacity, transform);
-  @include transition-duration(0.6s);
-  @include transition-timing-function($ease-out-quint);
+  transition-property: opacity, transform;
+  transition-duration: 0.6s;
+  transition-timing-function: $ease-out-quint;
 }
 
 .tooltip-is-active {
   opacity: 1;
 
   &.tooltip-top {
-     @include transform(translateY(-14px));
+     transform: translateY(-14px);
   }
 
   &.tooltip-bottom {
-    @include transform(translateY(14px));
+    transform: translateY(14px);
   }
 
   &.tooltip-left {
-    @include transform(translateX(-14px));
+    transform: translateX(-14px);
   }
 
   &.tooltip-right {
-    @include transform(translateX(14px));
+    transform: translateX(14px);
   }
 }
 
@@ -39,7 +39,7 @@
   white-space: nowrap;
 
   padding: 0 $base-spacing-unit;
-  @include font-size(10px);
+  font-size: 10px;
   line-height: 22px;
 
   background-color: $dark-grey;

@@ -8,19 +8,22 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "typeRoots" : ["./node_modules/@types"]
   },
   "exclude": [
     "node_modules/awesome-typescript-loader/",
     "node_modules/typescript/",
     "node_modules/rx/",
     "node_modules/bs-recipes/",
-    "node_modules/popsicle/",
-    "node_modules/popsicle-retry/",
+    "node_modules/promise/",
+    "node_modules/postcss*",
+    "node_modules/popsicle*",
     "out",
     "dist",
     "dev",
-    "reports"
+    "reports",
+    "typings/**/*.ts"
   ],
   "atom": { "rewriteTsconfig": false },
   "buildOnSave": false, "compileOnSave": false
