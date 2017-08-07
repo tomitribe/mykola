@@ -7,6 +7,7 @@
  * tribeActivateHover: Set option active, onmouseenter event, in ui-select
  * tribeSelectOpenOnFocus: this directive set the select active, on focus (tab)
  * tribeSelectPreventTab: this directive prevent tab selection
+ * tribeSelectFetchOnOpen: this directive refresh the list options, when the dropdown is opened
  *
  */
 module tomitribe_select {
@@ -16,7 +17,8 @@ module tomitribe_select {
         .module('tomitribe-select', [])
         .directive('tribeActivateHover', ['$timeout', tribeActivateHover])
         .directive('tribeSelectOpenOnFocus', ['$timeout', tribeSelectOpenOnFocus])
-        .directive('tribeSelectPreventTab', ['$timeout', tribeSelectPreventTab]);
+        .directive('tribeSelectPreventTab', ['$timeout', tribeSelectPreventTab])
+        .directive('tribeSelectFetchOnOpen', tribeSelectLoadOnOpen);
 
     function tribeSelectPreventTab($timeout) {
         return {
@@ -151,6 +153,26 @@ module tomitribe_select {
         }
     }
 
+    function tribeSelectLoadOnOpen() {
+        return {
+            restrict: 'A',
+            require: 'uiSelect',
+            replace: false,
+            link: link,
+        };
+
+        function link(scope, element, attrs, uiSelectCtrl) {
+            scope.$on('uis:activate', ()=> {
+                //Check if we have the function defined  in tribe-select-fetch-on-open="function". Otherwise, check if the have the refresh attribute defined in ui-select
+                let refreshFn = attrs['tribeSelectFetchOnOpen'].indexOf('tribe-select-fetch-on-open') !== 0 ? attrs['tribeSelectFetchOnOpen'] : element.find('.ui-select-dropdown').attr('refresh');
+
+                if (refreshFn) {
+                    uiSelectCtrl.refresh(refreshFn)
+
+                }
+            });
+        }
+    }
     // todo: fix proper interfacing
     (<any>$).fn.bindFirst = function (name, fn) {
         this.on(name, fn);
