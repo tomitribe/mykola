@@ -18,7 +18,7 @@ module tomitribe_select {
         .directive('tribeActivateHover', ['$timeout', tribeActivateHover])
         .directive('tribeSelectOpenOnFocus', ['$timeout', tribeSelectOpenOnFocus])
         .directive('tribeSelectPreventTab', ['$timeout', tribeSelectPreventTab])
-        .directive('tribeSelectFetchOnOpen', tribeSelectLoadOnOpen);
+        .directive('tribeSelectFetchOnOpen', ['$timeout', tribeSelectFetchOnOpen]);
 
     function tribeSelectPreventTab($timeout) {
         return {
@@ -153,7 +153,7 @@ module tomitribe_select {
         }
     }
 
-    function tribeSelectLoadOnOpen() {
+    function tribeSelectFetchOnOpen($timeout) {
         return {
             restrict: 'A',
             require: 'uiSelect',
@@ -163,13 +163,13 @@ module tomitribe_select {
 
         function link(scope, element, attrs, uiSelectCtrl) {
             scope.$on('uis:activate', ()=> {
-                //Check if we have the function defined  in tribe-select-fetch-on-open="function". Otherwise, check if the have the refresh attribute defined in ui-select
-                let refreshFn = attrs['tribeSelectFetchOnOpen'].indexOf('tribe-select-fetch-on-open') !== 0 ? attrs['tribeSelectFetchOnOpen'] : element.find('.ui-select-dropdown').attr('refresh');
+                //Force dropdown to refresh
+                let oldSearch = uiSelectCtrl.search;
+                uiSelectCtrl.search = undefined;
 
-                if (refreshFn) {
-                    uiSelectCtrl.refresh(refreshFn)
-
-                }
+                $timeout(()=> {
+                    uiSelectCtrl.search = oldSearch;
+                });
             });
         }
     }
