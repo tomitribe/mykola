@@ -246,6 +246,10 @@ module index {
                             $scope.ages = [1, 2, 5, 10, 25, 35, 100];
                             $scope.myAge11 = 2;
 
+                            $scope.updateAges = () => {
+                                console.log('Ages updated');
+                            };
+
                             $scope.taggingCallback = (v) => {
 
                             }
