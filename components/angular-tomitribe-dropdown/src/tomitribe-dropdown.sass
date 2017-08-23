@@ -3,7 +3,6 @@
 .dropdown
   position: relative
   width: 30px
-
   &.open
     .dropdown-list
       display: block
@@ -12,77 +11,61 @@
   .dropdown-primary
     width: 30px
     height: 40px
-    display: table-cell
-    vertical-align: middle
+    display: flex
+    align-items: center
+    justify-content: center
     .bimg
       background-repeat: no-repeat
       background-position: center center
-      background-size: 19px 4px
+      background-size: 18px 4px
       background-image: url(images/ellipsis-icon-grey.svg)
       &:hover
         background-image: url(images/ellipsis-icon-orange.svg)
       &.lo:hover
         background-image: url(images/ellipsis-icon-light-orange.svg)
+    & + .dropdown-list-down,
+    & + .dropdown-list-up 
+      &:before,
+      &:after
+        content: " "
+        position: absolute
+        border-width: 15px
+        border-style: solid
+        z-index: 0
+      &:before
+        border-width: 16px
+        margin-right: -1px
+        margin-left: -1px
+      &.pull-right
+        left: -7px
+        text-align: left
+        &:before,
+        &:after
+          left: 6px
+      &.pull-left
+        right: -11px
+        text-align: right
+        &:before,
+        &:after
+          right: 10px
     + .dropdown-list-down
       top: 40px
       &:before,
       &:after
         bottom: 100%
-        content: " "
-        position: absolute
-        border-width: 15px
-        border-style: solid
-        z-index: 0
       &:before
-        border-width: 16px
-        margin-right: -1px
-        margin-left: -1px
         border-color: transparent transparent #e5e6e7 transparent
       &:after
-        border-color: transparent transparent #e5e6e7 transparent
-        border-bottom-color: #fff
-      &.pull-right
-        left: -7px
-        text-align: left
-        &:before,
-        &:after
-          left: 8px
-      &.pull-left
-        right: -11px
-        text-align: right
-        &:before,
-        &:after
-          right: 8px
+        border-color: transparent transparent #fff transparent
     + .dropdown-list-up
       bottom: 40px
       &:before,
       &:after
         top: 100%
-        content: " "
-        position: absolute
-        border-width: 15px
-        border-style: solid
-        z-index: 0
       &:before
-        border-width: 16px
-        margin-right: -1px
-        margin-left: -1px
         border-color: #e5e6e7 transparent transparent transparent
       &:after
-        border-color: #e5e6e7 transparent transparent transparent
-        border-top-color: #fff
-      &.pull-right
-        left: -7px
-        text-align: left
-        &:before,
-        &:after
-          left: 8px
-      &.pull-left
-        right: -11px
-        text-align: right
-        &:before,
-        &:after
-          right: 8px
+        border-color: #fff transparent transparent transparent
     i
       display: inline-block
       width: 30px
