@@ -99,27 +99,31 @@ module tomitribe_select {
         };
 
         function link(scope, element, attrs, uiSelect) {
-            var autoOpen = true;
-            scope.openOnFocusDelay = angular.isDefined(attrs.openOnFocusDelay) ? attrs.openOnFocusDelay : 0;
+            scope.openOnFocusDelay = angular.isDefined(attrs.openOnFocusDelay) ? parseInt(attrs.openOnFocusDelay) : 0;
             scope.openOnFocusDelayOnce = angular.isDefined(attrs.openOnFocusDelayOnce) ? attrs.openOnFocusDelayOnce : false;
-            var timer;
-            var runCounter = 0;
+            let timer = null;
+            const destroyTimer = () => timer ? $timeout.cancel(timer) : {};
 
-            angular.element(uiSelect.focusInput).on('focus', ()=> {
-                if (autoOpen) {
-                    if(!scope.openOnFocusDelayOnce || (scope.openOnFocusDelayOnce && runCounter === 0)) {
-                        timer = $timeout(()=> uiSelect.activate(), scope.openOnFocusDelay);
+            let runCounter = 0;
+            let autoOpen = true;
+
+            angular.element(uiSelect.focusInput).on('focus', function() {
+                if (!uiSelect.open && autoOpen) {
+                    // open selects without openOnFocusDelayOnce
+                    if (angular.isNumber(scope.openOnFocusDelay) && !scope.openOnFocusDelayOnce) {
+                        timer = $timeout(uiSelect.activate, scope.openOnFocusDelay);
                     } else {
-                        uiSelect.activate();
+                    // open selects with openOnFocusDelayOnce
+                        !runCounter
+                            ? timer = $timeout(uiSelect.activate, scope.openOnFocusDelay)
+                            : timer = $timeout(uiSelect.activate);
+                        runCounter++;
                     }
-
-                    runCounter++;
                 }
             });
 
             angular.element(uiSelect.focusInput).on('blur', ()=> {
                 destroyTimer();
-
                 //On blur when we don't have element, we must force the uiSelect to close
                 if (uiSelect.items && uiSelect.items.length === 0) uiSelect.close();
             });
@@ -135,21 +139,17 @@ module tomitribe_select {
             }
 
             // Re-enable the auto open after the select element has been closed
-            scope.$on('uis:close', ()=> {
-                autoOpen = false;
-                $timeout(()=> autoOpen = true);
+            scope.$on('uis:close', () => {
+               autoOpen = false;
+               $timeout(
+                   () => autoOpen = true,
+                   scope.openOnFocusDelay + 500 // +500 to prevent IE race condition
+                );
             });
 
             scope.$on('$destroy', () => {
                 destroyTimer();
             });
-
-            function destroyTimer() {
-                if(timer) {
-                    $timeout.cancel(timer);
-                }
-            }
-
         }
     }
 
