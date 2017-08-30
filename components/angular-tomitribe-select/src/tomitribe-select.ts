@@ -107,18 +107,14 @@ module tomitribe_select {
             let runCounter = 0;
             let autoOpen = true;
 
+            function activateWithDelay(activate: () => void, delay: number, once: boolean) {
+                return $timeout(activate, (delay && (!once || !runCounter)) ? delay : 0);
+            }
+
             angular.element(uiSelect.focusInput).on('focus', function() {
-                if (!uiSelect.open && autoOpen) {
-                    // open selects without openOnFocusDelayOnce
-                    if (angular.isNumber(scope.openOnFocusDelay) && !scope.openOnFocusDelayOnce) {
-                        timer = $timeout(uiSelect.activate, scope.openOnFocusDelay);
-                    } else {
-                    // open selects with openOnFocusDelayOnce
-                        !runCounter
-                            ? timer = $timeout(uiSelect.activate, scope.openOnFocusDelay)
-                            : timer = $timeout(uiSelect.activate);
-                        runCounter++;
-                    }
+                if (!uiSelect.open && autoOpen && angular.isNumber(scope.openOnFocusDelay)) {
+                    timer = activateWithDelay(uiSelect.activate, scope.openOnFocusDelay, scope.openOnFocusDelayOnce);
+                    runCounter++;
                 }
             });
 
@@ -143,7 +139,7 @@ module tomitribe_select {
                autoOpen = false;
                $timeout(
                    () => autoOpen = true,
-                   scope.openOnFocusDelay + 500 // +500 to prevent IE race condition
+                   scope.openOnFocusDelay + 250 // +250 to prevent IE race condition
                 );
             });
 
