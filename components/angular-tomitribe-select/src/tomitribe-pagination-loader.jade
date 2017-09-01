@@ -1,0 +1,5 @@
+div.load-more(ng-class="{'not-completed': $select.items.length - 1 !== item.total}", tribe-activate-hover="item", ng-if="item.$$loader", infinite-scroll="pagingState && refresh()", infinite-scroll-disabled="!$select.open || pagingBusy", infinite-scroll-distance="0", infinite-scroll-container="'.'+containerClass+' .ui-select-choices .ui-select-choices-content'")
+    span.counters {{$select.items.length - 1}} of {{item.total}}
+    span {{itemName}} are displayed
+    span(ng-if="$select.items.length - 1 !== item.total") (Scroll for more)
+    span(ng-if="$select.items.length - 1 === item.total") (All {{itemName}} loaded)

@@ -3,6 +3,8 @@ import * as angular from 'angular';
 
 import "./styles/app.sass";
 
+let _ = require('underscore');
+
 module index {
     angular.module("demo-app", [
             'ngRoute',
@@ -13,7 +15,8 @@ module index {
             'tomitribe-bulkedit',
             'tomitribe-tags',
             'tomitribe-sortable',
-            'tomitribe-select'
+            'tomitribe-select',
+            'infinite-scroll'
         ])
         .filter('prettify', function () {
 
@@ -202,6 +205,10 @@ module index {
                         template: require('./templates/tags.jade'),
                         controller: ['$scope', ($scope) => {
                             $scope.tags = [];
+
+                            $scope.loadMore = ()=> {
+                                console.log("load more");
+                            }
                         }]
                     })
                     .when('/tooltip', {
@@ -242,16 +249,31 @@ module index {
                     })
                     .when('/select', {
                         template: require('./templates/select.jade'),
-                        controller: ['$scope', ($scope) => {
+                        controller: ['$scope', '$timeout', ($scope, $timeout) => {
+                            var increment = 10;
                             $scope.ages = [1, 2, 5, 10, 25, 35, 100];
                             $scope.myAge11 = 2;
+                            $scope.agesPaginated = [];
 
-                            $scope.updateAges = () => {
-                                console.log('Ages updated');
+
+                            function generateAges() {
+                                let ages =  _.range(increment - 10, increment);
+                                increment += 10;
+                                return ages;
+                            }
+
+                            $scope.loadAges = () => {
+                                $scope.$$pagingBusy = true;
+
+                                $timeout(()=> {
+                                    $scope.agesPaginated = $scope.agesPaginated.concat(generateAges());
+                                    $scope.$$total = 40;
+                                    $scope.$$pagingState = $scope.agesPaginated.length < 40;
+                                    $scope.$$pagingBusy = false;
+                                }, 400);
                             };
 
                             $scope.taggingCallback = (v) => {
-
                             }
                         }]
                     })
