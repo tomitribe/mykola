@@ -138,8 +138,11 @@ module tomitribe_select {
             scope.$on('uis:close', () => {
                autoOpen = false;
                $timeout(
-                   () => autoOpen = true,
-                   scope.openOnFocusDelay + 250 // +250 to prevent IE race condition
+                   () => {
+                       autoOpen = true;
+                       angular.element(uiSelect.focusInput).blur(); // IE continious open fix
+                   },
+                   scope.openOnFocusDelay
                 );
             });
 
