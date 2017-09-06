@@ -1,5 +1,8 @@
 export class TagsConfigurer {
     tagsEndpoint = 'api/label/available';
+    sortFn = (items) => {
+        return items.sort((a:any,b:any) => a['name'].localeCompare(b['name']))
+    };
 
     /*
         TODO:

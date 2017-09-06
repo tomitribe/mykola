@@ -7,6 +7,7 @@ import "angular-tomitribe-common";
 import "angular-sanitize/angular-sanitize";
 import 'bootstrap-admin-ui/dist/css/bootstrap-admin-ui.css';
 import "ui-select/dist/select";
+import "ng-infinite-scroll"
 
 require('../components/angular-tomitribe-button/index');
 require('../components/angular-tomitribe-fab/index');
