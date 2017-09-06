@@ -191,6 +191,18 @@ module tomitribe_select {
 
         function link(scope, element, attrs, ctrl) {
             scope.$select = ctrl;
+
+            scope.$watch("$select.items", (nv, ov)=> {
+                if(nv) {
+                    //Count all excluding : new tags and $$loader
+                    scope.$$listTotal = nv.reduce((res, item) => {
+                        if((item['isTag'] === undefined || !item['isTag']) && (item['$$loader'] === undefined || !item['$$loader'])) {
+                            res++;
+                        }
+                        return res;
+                    }, 0);
+                }
+            });
         }
     }
 
@@ -208,13 +220,16 @@ module tomitribe_select {
 
         function link(scope, element, attrs, ctrl) {
             scope.$watch("pagingBusy", (nv, ov)=> {
-                if (ov !== undefined && nv != undefined) {
+                if (ov !== undefined && nv !== undefined) {
                     if (!!ov && !nv) {
                         //when loading finish
-                        scope.items.push({
-                            $$loader: true,
-                            total: scope.total
-                        });
+                        //when we don't have any items, do not show load more
+                        if (scope.items && scope.items.length > 0) {
+                            scope.items.push({
+                                $$loader: true,
+                                total: scope.total
+                            });
+                        }
                     } else if (!ov && !!nv) {
                         //loading start
                         removeLoadMoreOption();

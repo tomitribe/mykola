@@ -50,7 +50,7 @@ export class TagsController {
 
                     const previousArray = $scope.availableTags && $scope.$$pagingState ? $scope.availableTags : [];
 
-                    $scope.availableTags = _.union(previousArray, tagsFromServer).sort((a:any,b:any) => a.name.localeCompare(b.name));
+                    $scope.availableTags = tagConfigurer.sortFn(_.union(previousArray, tagsFromServer));
                     $scope.$$total = data.total;
 
                     // prerequisite to pagination
@@ -59,7 +59,5 @@ export class TagsController {
                 }
             );
         }
-
-
     }
 }
