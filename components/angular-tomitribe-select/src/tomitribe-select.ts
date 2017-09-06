@@ -18,7 +18,9 @@ module tomitribe_select {
         .directive('tribeActivateHover', ['$timeout', tribeActivateHover])
         .directive('tribeSelectOpenOnFocus', ['$timeout', tribeSelectOpenOnFocus])
         .directive('tribeSelectPreventTab', ['$timeout', tribeSelectPreventTab])
-        .directive('tribeSelectFetchOnOpen', ['$timeout', tribeSelectFetchOnOpen]);
+        .directive('tribeSelectFetchOnOpen', ['$timeout', tribeSelectFetchOnOpen])
+        .directive('tribeSelectPaginationControl', tribeSelectPaginationControl)
+        .directive('tribeSelectPaginationLoader', tribeSelectPaginationLoader);
 
     function tribeSelectPreventTab($timeout) {
         return {
@@ -138,8 +140,11 @@ module tomitribe_select {
             scope.$on('uis:close', () => {
                autoOpen = false;
                $timeout(
-                   () => autoOpen = true,
-                   scope.openOnFocusDelay + 250 // +250 to prevent IE race condition
+                   () => {
+                       autoOpen = true;
+                       angular.element(uiSelect.focusInput).blur(); // IE continious open fix
+                   },
+                   scope.openOnFocusDelay
                 );
             });
 
@@ -167,6 +172,90 @@ module tomitribe_select {
                     uiSelectCtrl.search = oldSearch;
                 });
             });
+        }
+    }
+
+    function tribeSelectPaginationLoader() {
+        return {
+            restrict: 'E',
+            replace: false,
+            template: require('./tomitribe-pagination-loader.jade'),
+            require: '^uiSelect',
+            scope: {
+                item: '=',
+                pagingState: '=',
+                pagingBusy: '=',
+                containerClass: '@',
+                refresh: '&',
+                itemName: '@'
+            },
+            link: link
+        };
+
+        function link(scope, element, attrs, ctrl) {
+            scope.$select = ctrl;
+
+            scope.$watch("$select.items", (nv, ov)=> {
+                if(nv) {
+                    //Count all excluding : new tags and $$loader
+                    scope.$$listTotal = nv.reduce((res, item) => {
+                        if((item['isTag'] === undefined || !item['isTag']) && (item['$$loader'] === undefined || !item['$$loader'])) {
+                            res++;
+                        }
+                        return res;
+                    }, 0);
+                }
+            });
+        }
+    }
+
+    function tribeSelectPaginationControl() {
+        return {
+            restrict: 'A',
+            replace: false,
+            scope: {
+                items: '=',
+                pagingBusy: '=',
+                total: '='
+            },
+            link: link
+        };
+
+        function link(scope, element, attrs, ctrl) {
+            scope.$watch("pagingBusy", (nv, ov)=> {
+                if (ov !== undefined && nv !== undefined) {
+                    if (!!ov && !nv) {
+                        //when loading finish
+                        //when we don't have any items, do not show load more
+                        if (scope.items && scope.items.length > 0) {
+                            scope.items.push({
+                                $$loader: true,
+                                total: scope.total
+                            });
+                        }
+                    } else if (!ov && !!nv) {
+                        //loading start
+                        removeLoadMoreOption();
+                    }
+                }
+            });
+
+            function removeLoadMoreOption() {
+                if (isLastLoadMoreOption()) {
+                    scope.items.pop();
+                }
+            }
+
+            function isLastLoadMoreOption() {
+                if (scope.items) {
+                    let last = _.last(scope.items);
+
+                    if (last) {
+                        return last['$$loader'];
+                    }
+                }
+                return false;
+            }
         }
     }
     // todo: fix proper interfacing
