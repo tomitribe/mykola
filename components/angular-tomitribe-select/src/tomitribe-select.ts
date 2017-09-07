@@ -18,7 +18,7 @@ module tomitribe_select {
         .directive('tribeActivateHover', ['$timeout', tribeActivateHover])
         .directive('tribeSelectOpenOnFocus', ['$timeout', tribeSelectOpenOnFocus])
         .directive('tribeSelectPreventTab', ['$timeout', tribeSelectPreventTab])
-        .directive('tribeSelectFetchOnOpen', ['$timeout', tribeSelectFetchOnOpen])
+        .directive('tribeSelectFetchOnOpen', tribeSelectFetchOnOpen)
         .directive('tribeSelectPaginationControl', tribeSelectPaginationControl)
         .directive('tribeSelectPaginationLoader', tribeSelectPaginationLoader);
 
@@ -163,23 +163,19 @@ module tomitribe_select {
         }
     }
 
-    function tribeSelectFetchOnOpen($timeout) {
+    function tribeSelectFetchOnOpen() {
         return {
             restrict: 'A',
-            require: 'uiSelect',
+            require: '^uiSelect',
             replace: false,
             link: link,
         };
 
         function link(scope, element, attrs, uiSelectCtrl) {
             scope.$on('uis:activate', ()=> {
-                //Force dropdown to refresh
-                let oldSearch = uiSelectCtrl.search;
-                uiSelectCtrl.search = undefined;
-
-                $timeout(()=> {
-                    uiSelectCtrl.search = oldSearch;
-                });
+                if(attrs['refresh']) {
+                    uiSelectCtrl.refresh(attrs['refresh']);
+                }
             });
         }
     }
