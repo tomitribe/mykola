@@ -17,10 +17,10 @@ div
 
                             p
                                 h4 Simple Select (empty)
-                                ui-select(ng-model="myAge1", tabindex="0", tribe-select-open-on-focus, tribe-select-prevent-tab, tribe-select-fetch-on-open)
+                                ui-select(ng-model="myAge1", tabindex="0", tribe-select-open-on-focus, tribe-select-prevent-tab)
                                     ui-select-match(placeholder="Select Age...")
                                         span {{$select.selected}}
-                                    ui-select-choices(repeat="age in (ages | filter: $select.search)", refresh="updateAges()")
+                                    ui-select-choices(repeat="age in (ages | filter: $select.search)", refresh="loadAgesDummy()", tribe-select-fetch-on-open)
                                         span(ng-bind-html="age | highlight: $select.search")
                             p
                                 h4 Simple Select (with default value)

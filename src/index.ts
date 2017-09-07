@@ -262,6 +262,10 @@ module index {
                                 return ages;
                             }
 
+                            $scope.loadAgesDummy = () => {
+                                console.log("calling loadAgesDummy");
+                            };
+
                             $scope.loadAges = () => {
                                 $scope.$$pagingBusy = true;
 
