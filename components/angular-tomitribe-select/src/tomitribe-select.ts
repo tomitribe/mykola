@@ -109,16 +109,26 @@ module tomitribe_select {
             let runCounter = 0;
             let autoOpen = true;
 
-            function activateWithDelay(activate: () => void, delay: number, once: boolean) {
+            const activateWithDelay = (activate: () => void, delay: number, once: boolean) => {
                 return $timeout(activate, (delay && (!once || !runCounter)) ? delay : 0);
             }
 
-            angular.element(uiSelect.focusInput).on('focus', function() {
-                if (!uiSelect.open && autoOpen && angular.isNumber(scope.openOnFocusDelay)) {
+            const focusHandler = () => {
+                destroyTimer();
+                if (autoOpen && angular.isNumber(scope.openOnFocusDelay)) {
                     timer = activateWithDelay(uiSelect.activate, scope.openOnFocusDelay, scope.openOnFocusDelayOnce);
                     runCounter++;
                 }
-            });
+            }
+
+            // multiple selects have no focusser
+            if (uiSelect.multiple) {
+                angular.element(uiSelect.focusInput).on('focus', focusHandler);
+                // patch closing multiple on select, it should not close
+                scope.$on('uis:select', focusHandler);
+            } else {
+                angular.element(uiSelect.focusser).on('focus', focusHandler);
+            }
 
             angular.element(uiSelect.focusInput).on('blur', ()=> {
                 destroyTimer();
@@ -142,9 +152,8 @@ module tomitribe_select {
                $timeout(
                    () => {
                        autoOpen = true;
-                       angular.element(uiSelect.focusInput).blur(); // IE continious open fix
                    },
-                   scope.openOnFocusDelay
+                   scope.openOnFocusDelay + 250 // https://github.com/angular-ui/ui-select/issues/428#issuecomment-206684328
                 );
             });
 
