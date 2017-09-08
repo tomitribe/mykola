@@ -124,8 +124,6 @@ module tomitribe_select {
             // multiple selects have no focusser
             if (uiSelect.multiple) {
                 angular.element(uiSelect.focusInput).on('focus', focusHandler);
-                // patch closing multiple on select, it should not close
-                scope.$on('uis:select', focusHandler);
             } else {
                 angular.element(uiSelect.focusser).on('focus', focusHandler);
             }
