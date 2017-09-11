@@ -1,10 +1,10 @@
-let _ = require('underscore');
-
 import {TagReference} from "./tags.service";
 export class TagsController {
     static $inject = ['$scope', 'TribeTagsService', 'TribeTagsConfigurer'];
 
     constructor(private $scope, private tagService, private tagConfigurer) {
+        let _ = require('underscore');
+
         $scope.self = $scope; // this is weird right but then we reference with a dot and binding works cause angular doesn't copy it all
         $scope.availableTags = [];
 
@@ -12,7 +12,7 @@ export class TagsController {
 
         $scope.stringToTagReference = name => {
             const found = $scope.availableTags.filter(t => t.name === name);
-            var tag = !!found.length ? found[0] : new TagReference(null, name, {});
+            var tag = !!found.length ? found[0] : this.createTag(name);
 
             tag['$$invalid'] = !tagConfigurer.validation.default.isValid(name);
 
@@ -50,7 +50,13 @@ export class TagsController {
 
                     const previousArray = $scope.availableTags && $scope.$$pagingState ? $scope.availableTags : [];
 
-                    $scope.availableTags = tagConfigurer.sortFn(_.union(previousArray, tagsFromServer));
+                    $scope.availableTags = _.union(previousArray, tagsFromServer).sort((a:any,b:any) => a.name.localeCompare(b.name));
+
+                    //Add tag if we didn't find it
+                    if(query && !(_.findIndex($scope.availableTags, {name: query}) >= 0)) {
+                        $scope.availableTags.unshift(this.createTag(query));
+                    }
+
                     $scope.$$total = data.total;
 
                     // prerequisite to pagination
@@ -59,5 +65,13 @@ export class TagsController {
                 }
             );
         }
+
+    }
+
+    private createTag(name): TagReference {
+        let tag:any = new TagReference(null, name, {});
+        tag.isTag = true;
+
+        return tag;
     }
 }
