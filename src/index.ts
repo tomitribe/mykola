@@ -153,6 +153,25 @@ module index {
                                     rate: 5
                                 }];
 
+                            $scope.items3 = [
+                                {
+                                    name: 'First App',
+                                    rate: 5
+                                },
+                                {
+                                    name: 'Second App',
+                                    rate: 5
+                                },
+                                {
+                                    name: 'Third App',
+                                    rate: 5
+                                }];
+
+                            $scope.options3 = {
+                                totalCount: 40
+                            };
+
+
                             $scope.operatorItems = [
                                 {
                                     iconClass: "fa-2x fa-share",
@@ -255,6 +274,10 @@ module index {
                             $scope.myAge11 = 2;
                             $scope.agesPaginated = [];
 
+                            // Issue with ui-select multiple
+                            // [ui.select:choices] Expected multiple .ui-select-choices-row but got '0'
+                            // Issue https://github.com/angular-ui/ui-select/issues/1355
+                            $scope.tagNull = t => null;
 
                             function generateAges() {
                                 let ages =  _.range(increment - 10, increment);

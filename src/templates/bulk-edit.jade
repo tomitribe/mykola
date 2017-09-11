@@ -1,19 +1,27 @@
 div
-  div.row.header
-    div.col-xs-12
-      div.meta
-        div.title Bulk Edit
-        div.hero All are selected: {{checkedStatus | json}}
-  div.page
-    div.panel
-      div.row
-        div.col-sm-6
+  .row.header
+    .col-xs-12
+      .meta
+        .title Bulk Edit
+        .hero All are selected: {{checkedStatus | json}}
+  .page
+    .panel
+      .row
+        .col-sm-6
           h3 Selectable items
           ul.items-list
-            li.item(ng-repeat="item in items", ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}")
-              input(type="checkbox" ng-model="item.$$selected" ng-hide="true")
+            li.item(
+            ng-repeat="item in items",
+            ng-click="item.$$selected = !item.$$selected",
+            ng-class="{selected: item.$$selected}"
+            )
+              input(
+              type="checkbox",
+              ng-model="item.$$selected",
+              ng-hide="true"
+              )
               span Name: {{item.name}},  Rate: {{item.rate}}
-        div(ng-if="selectedAction").col-sm-6
+        .col-sm-6(ng-if="selectedAction")
           div
             h3 Clicked action
             div {{selectedAction}}
@@ -21,29 +29,85 @@ div
             h3 Selected items
             ul
               li(ng-repeat="item in selectedItems") {{item.name}}
-      div.row
-        div.col-sm-6
+      .clear
+        tribe-bulkedit(
+        list-items="items",
+        operator-items="operatorItems",
+        select-field="$$selected",
+        all-checked="checkedStatus"
+        )
+
+      .row
+        .col-sm-6
           h3 Selectable items Object of arrays in prop
           ul.items-list(ng-repeat="key in itemsProp")
-            li.item(ng-repeat="item in getDescendantProp(itemsObject, key.path)", ng-click="item.$$selected = !item.$$selected" ng-class="{selected: item.$$selected}")
-              input(type="checkbox" ng-model="item.$$selected" ng-hide="true")
+            li.item(
+            ng-repeat="item in getDescendantProp(itemsObject, key.path)",
+            ng-click="item.$$selected = !item.$$selected",
+            ng-class="{selected: item.$$selected}"
+            )
+              input(
+              type="checkbox",
+              ng-model="item.$$selected",
+              ng-hide="true"
+              )
               span Name: {{item.name}}, Rate: {{item.rate}}, Type: {{item.$$type}}
-      div.clear
-        tribe-bulkedit(list-items="items" operator-items="operatorItems" select-field="$$selected" all-checked="checkedStatus")
-      div.clear
-        tribe-bulkedit(list-items="itemsObject" list-prop="itemsProp" select-field="$$selected")
+      .clear
+        tribe-bulkedit(
+        list-items="itemsObject",
+        list-prop="itemsProp",
+        select-field="$$selected"
+        )
 
-      div.row
-        div.col-sm-6
+      .row
+        .col-sm-6
           h3 Selectable items (selecting using tribe-click: first element disabled)
           ul.items-list
-            li.item(ng-repeat="item in items2" tribe-click="item" tribe-click-disabled="$first" ng-class="{selected: item.$$selected}")
-              input(type="checkbox" ng-model="item.$$selected" ng-hide="true")
+            li.item(
+            ng-repeat="item in items2",
+            tribe-click="item",
+            tribe-click-disabled="$first",
+            ng-class="{selected: item.$$selected}"
+            )
+              input(
+              type="checkbox",
+              ng-model="item.$$selected",
+              ng-hide="true"
+              )
               span Name: {{item.name}},  Rate: {{item.rate}}
 
-      div.clear
-        tribe-bulkedit(list-items="items2" operator-items="operatorItems" select-field="$$selected" all-checked="checkedStatus2")
+      .clear
+        tribe-bulkedit(
+        list-items="items2",
+        operator-items="operatorItems",
+        select-field="$$selected",
+        all-checked="checkedStatus2"
+        )
 
+      .row
+        .col-sm-6
+          h3 Selectable items (with options.totalCount)
+          ul.items-list
+            li.item(
+            ng-repeat="item in items3",
+            ng-click="item.$$selected = !item.$$selected",
+            ng-class="{selected: item.$$selected}"
+            )
+              input(
+              type="checkbox",
+              ng-model="item.$$selected",
+              ng-hide="true"
+              )
+              span Name: {{item.name}},  Rate: {{item.rate}}
+
+      .clear
+        tribe-bulkedit(
+        list-items="items3",
+        operator-items="operatorItems",
+        select-field="$$selected",
+        all-checked="checkedStatus2",
+        options="options3"
+        )
 
 
 
