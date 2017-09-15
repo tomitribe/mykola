@@ -181,16 +181,18 @@ module tomitribe_select {
 
     function tribeSelectSaveSearch() {
         return {
-            require: 'uiSelect',
+            require: '^uiSelect',
             replace: false,
             link: link
         };
-
         function link(scope, element, attrs, uiSelect) {
+            // let default key be id
+            const key = attrs.tribeSelectSaveSearch || 'id';
+            // prevent input clear on select
             uiSelect.resetSearchInput = false;
-
+            // copy seleted attr to search field
             scope.$on('uis:select', function(arg) {
-                uiSelect.search = uiSelect.selected;
+                uiSelect.search = angular.isObject(uiSelect.selected) ? uiSelect.selected[key] : uiSelect.selected;
             });
         }
     }
