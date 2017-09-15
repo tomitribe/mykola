@@ -20,7 +20,8 @@ module tomitribe_select {
         .directive('tribeSelectPreventTab', ['$timeout', tribeSelectPreventTab])
         .directive('tribeSelectFetchOnOpen', tribeSelectFetchOnOpen)
         .directive('tribeSelectPaginationControl', tribeSelectPaginationControl)
-        .directive('tribeSelectPaginationLoader', tribeSelectPaginationLoader);
+        .directive('tribeSelectPaginationLoader', tribeSelectPaginationLoader)
+        .directive('tribeSelectSaveSearch', tribeSelectSaveSearch);
 
     function tribeSelectPreventTab($timeout) {
         return {
@@ -174,6 +175,22 @@ module tomitribe_select {
                 if(attrs['refresh']) {
                     uiSelectCtrl.refresh(attrs['refresh']);
                 }
+            });
+        }
+    }
+
+    function tribeSelectSaveSearch() {
+        return {
+            require: 'uiSelect',
+            replace: false,
+            link: link
+        };
+
+        function link(scope, element, attrs, uiSelect) {
+            uiSelect.resetSearchInput = false;
+
+            scope.$on('uis:select', function(arg) {
+                uiSelect.search = uiSelect.selected;
             });
         }
     }
