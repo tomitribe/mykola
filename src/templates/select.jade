@@ -30,8 +30,16 @@ div
                                     ui-select-choices(repeat="age in (ages | filter: $select.search)")
                                         span(ng-bind-html="age | highlight: $select.search")
                             p
-                                h4 Select multiple
-                                ui-select(multiple ng-model="myAge3", tabindex="0", tribe-select-open-on-focus, tribe-select-prevent-tab)
+                                h4 Select multiple + (close-on-select="false")
+                                ui-select(
+                                multiple,
+                                ng-model="myAge3",
+                                tabindex="0",
+                                tribe-select-open-on-focus,
+                                tribe-select-prevent-tab,
+                                tagging="tagNull",
+                                close-on-select="false"
+                                )
                                     ui-select-match(placeholder="Select Age...")
                                         span {{$item}}
                                     ui-select-choices(repeat="age in (ages | filter: $select.search)")
