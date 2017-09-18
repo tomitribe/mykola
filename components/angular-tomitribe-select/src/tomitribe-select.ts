@@ -267,13 +267,13 @@ module tomitribe_select {
         return {
             restrict: 'A',
             replace: false,
+            require: 'uiSelect',
             link: link
         };
 
-        function link(scope, element, attrs, ctrl) {
-            var inputElement = angular.element(element[0].querySelector('input.ui-select-search'));
-            if (inputElement && inputElement.length > 0) {
-                inputElement.attr("maxlength", attrs.tribeSelectMaxLength);
+        function link(scope, element, attrs, uiSelectCtrl) {
+            if (uiSelectCtrl.searchInput && uiSelectCtrl.searchInput.length > 0) {
+                uiSelectCtrl.searchInput.attr("maxlength", attrs.tribeSelectMaxLength);
             }
         }
     }
