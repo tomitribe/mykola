@@ -273,6 +273,24 @@ module index {
                             $scope.ages = [1, 2, 5, 10, 25, 35, 100];
                             $scope.myAge11 = 2;
                             $scope.agesPaginated = [];
+                            $scope.sampleObjects = [
+                                {
+                                    name: "object 1",
+                                    value: "1"
+                                },
+                                {
+                                    name: "object 2",
+                                    value: "2"
+                                },
+                                {
+                                    name: "object 3",
+                                    value: "3"
+                                },
+                                {
+                                    name: "object 4",
+                                    value: "4"
+                                }
+                            ]
 
                             // Issue with ui-select multiple
                             // [ui.select:choices] Expected multiple .ui-select-choices-row but got '0'

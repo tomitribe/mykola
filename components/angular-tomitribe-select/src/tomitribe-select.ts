@@ -21,6 +21,7 @@ module tomitribe_select {
         .directive('tribeSelectFetchOnOpen', tribeSelectFetchOnOpen)
         .directive('tribeSelectPaginationControl', tribeSelectPaginationControl)
         .directive('tribeSelectPaginationLoader', tribeSelectPaginationLoader)
+        .directive('tribeSelectSaveSearch', tribeSelectSaveSearch)
         .directive('tribeSelectMaxLength', tribeSelectMaxLength);
 
     function tribeSelectPreventTab($timeout) {
@@ -175,6 +176,24 @@ module tomitribe_select {
                 if(attrs['refresh']) {
                     uiSelectCtrl.refresh(attrs['refresh']);
                 }
+            });
+        }
+    }
+
+    function tribeSelectSaveSearch() {
+        return {
+            require: '^uiSelect',
+            replace: false,
+            link: link
+        };
+        function link(scope, element, attrs, uiSelect) {
+            // let default key be id
+            const key = attrs.tribeSelectSaveSearch || 'id';
+            // prevent input clear on select
+            uiSelect.resetSearchInput = false;
+            // copy seleted attr to search field
+            scope.$on('uis:select', function(arg) {
+                uiSelect.search = angular.isObject(uiSelect.selected) ? uiSelect.selected[key] : uiSelect.selected;
             });
         }
     }
