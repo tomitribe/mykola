@@ -191,9 +191,11 @@ module tomitribe_select {
             // prevent input clear on select
             uiSelect.resetSearchInput = false;
             // copy seleted attr to search field
-            scope.$on('uis:select', function(arg) {
+            const choiceToSearch = () => {
                 uiSelect.search = angular.isObject(uiSelect.selected) ? uiSelect.selected[key] : uiSelect.selected;
-            });
+            }
+            scope.$on('uis:select', choiceToSearch);
+            scope.$on('uis:close', choiceToSearch);
         }
     }
 
