@@ -21,7 +21,8 @@ module tomitribe_select {
         .directive('tribeSelectFetchOnOpen', tribeSelectFetchOnOpen)
         .directive('tribeSelectPaginationControl', tribeSelectPaginationControl)
         .directive('tribeSelectPaginationLoader', tribeSelectPaginationLoader)
-        .directive('tribeSelectSaveSearch', tribeSelectSaveSearch);
+        .directive('tribeSelectSaveSearch', tribeSelectSaveSearch)
+        .directive('tribeSelectMaxLength', tribeSelectMaxLength);
 
     function tribeSelectPreventTab($timeout) {
         return {
@@ -282,6 +283,22 @@ module tomitribe_select {
             }
         }
     }
+
+    function tribeSelectMaxLength() {
+        return {
+            restrict: 'A',
+            replace: false,
+            require: 'uiSelect',
+            link: link
+        };
+
+        function link(scope, element, attrs, uiSelectCtrl) {
+            if (uiSelectCtrl.searchInput && uiSelectCtrl.searchInput.length > 0) {
+                uiSelectCtrl.searchInput.attr("maxlength", attrs.tribeSelectMaxLength);
+            }
+        }
+    }
+
     // todo: fix proper interfacing
     (<any>$).fn.bindFirst = function (name, fn) {
         this.on(name, fn);
