@@ -17,7 +17,7 @@ div
 
                             p
                                 h4 Simple Select (empty)
-                                ui-select(ng-model="myAge1", tabindex="0", tribe-select-open-on-focus, tribe-select-prevent-tab)
+                                ui-select(ng-model="myAge1", tabindex="0", tribe-select-open-on-focus, tribe-select-prevent-tab, tribe-select-max-length="40")
                                     ui-select-match(placeholder="Select Age...")
                                         span {{$select.selected}}
                                     ui-select-choices(repeat="age in (ages | filter: $select.search)", refresh="loadAgesDummy()", tribe-select-fetch-on-open)
@@ -84,3 +84,10 @@ div
                                         div(tribe-activate-hover="age", ng-if="!age.$$loader")
                                             span(ng-bind-html="age | highlight: $select.search")
                                         tribe-select-pagination-loader(item="age", item-name="ages", paging-state="$$pagingState", paging-busy="$$pagingBusy", container-class="ages-dropdown", refresh="loadAges()")
+                            p
+                                h4 Select simple with search save
+                                ui-select(ng-model="myAge9", tabindex="0", tribe-select-open-on-focus, tribe-select-prevent-tab)
+                                    ui-select-match(placeholder="Select...", tribe-select-save-search="name")
+                                        span {{$select.selected.name}}
+                                    ui-select-choices(repeat="item in (sampleObjects | filter: $select.search)")
+                                        span(ng-bind-html="item.name | highlight: $select.search")
