@@ -48,9 +48,13 @@ export class TagsController {
                         return new TagReference(t.id, t.name, {});
                     });
 
-                    const previousArray = $scope.availableTags && $scope.$$pagingState ? $scope.availableTags : [];
+                    const previousArray = (($scope.availableTags && $scope.$$pagingState) || !tagsFromServer.length) ? $scope.availableTags : [];
 
-                    $scope.availableTags = tagConfigurer.sortFn(_.union(previousArray, tagsFromServer));
+                    // remove previous (new), union and sort
+                    $scope.availableTags = tagConfigurer.sortFn(
+                        _.union(previousArray, tagsFromServer)
+                        .filter(tag => !!tag.id)
+                    );
 
                     //Add tag if we didn't find it
                     if(query && !(_.findIndex($scope.availableTags, {name: query}) >= 0)) {
