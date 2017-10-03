@@ -19,10 +19,6 @@ export class TagsController {
             return tag;
         };
 
-        $scope.groupSuggestions = item => {
-            return 'Suggestions';
-        };
-
         $scope.$on('tribe-tags:refresh', () => $scope.loadTagsProposals(''));
 
         $scope.loadTagsProposals = (query) => {

@@ -10,6 +10,9 @@
  * tribeSelectFetchOnOpen: this directive refresh the list options, when the dropdown is opened
  *
  */
+
+import './tomitribe-select.scss';
+
 module tomitribe_select {
     let _ = require('underscore');
 
