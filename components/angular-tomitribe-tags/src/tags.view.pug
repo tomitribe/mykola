@@ -5,33 +5,30 @@ tagging-tokens="ENTER|,",
 ng-model="self.ngModel",
 sortable="true",
 tribe-tags-on-blur,
-name="tags",
 tribe-tagging-validator,
 displayed-property="name",
 tabindex="0",
 tribe-select-open-on-focus,
-tribe-select-prevent-tab
+tribe-select-prevent-tab,
+uis-open-close="onOpenClose(isOpen)"
 )
   ui-select-match(
   class="{{$item.$$invalid ? 'invalid' : ''}}",
   placeholder="Select tag..."
   ) {{$item.name}}
   ui-select-choices(
-  tribe-select-pagination-control,
-  items="availableTags",
-  paging-busy="$$pagingBusy",
-  total="$$total",
+  ng-show="$select.items.length &&",
   ui-disable-choice="tag.$$loader",
   repeat="tag in availableTags",
   select-choices-header="Suggestions",
-  ng-show="$select.items.length &&",
+  select-choices-footer="{{$select.items.length + $select.selected.length}} of {{$$total}} tags are displayed {{ $select.items.length + $select.selected.length < $$total ? '(Scroll for more)' : '(All tags loaded)' }}",
+
   refresh="loadTagsProposals($select.search)",
   refresh-delay="400",
   position="{{position}}"
   )
     div(
-    tribe-activate-hover="tag",
-    ng-if="!tag.$$loader"
+    tribe-activate-hover="tag"
     )
       span(
       ng-if="!tag.isTag",
@@ -41,13 +38,12 @@ tribe-select-prevent-tab
       ng-if="tag.isTag",
       ng-bind-html="(tag.name | highlight: $select.search) + ' (new)'"
       )
-    tribe-select-pagination-loader(
-    item="tag",
-    item-name="tags",
-    paging-state="$$pagingState",
-    paging-busy="$$pagingBusy",
-    container-class="tags-dropdown",
-    refresh="loadTagsProposals($select.search)"
-    )
+      .load-more(
+      ng-if="$last",
+      infinite-scroll="$$pagingState && loadTagsProposals($select.search)",
+      infinite-scroll-disabled="!$select.open || $$pagingBusy",
+      infinite-scroll-distance="0",
+      infinite-scroll-container="domElem"
+      )
 p.validation-message(ng-show="form.tags.$error.tagging && (!form.tags.$pristine || form.$submitted)"
 ) {{validationErrorMessage}}

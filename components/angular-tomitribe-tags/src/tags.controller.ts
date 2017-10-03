@@ -38,7 +38,7 @@ export class TagsController {
                 "size": 20
             };
 
-            tagService.findTags(params).then(
+            return tagService.findTags(params).then(
                 (data) => {
                     let tagsFromServer = data.items.map(t => {
                         return new TagReference(t.id, t.name, {});

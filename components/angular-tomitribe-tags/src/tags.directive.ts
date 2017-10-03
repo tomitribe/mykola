@@ -20,6 +20,7 @@ export class TagsDirective {
     };
     link: ng.IDirectiveLinkFn = (scope: any, el: any, attrs: any, ctrl: any): void => {
         scope.form = ctrl;
+        scope.onOpenClose = (isOpen) => { if (!scope.domElem && isOpen) scope.domElem = el.find('.ui-select-choices-content')};
         if(!scope.position) {
             scope.position = 'auto';
         }
