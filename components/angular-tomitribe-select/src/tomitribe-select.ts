@@ -24,6 +24,7 @@ module tomitribe_select {
         .directive('tribeSelectFetchOnOpen', tribeSelectFetchOnOpen)
         .directive('tribeSelectPaginationControl', tribeSelectPaginationControl)
         .directive('tribeSelectPaginationLoader', tribeSelectPaginationLoader)
+        .directive('tribeSelectLoadMore', tribeSelectLoadMore)
         .directive('tribeSelectSaveSearch', tribeSelectSaveSearch)
         .directive('tribeSelectMaxLength', tribeSelectMaxLength);
 
@@ -200,6 +201,27 @@ module tomitribe_select {
             }
             scope.$on('uis:select', choiceToSearch);
             scope.$on('uis:close', choiceToSearch);
+        }
+    }
+
+    function tribeSelectLoadMore() {
+        return {
+            restrict: 'E',
+            replace: false,
+            template: require('./tomitribe-load-more.jade'),
+            require: '^uiSelect',
+            scope: {
+                pagingState: '=',
+                pagingBusy: '=',
+                refresh: '&'
+            },
+            link: link
+        };
+
+        function link(scope, element, attrs, select) {
+            scope.$select = select;
+
+            scope.closestContainer = element.parents('.ui-select-choices-content')[0];
         }
     }
 

@@ -22,7 +22,6 @@ uis-open-close="onOpenClose(isOpen)"
   repeat="tag in availableTags",
   select-choices-header="Suggestions",
   select-choices-footer="{{$select.items.length + $select.selected.length}} of {{$$total}} tags are displayed {{ $select.items.length + $select.selected.length < $$total ? '(Scroll for more)' : '(All tags loaded)' }}",
-
   refresh="loadTagsProposals($select.search)",
   refresh-delay="400",
   position="{{position}}"
@@ -38,12 +37,11 @@ uis-open-close="onOpenClose(isOpen)"
       ng-if="tag.isTag",
       ng-bind-html="(tag.name | highlight: $select.search) + ' (new)'"
       )
-      .load-more(
-      ng-if="$last",
-      infinite-scroll="$$pagingState && loadTagsProposals($select.search)",
-      infinite-scroll-disabled="!$select.open || $$pagingBusy",
-      infinite-scroll-distance="0",
-      infinite-scroll-container="domElem"
+      tribe-select-load-more(
+        ng-if="$last",
+        paging-state="$$pagingState",
+        paging-busy="$$pagingBusy",
+        refresh="loadTagsProposals($select.search)"
       )
 p.validation-message(ng-show="form.tags.$error.tagging && (!form.tags.$pristine || form.$submitted)"
 ) {{validationErrorMessage}}
