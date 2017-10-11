@@ -1,27 +1,29 @@
 ui-select.tags-dropdown(
+ng-model="self.ngModel",
+
+tabindex="0",
+sortable="true",
 multiple,
+
 tagging="stringToTagReference",
 tagging-tokens="ENTER|,",
-ng-model="self.ngModel",
-sortable="true",
+
 tribe-tags-on-blur,
 tribe-tagging-validator,
-displayed-property="name",
-tabindex="0",
 tribe-select-open-on-focus,
-tribe-select-prevent-tab,
-uis-open-close="onOpenClose(isOpen)"
+tribe-select-prevent-tab
 )
   ui-select-match(
   class="{{$item.$$invalid ? 'invalid' : ''}}",
   placeholder="Select tag..."
   ) {{$item.name}}
-  ui-select-choices(
+  ui-select-choices.has-header.has-footer(
   ng-show="$select.items.length &&",
-  ui-disable-choice="tag.$$loader",
   repeat="tag in availableTags",
+
   select-choices-header="Suggestions",
   select-choices-footer="{{$select.items.length + $select.selected.length}} of {{$$total}} tags are displayed {{ $select.items.length + $select.selected.length < $$total ? '(Scroll for more)' : '(All tags loaded)' }}",
+
   refresh="loadTagsProposals($select.search)",
   refresh-delay="400",
   position="{{position}}"
@@ -29,19 +31,22 @@ uis-open-close="onOpenClose(isOpen)"
     div(
     tribe-activate-hover="tag"
     )
+      //- tag
       span(
       ng-if="!tag.isTag",
       ng-bind-html="tag.name + tag.isTag| highlight: $select.search"
       )
+      //- new
       span(
       ng-if="tag.isTag",
       ng-bind-html="(tag.name | highlight: $select.search) + ' (new)'"
       )
-      tribe-select-load-more(
-        ng-if="$last",
-        paging-state="$$pagingState",
-        paging-busy="$$pagingBusy",
-        refresh="loadTagsProposals($select.search)"
-      )
-p.validation-message(ng-show="form.tags.$error.tagging && (!form.tags.$pristine || form.$submitted)"
+    tribe-select-pagination-loader(
+    ng-if="$last",
+    paging-state="$$pagingState",
+    paging-busy="$$pagingBusy",
+    refresh="loadTagsProposals($select.search)"
+    )
+p.validation-message(
+ng-show="form.tags.$error.tagging && (!form.tags.$pristine || form.$submitted)"
 ) {{validationErrorMessage}}
