@@ -14,7 +14,7 @@ export class TagsController {
             const found = $scope.availableTags.filter(t => t.name === name);
             var tag = !!found.length ? found[0] : this.createTag(name);
 
-            tag['$$invalid'] = !tagConfigurer.validation.default.isValid(name);
+            this.setInvalid(tag);
 
             return tag;
         };
@@ -75,7 +75,12 @@ export class TagsController {
     private createTag(name): TagReference {
         let tag:any = new TagReference(null, name, {});
         tag.isTag = true;
+        this.setInvalid(tag);
 
         return tag;
+    }
+
+    private setInvalid(tag) {
+        tag['$$invalid'] = !this.tagConfigurer.validation.default.isValid(tag.name);
     }
 }
