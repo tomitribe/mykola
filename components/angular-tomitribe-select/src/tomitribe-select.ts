@@ -10,6 +10,9 @@
  * tribeSelectFetchOnOpen: this directive refresh the list options, when the dropdown is opened
  *
  */
+
+import './tomitribe-select.scss';
+
 module tomitribe_select {
     let _ = require('underscore');
 
@@ -19,7 +22,6 @@ module tomitribe_select {
         .directive('tribeSelectOpenOnFocus', ['$timeout', tribeSelectOpenOnFocus])
         .directive('tribeSelectPreventTab', ['$timeout', tribeSelectPreventTab])
         .directive('tribeSelectFetchOnOpen', tribeSelectFetchOnOpen)
-        .directive('tribeSelectPaginationControl', tribeSelectPaginationControl)
         .directive('tribeSelectPaginationLoader', tribeSelectPaginationLoader)
         .directive('tribeSelectSaveSearch', tribeSelectSaveSearch)
         .directive('tribeSelectMaxLength', tribeSelectMaxLength);
@@ -207,80 +209,16 @@ module tomitribe_select {
             template: require('./tomitribe-pagination-loader.jade'),
             require: '^uiSelect',
             scope: {
-                item: '=',
                 pagingState: '=',
                 pagingBusy: '=',
-                containerClass: '@',
-                refresh: '&',
-                itemName: '@'
+                refresh: '&'
             },
             link: link
         };
 
         function link(scope, element, attrs, ctrl) {
             scope.$select = ctrl;
-
-            scope.$watch("$select.items", (nv, ov)=> {
-                if(nv) {
-                    //Count all excluding : new tags and $$loader
-                    scope.$$listTotal = nv.reduce((res, item) => {
-                        if((item['isTag'] === undefined || !item['isTag']) && (item['$$loader'] === undefined || !item['$$loader'])) {
-                            res++;
-                        }
-                        return res;
-                    }, 0);
-                }
-            });
-        }
-    }
-
-    function tribeSelectPaginationControl() {
-        return {
-            restrict: 'A',
-            replace: false,
-            scope: {
-                items: '=',
-                pagingBusy: '=',
-                total: '='
-            },
-            link: link
-        };
-
-        function link(scope, element, attrs, ctrl) {
-            scope.$watch("pagingBusy", (nv, ov)=> {
-                if (ov !== undefined && nv !== undefined) {
-                    if (!!ov && !nv) {
-                        //when loading finish
-                        //when we don't have any items, do not show load more
-                        if (scope.items && scope.items.length > 0) {
-                            scope.items.push({
-                                $$loader: true,
-                                total: scope.total
-                            });
-                        }
-                    } else if (!ov && !!nv) {
-                        //loading start
-                        removeLoadMoreOption();
-                    }
-                }
-            });
-
-            function removeLoadMoreOption() {
-                if (isLastLoadMoreOption()) {
-                    scope.items.pop();
-                }
-            }
-
-            function isLastLoadMoreOption() {
-                if (scope.items) {
-                    let last = _.last(scope.items);
-
-                    if (last) {
-                        return last['$$loader'];
-                    }
-                }
-                return false;
-            }
+            scope.collectionContainer = element.parents('.ui-select-choices-content')[0];
         }
     }
 
