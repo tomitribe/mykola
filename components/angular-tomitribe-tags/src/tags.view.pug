@@ -8,6 +8,8 @@ multiple,
 tagging="stringToTagReference",
 tagging-tokens="ENTER|,",
 
+name="{{fieldName}}",
+
 tribe-tagging-validator,
 validation-key="name",
 
@@ -50,5 +52,5 @@ tribe-select-prevent-tab
     refresh="loadTagsProposals($select.search)"
     )
 p.validation-message(
-ng-show="form.tags.$error.tagging && (!form.tags.$pristine || form.$submitted)"
+ng-show="form[fieldName].$error.tagging && (!form[fieldName].$pristine || form.$submitted)"
 ) {{validationErrorMessage}}

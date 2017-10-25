@@ -16,10 +16,13 @@ export class TagsDirective {
     controller = 'TribeTagsController';
     scope = {
         ngModel: '=',
-        position: '@?'
+        position: '@?',
+        fieldName: '@?'
     };
     link: ng.IDirectiveLinkFn = (scope: any, el: any, attrs: any, ctrl: any): void => {
         scope.form = ctrl;
+        scope.fieldName = scope.fieldName || 'tags';
+
         if(!scope.position) {
             scope.position = 'auto';
         }
