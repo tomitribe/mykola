@@ -247,10 +247,8 @@ module tomitribe_select {
       };
 
       function link(scope, element, attrs, uiSelect) {
-        scope.$select = uiSelect;
-
-        scope.$watch('$select.search', () => {
-          if (scope.calculateDropdownPos) scope.calculateDropdownPos();
+        scope.$watchCollection('$select.items', () => {
+            if (scope.calculateDropdownPos) scope.calculateDropdownPos();
         })
       }
     }
