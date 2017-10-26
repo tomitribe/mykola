@@ -24,7 +24,8 @@ module tomitribe_select {
         .directive('tribeSelectFetchOnOpen', tribeSelectFetchOnOpen)
         .directive('tribeSelectPaginationLoader', tribeSelectPaginationLoader)
         .directive('tribeSelectSaveSearch', tribeSelectSaveSearch)
-        .directive('tribeSelectMaxLength', tribeSelectMaxLength);
+        .directive('tribeSelectMaxLength', tribeSelectMaxLength)
+        .directive('tribeSelectRedrawOnTagging', tribeSelectRedrawOnTagging)
 
     function tribeSelectPreventTab($timeout) {
         return {
@@ -235,6 +236,21 @@ module tomitribe_select {
                 uiSelectCtrl.searchInput.attr("maxlength", attrs.tribeSelectMaxLength);
             }
         }
+    }
+
+    function tribeSelectRedrawOnTagging() {
+      return {
+        restrict: 'A',
+        replace: false,
+        require: '^uiSelect',
+        link: link
+      };
+
+      function link(scope, element, attrs, uiSelect) {
+        scope.$watchCollection('$select.items', () => {
+            if (scope.calculateDropdownPos) scope.calculateDropdownPos();
+        })
+      }
     }
 
     // todo: fix proper interfacing
