@@ -25,7 +25,7 @@ module tomitribe_select {
         .directive('tribeSelectPaginationLoader', tribeSelectPaginationLoader)
         .directive('tribeSelectSaveSearch', tribeSelectSaveSearch)
         .directive('tribeSelectMaxLength', tribeSelectMaxLength)
-        .directive('refreshOnItemAdded', refreshOnItemAdded)
+        .directive('tribeSelectRedrawOnTagging', tribeSelectRedrawOnTagging)
 
     function tribeSelectPreventTab($timeout) {
         return {
@@ -238,7 +238,7 @@ module tomitribe_select {
         }
     }
 
-    function refreshOnItemAdded() {
+    function tribeSelectRedrawOnTagging() {
       return {
         restrict: 'A',
         replace: false,
@@ -249,7 +249,7 @@ module tomitribe_select {
       function link(scope, element, attrs, uiSelect) {
         scope.$select = uiSelect;
 
-        scope.$watch('$select.items.length', () => {
+        scope.$watch('$select.search', () => {
           if (scope.calculateDropdownPos) scope.calculateDropdownPos();
         })
       }
