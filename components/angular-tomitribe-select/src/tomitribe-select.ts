@@ -26,6 +26,7 @@ module tomitribe_select {
         .directive('tribeSelectSaveSearch', tribeSelectSaveSearch)
         .directive('tribeSelectMaxLength', tribeSelectMaxLength)
         .directive('tribeSelectRedrawOnTagging', tribeSelectRedrawOnTagging)
+        .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab]);
 
     function tribeSelectPreventTab($timeout) {
         return {
@@ -251,6 +252,30 @@ module tomitribe_select {
             if (scope.calculateDropdownPos) scope.calculateDropdownPos();
         })
       }
+    }
+
+    function tribeSelectOnTab($timeout) {
+        return {
+            restrict: 'A',
+            require: 'uiSelect',
+            replace: false,
+            link: link
+        };
+        function link(scope, element, attrs, uiSelect) {
+            if (uiSelect.searchInput) {
+                uiSelect.searchInput.bindFirst('keydown', function (e) {
+                    if (e.keyCode === 9) {
+                        if (!uiSelect.multiple) {
+                            uiSelect.selected = uiSelect.items[uiSelect.activeIndex];
+                            uiSelect.search = uiSelect.items[uiSelect.activeIndex];
+                            $timeout(() => {
+                                uiSelect.select(uiSelect.items[uiSelect.activeIndex], true);
+                            });
+                        }
+                    }
+                });
+            }
+        }
     }
 
     // todo: fix proper interfacing
