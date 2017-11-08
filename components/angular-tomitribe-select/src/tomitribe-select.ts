@@ -26,6 +26,7 @@ module tomitribe_select {
         .directive('tribeSelectSaveSearch', tribeSelectSaveSearch)
         .directive('tribeSelectMaxLength', tribeSelectMaxLength)
         .directive('tribeSelectRedrawOnTagging', tribeSelectRedrawOnTagging)
+        .directive('tribeSelectDontCloseOnClick', tribeSelectDontCloseOnClick)
         .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab]);
 
     function tribeSelectPreventTab($timeout) {
@@ -276,6 +277,23 @@ module tomitribe_select {
                 });
             }
         }
+    }
+
+    function tribeSelectDontCloseOnClick() {
+      return {
+          restrict: 'A',
+          require: 'uiSelect',
+          replace: false,
+          link: link
+      };
+      function link(scope, element, attrs, ctrl) {
+          // monkey patch of ui-select toggle to prevent close on click on select
+          ctrl.toggle = () => {
+            if (!ctrl.open) {
+              ctrl.activate();
+            }
+          }
+      }
     }
 
     // todo: fix proper interfacing
