@@ -287,12 +287,9 @@ module tomitribe_select {
           link: link
       };
       function link(scope, element, attrs, ctrl) {
-          // monkey patch of ui-select toggle to prevent close on click on select
-          ctrl.toggle = () => {
-            if (!ctrl.open) {
-              ctrl.activate();
-            }
-          }
+          ctrl.searchInput.off('click').on('click', (event) => {
+            if (ctrl.open) event.stopPropagation();
+          })
       }
     }
 
