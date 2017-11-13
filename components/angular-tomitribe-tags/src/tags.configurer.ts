@@ -27,9 +27,13 @@ export class TagsConfigurer {
 
                 const lessThanMax = tagName.length <= this.maxLength;
                 const passesRegex = regex.test(tagName);
-                const notDuplicate = tags? tags.filter((tag: TagReference) => tag.name === tagName).length <= (inputValdatorCheck ? 1 : 0): true;
+                const notDuplicate = tags ? tags.filter((tag: TagReference) => tag.name === tagName).length <= (inputValdatorCheck ? 1 : 0): true;
 
                 return tagName && lessThanMax && passesRegex && notDuplicate;
+            },
+
+            isDuplicate(tagName: string, tags: Array<any>): boolean {
+                return tags ? !(tags.filter((tag: TagReference) => tag.name === tagName).length <= 1) : false;
             }
         }
     }

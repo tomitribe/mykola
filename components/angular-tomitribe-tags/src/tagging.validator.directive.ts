@@ -13,6 +13,7 @@ export class TaggingValidatorDirective implements ng.IDirective {
 
         scope.$parent.setTagInvalid = (tag: TagReference, inputValdatorCheck:boolean = false) => {
             tag['$$invalid'] = !this.tagConfigurer.validation.default.isValid(tag.name, uiSelect.selected, inputValdatorCheck);
+            tag['$$duplicate'] = this.tagConfigurer.validation.default.isDuplicate(tag.name, uiSelect.selected);
             return tag;
         }
 
