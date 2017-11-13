@@ -44,8 +44,13 @@ tribe-select-prevent-tab
       )
       //- new
       span(
-      ng-if="tag.isTag",
+      ng-if="tag.isTag && !tag.$$duplicate",
       ng-bind-html="(tag.name | highlight: $select.search) + ' (new)'"
+      )
+      //- duplicate
+      span(
+      ng-if="tag.isTag && tag.$$duplicate",
+      ng-bind-html="(tag.name | highlight: $select.search)"
       )
     tribe-select-pagination-loader(
     ng-if="$last",
