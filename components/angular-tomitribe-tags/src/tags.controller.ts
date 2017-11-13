@@ -1,4 +1,5 @@
 import {TagReference} from "./tags.service";
+
 export class TagsController {
     static $inject = ['$scope', 'TribeTagsService', 'TribeTagsConfigurer'];
 
@@ -11,12 +12,8 @@ export class TagsController {
         $scope.validationErrorMessage = tagConfigurer.validation.default.errorMessage();
 
         $scope.stringToTagReference = name => {
-            const found = $scope.availableTags.filter(t => t.name === name);
-            var tag = !!found.length ? found[0] : this.createTag(name);
-
-            this.setInvalid(tag);
-
-            return tag;
+            const found = _.findWhere($scope.availableTags, {name: name});
+            return found ? $scope.setTagInvalid(found) : this.createTag(name);
         };
 
         $scope.$on('tribe-tags:refresh', () => $scope.loadTagsProposals(''));
@@ -53,8 +50,10 @@ export class TagsController {
                     );
 
                     //Add tag if we didn't find it
-                    if(query && !(_.findIndex($scope.availableTags, {name: query}) >= 0)) {
-                        $scope.availableTags.unshift(this.createTag(query));
+                    const found = _.findWhere($scope.availableTags, {name: query});
+                    if(query && !found) {
+                        const newTag = this.createTag(query);
+                        $scope.availableTags.unshift(newTag);
                     }
 
                     $scope.$$total = data.total;
@@ -68,15 +67,19 @@ export class TagsController {
 
     }
 
-    private createTag(name): TagReference {
+    private createTag(name: string): TagReference {
         let tag:any = new TagReference(null, name, {});
         tag.isTag = true;
-        this.setInvalid(tag);
+         // ui-select not allows duplicates, so we make tags unique
+        this.makeTagUnique(tag);
+        this.$scope.setTagInvalid(tag);
 
         return tag;
     }
 
-    private setInvalid(tag) {
-        tag['$$invalid'] = !this.tagConfigurer.validation.default.isValid(tag.name);
+    private makeTagUnique(tag: TagReference) {
+        // as ui-select use angular.equals we have to add real field
+        tag['uniqueField'] = Math.random() * Math.random();
+        return tag;
     }
 }
