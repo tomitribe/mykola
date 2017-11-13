@@ -13,7 +13,7 @@ export class TagsController {
 
         $scope.stringToTagReference = name => {
             const found = _.findWhere($scope.availableTags, {name: name});
-            return found ? $scope.setTagInvalid(found) : this.createTag(name);
+            return found ? $scope.applyTaggingValidation(found) : this.createTag(name);
         };
 
         $scope.$on('tribe-tags:refresh', () => $scope.loadTagsProposals(''));
@@ -72,7 +72,7 @@ export class TagsController {
         tag.isTag = true;
          // ui-select not allows duplicates, so we make tags unique
         this.makeTagUnique(tag);
-        this.$scope.setTagInvalid(tag);
+        this.$scope.applyTaggingValidation(tag);
 
         return tag;
     }
