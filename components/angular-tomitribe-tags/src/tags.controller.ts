@@ -65,6 +65,9 @@ export class TagsController {
             );
         }
 
+        $scope.refreshDuplicateValidation = (selected) => {
+            selected.forEach( tag => $scope.applyTaggingValidation(tag) )
+        }
     }
 
     private createTag(name: string): TagReference {

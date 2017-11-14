@@ -1,3 +1,5 @@
+let _ = require('underscore');
+
 import {TagReference} from "./tags.service";
 export class TaggingValidatorDirective implements ng.IDirective {
     restrict = 'A';
@@ -12,8 +14,10 @@ export class TaggingValidatorDirective implements ng.IDirective {
         const [ngModel, uiSelect] = ctrls;
 
         scope.$parent.applyTaggingValidation = (tag: TagReference, inputValdatorCheck:boolean = false) => {
-            tag['$$invalid'] = !this.tagConfigurer.validation.default.isValid(tag.name, uiSelect.selected, inputValdatorCheck);
-            tag['$$duplicate'] = this.tagConfigurer.validation.default.isDuplicate(tag.name, uiSelect.selected);
+            // check duplication on collection without this element
+            const pureSelected = _.without(uiSelect.selected, tag);
+            tag['$$invalid']   = !this.tagConfigurer.validation.default.isValid(tag.name, pureSelected, inputValdatorCheck);
+            tag['$$duplicate'] = this.tagConfigurer.validation.default.isDuplicate(tag.name, pureSelected);
             return tag;
         }
 
