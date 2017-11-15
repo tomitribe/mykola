@@ -33,8 +33,10 @@ tribe-select-prevent-tab
   refresh="loadTagsProposals($select.search)",
   refresh-delay="400",
   position="{{position}}"
-  
-  tribe-select-refresh-on-list-drain="10",
+
+  tribe-select-fetch-on-select,
+  fetch-items-count="10",
+
   tribe-select-fetch-on-open,
   tribe-select-redraw-on-tagging
   )

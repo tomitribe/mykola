@@ -27,7 +27,7 @@ module tomitribe_select {
         .directive('tribeSelectMaxLength', tribeSelectMaxLength)
         .directive('tribeSelectRedrawOnTagging', tribeSelectRedrawOnTagging)
         .directive('tribeSelectDontCloseOnClick', tribeSelectDontCloseOnClick)
-        .directive('tribeSelectRefreshOnListDrain', tribeSelectRefreshOnListDrain)
+        .directive('tribeSelectFetchOnSelect', tribeSelectFetchOnSelect)
         .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab]);
 
     function tribeSelectPreventTab($timeout) {
@@ -294,7 +294,7 @@ module tomitribe_select {
       }
     }
 
-    function tribeSelectRefreshOnListDrain() {
+    function tribeSelectFetchOnSelect() {
       return {
         restrict: 'A',
         replace: false,
@@ -303,17 +303,16 @@ module tomitribe_select {
       };
 
       function link(scope, el, attrs, uiSelect) {
-        const drainFlag = parseInt(attrs.tribeSelectRefreshOnListDrain) || 10;
-        const defaultCallback = uiSelect.onSelectCallback;
-        uiSelect.onSelectCallback = (item, model) => {
-          defaultCallback(item, model);
+        const fetchItemsCount = parseInt(attrs.fetchItemsCount) || 10;
 
-          if (attrs.refresh) {
-            if (uiSelect.items.length < drainFlag) uiSelect.refresh(attrs.refresh);
-          } else {
-            console.warn('tribe-select-refresh-on-list-drain requires refresh attribute!')
-          }
+        if (!attrs.refresh) {
+          console.warn('tribe-select-refresh-on-list-drain requires refresh attribute!')
+          return;
         }
+
+        scope.$on('uis:select', () => {
+          if (uiSelect.items.length < fetchItemsCount) uiSelect.refresh(attrs.refresh);
+        });
       }
     }
 
