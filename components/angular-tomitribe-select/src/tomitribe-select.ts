@@ -27,6 +27,7 @@ module tomitribe_select {
         .directive('tribeSelectMaxLength', tribeSelectMaxLength)
         .directive('tribeSelectRedrawOnTagging', tribeSelectRedrawOnTagging)
         .directive('tribeSelectDontCloseOnClick', tribeSelectDontCloseOnClick)
+        .directive('tribeSelectFetchOnSelect', tribeSelectFetchOnSelect)
         .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab]);
 
     function tribeSelectPreventTab($timeout) {
@@ -290,6 +291,28 @@ module tomitribe_select {
           ctrl.searchInput.off('click').on('click', (event) => {
             if (ctrl.open) event.stopPropagation();
           })
+      }
+    }
+
+    function tribeSelectFetchOnSelect() {
+      return {
+        restrict: 'A',
+        replace: false,
+        require: '^uiSelect',
+        link: link
+      };
+
+      function link(scope, el, attrs, uiSelect) {
+        const fetchItemsCount = parseInt(attrs.fetchItemsCount) || 10;
+
+        if (!attrs.refresh) {
+          console.warn('tribe-select-refresh-on-list-drain requires refresh attribute!')
+          return;
+        }
+
+        scope.$on('uis:select', () => {
+          if (uiSelect.items.length < fetchItemsCount) uiSelect.refresh(attrs.refresh);
+        });
       }
     }
 

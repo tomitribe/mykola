@@ -14,6 +14,7 @@ tribe-tagging-validator,
 validation-key="name",
 on-remove="refreshDuplicateValidation($select.selected)",
 
+close-on-select="false",
 tribe-tags-on-blur,
 tribe-select-open-on-focus,
 tribe-select-prevent-tab
@@ -32,7 +33,11 @@ tribe-select-prevent-tab
   refresh="loadTagsProposals($select.search)",
   refresh-delay="400",
   position="{{position}}"
-  
+
+  tribe-select-fetch-on-select,
+  fetch-items-count="10",
+
+  tribe-select-fetch-on-open,
   tribe-select-redraw-on-tagging
   )
     div(
