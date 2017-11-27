@@ -14,7 +14,17 @@ export class TagsController {
         $scope.validationErrorMessage = tagConfigurer.validation.default.errorMessage();
 
         $scope.stringToTagReference = name => {
-            const found = _.findWhere($scope.availableTags, {name: name});
+            // ignore selected to be able duplicate loaded tags
+            let collection = [];
+            if ($scope.ngModel) {
+              collection = _.filter($scope.availableTags, (tag) => {
+                if (!$scope.ngModel.length) return true;
+                return !$scope.ngModel.reduce( (acc, item) => {
+                  return angular.equals(item, tag) && acc;
+                }, true)
+              });
+            }
+            const found = _.findWhere(collection, {name: name});
             return found ? $scope.applyTaggingValidation(found) : this.createTag(name);
         };
 
