@@ -14,19 +14,22 @@ export class TagsController {
         $scope.validationErrorMessage = tagConfigurer.validation.default.errorMessage();
 
         $scope.stringToTagReference = name => {
-            // ignore selected to be able duplicate loaded tags
-            let collection = [];
-            if ($scope.ngModel) {
-              collection = _.filter($scope.availableTags, (tag) => {
-                if (!$scope.ngModel.length) return true;
-                return !$scope.ngModel.reduce( (acc, item) => {
-                  return angular.equals(item, tag) && acc;
-                }, true)
-              });
-            }
-            const found = _.findWhere(collection, {name: name});
+            const found = _.findWhere($scope.getFilteredAvailable(), {name: name});
             return found ? $scope.applyTaggingValidation(found) : this.createTag(name);
         };
+
+        $scope.getFilteredAvailable = () => {
+            // ignore selected to be able duplicate loaded tags
+            const selected = $scope.ngModel || [];
+            const fieldValid = $scope.form[$scope.fieldName].$valid; // on invalid ngModel undefined;
+            const filtered = (!selected.length && !fieldValid) ? [] : _.filter($scope.availableTags, (tag) => {
+              const isSelected = selected.reduce( (acc, item) => {
+                return angular.equals(item, tag) || acc;
+              }, false)
+              return !selected.length ? true : !isSelected;
+            })
+            return filtered;
+        }
 
         $scope.$on('tribe-tags:refresh', () => $scope.loadTagsProposals(''));
 
@@ -48,7 +51,7 @@ export class TagsController {
                 "size": 20
             };
 
-            tagService.findTags(params).then((data) => {
+            tagService.findTags(params).then( (data) => {
                 // total without excluded (filtred)
                 const filtredTotal = data.total - ($scope.excludedNumber ? $scope.excludedNumber : 0);
                 // change collection if data changed
@@ -57,7 +60,7 @@ export class TagsController {
                         return new TagReference(t.id, t.name, {});
                     });
 
-                    const previousArray = (($scope.availableTags && $scope.$$pagingState) || !tagsFromServer.length) ? $scope.availableTags : [];
+                    const previousArray = $scope.availableTags && $scope.$$pagingState ? $scope.availableTags : [];
 
                     // remove previous (new), union and sort
                     $scope.availableTags = tagConfigurer.sortFn(
@@ -66,7 +69,7 @@ export class TagsController {
                     );
 
                     //Add tag if we didn't find it
-                    const found = _.findWhere($scope.availableTags, {name: query});
+                    const found = _.findWhere($scope.getFilteredAvailable(), {name: query});
                     if(query && !found) {
                         const newTag = this.createTag(query);
                         $scope.availableTags.unshift(newTag);
