@@ -10,6 +10,9 @@
  * tribeSelectFetchOnOpen: this directive refresh the list options, when the dropdown is opened
  *
  */
+
+import './tomitribe-select.scss';
+
 module tomitribe_select {
     let _ = require('underscore');
 
@@ -19,10 +22,13 @@ module tomitribe_select {
         .directive('tribeSelectOpenOnFocus', ['$timeout', tribeSelectOpenOnFocus])
         .directive('tribeSelectPreventTab', ['$timeout', tribeSelectPreventTab])
         .directive('tribeSelectFetchOnOpen', tribeSelectFetchOnOpen)
-        .directive('tribeSelectPaginationControl', tribeSelectPaginationControl)
         .directive('tribeSelectPaginationLoader', tribeSelectPaginationLoader)
         .directive('tribeSelectSaveSearch', tribeSelectSaveSearch)
-        .directive('tribeSelectMaxLength', tribeSelectMaxLength);
+        .directive('tribeSelectMaxLength', tribeSelectMaxLength)
+        .directive('tribeSelectRedrawOnTagging', tribeSelectRedrawOnTagging)
+        .directive('tribeSelectDontCloseOnClick', tribeSelectDontCloseOnClick)
+        .directive('tribeSelectFetchOnSelect', tribeSelectFetchOnSelect)
+        .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab]);
 
     function tribeSelectPreventTab($timeout) {
         return {
@@ -207,80 +213,16 @@ module tomitribe_select {
             template: require('./tomitribe-pagination-loader.jade'),
             require: '^uiSelect',
             scope: {
-                item: '=',
                 pagingState: '=',
                 pagingBusy: '=',
-                containerClass: '@',
-                refresh: '&',
-                itemName: '@'
+                refresh: '&'
             },
             link: link
         };
 
         function link(scope, element, attrs, ctrl) {
             scope.$select = ctrl;
-
-            scope.$watch("$select.items", (nv, ov)=> {
-                if(nv) {
-                    //Count all excluding : new tags and $$loader
-                    scope.$$listTotal = nv.reduce((res, item) => {
-                        if((item['isTag'] === undefined || !item['isTag']) && (item['$$loader'] === undefined || !item['$$loader'])) {
-                            res++;
-                        }
-                        return res;
-                    }, 0);
-                }
-            });
-        }
-    }
-
-    function tribeSelectPaginationControl() {
-        return {
-            restrict: 'A',
-            replace: false,
-            scope: {
-                items: '=',
-                pagingBusy: '=',
-                total: '='
-            },
-            link: link
-        };
-
-        function link(scope, element, attrs, ctrl) {
-            scope.$watch("pagingBusy", (nv, ov)=> {
-                if (ov !== undefined && nv !== undefined) {
-                    if (!!ov && !nv) {
-                        //when loading finish
-                        //when we don't have any items, do not show load more
-                        if (scope.items && scope.items.length > 0) {
-                            scope.items.push({
-                                $$loader: true,
-                                total: scope.total
-                            });
-                        }
-                    } else if (!ov && !!nv) {
-                        //loading start
-                        removeLoadMoreOption();
-                    }
-                }
-            });
-
-            function removeLoadMoreOption() {
-                if (isLastLoadMoreOption()) {
-                    scope.items.pop();
-                }
-            }
-
-            function isLastLoadMoreOption() {
-                if (scope.items) {
-                    let last = _.last(scope.items);
-
-                    if (last) {
-                        return last['$$loader'];
-                    }
-                }
-                return false;
-            }
+            scope.collectionContainer = element.parents('.ui-select-choices-content')[0];
         }
     }
 
@@ -297,6 +239,81 @@ module tomitribe_select {
                 uiSelectCtrl.searchInput.attr("maxlength", attrs.tribeSelectMaxLength);
             }
         }
+    }
+
+    function tribeSelectRedrawOnTagging() {
+      return {
+        restrict: 'A',
+        replace: false,
+        require: '^uiSelect',
+        link: link
+      };
+
+      function link(scope, element, attrs, uiSelect) {
+        scope.$watchCollection('$select.items', () => {
+            if (scope.calculateDropdownPos) scope.calculateDropdownPos();
+        })
+      }
+    }
+
+    function tribeSelectOnTab($timeout) {
+        return {
+            restrict: 'A',
+            require: 'uiSelect',
+            replace: false,
+            link: link
+        };
+        function link(scope, element, attrs, uiSelect) {
+            if (uiSelect.searchInput) {
+                uiSelect.searchInput.bindFirst('keydown', function (e) {
+                    if (e.keyCode === 9) {
+                        if (!uiSelect.multiple) {
+                            uiSelect.selected = uiSelect.items[uiSelect.activeIndex];
+                            uiSelect.search = uiSelect.items[uiSelect.activeIndex];
+                            $timeout(() => {
+                                uiSelect.select(uiSelect.items[uiSelect.activeIndex], true);
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    function tribeSelectDontCloseOnClick() {
+      return {
+          restrict: 'A',
+          require: 'uiSelect',
+          replace: false,
+          link: link
+      };
+      function link(scope, element, attrs, ctrl) {
+          ctrl.searchInput.off('click').on('click', (event) => {
+            if (ctrl.open) event.stopPropagation();
+          })
+      }
+    }
+
+    function tribeSelectFetchOnSelect() {
+      return {
+        restrict: 'A',
+        replace: false,
+        require: '^uiSelect',
+        link: link
+      };
+
+      function link(scope, el, attrs, uiSelect) {
+        const fetchItemsCount = parseInt(attrs.fetchItemsCount) || 10;
+
+        if (!attrs.refresh) {
+          console.warn('tribe-select-refresh-on-list-drain requires refresh attribute!')
+          return;
+        }
+
+        scope.$on('uis:select', () => {
+          if (uiSelect.items.length < fetchItemsCount) uiSelect.refresh(attrs.refresh);
+        });
+      }
     }
 
     // todo: fix proper interfacing

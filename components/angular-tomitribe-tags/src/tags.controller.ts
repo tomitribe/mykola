@@ -1,6 +1,9 @@
 import {TagReference} from "./tags.service";
+
 export class TagsController {
     static $inject = ['$scope', 'TribeTagsService', 'TribeTagsConfigurer'];
+
+    allLoaded: boolean = false;
 
     constructor(private $scope, private tagService, private tagConfigurer) {
         let _ = require('underscore');
@@ -11,16 +14,18 @@ export class TagsController {
         $scope.validationErrorMessage = tagConfigurer.validation.default.errorMessage();
 
         $scope.stringToTagReference = name => {
-            const found = $scope.availableTags.filter(t => t.name === name);
-            var tag = !!found.length ? found[0] : this.createTag(name);
-
-            this.setInvalid(tag);
-
-            return tag;
-        };
-
-        $scope.groupSuggestions = item => {
-            return 'Suggestions';
+            // ignore selected to be able duplicate loaded tags
+            let collection = [];
+            if ($scope.ngModel) {
+              collection = _.filter($scope.availableTags, (tag) => {
+                if (!$scope.ngModel.length) return true;
+                return !$scope.ngModel.reduce( (acc, item) => {
+                  return angular.equals(item, tag) && acc;
+                }, true)
+              });
+            }
+            const found = _.findWhere(collection, {name: name});
+            return found ? $scope.applyTaggingValidation(found) : this.createTag(name);
         };
 
         $scope.$on('tribe-tags:refresh', () => $scope.loadTagsProposals(''));
@@ -31,6 +36,7 @@ export class TagsController {
             if (query !== $scope.$$pagingQuery) {
                 $scope.$$pagingQuery = query;
                 $scope.$$pagingState = undefined;
+                this.allLoaded = false;
             }
 
             // we started our request (busy)
@@ -42,8 +48,11 @@ export class TagsController {
                 "size": 20
             };
 
-            tagService.findTags(params).then(
-                (data) => {
+            tagService.findTags(params).then((data) => {
+                // total without excluded (filtred)
+                const filtredTotal = data.total - ($scope.excludedNumber ? $scope.excludedNumber : 0);
+                // change collection if data changed
+                if (!this.allLoaded || $scope.$$total !== filtredTotal) {
                     let tagsFromServer = data.items.map(t => {
                         return new TagReference(t.id, t.name, {});
                     });
@@ -57,30 +66,50 @@ export class TagsController {
                     );
 
                     //Add tag if we didn't find it
-                    if(query && !(_.findIndex($scope.availableTags, {name: query}) >= 0)) {
-                        $scope.availableTags.unshift(this.createTag(query));
+                    const found = _.findWhere($scope.availableTags, {name: query});
+                    if(query && !found) {
+                        const newTag = this.createTag(query);
+                        $scope.availableTags.unshift(newTag);
                     }
 
-                    $scope.$$total = data.total;
-
-                    // prerequisite to pagination
-                    $scope.$$pagingState = data.pagingState;
+                    // check if we already loaded all
+                    this.allLoaded = this.isAllLoaded($scope.availableTags, data.total);
+                    // count total for footer
+                    $scope.$$total = filtredTotal;
+                    // pagination
+                    $scope.$$pagingState = data.pagingState || undefined;
+                    // finish request
                     $scope.$$pagingBusy = false;
                 }
-            );
+            });
         }
 
+        $scope.refreshDuplicateValidation = (selected) => {
+            selected.forEach( tag => $scope.applyTaggingValidation(tag) )
+        }
     }
 
-    private createTag(name): TagReference {
+    private createTag(name: string): TagReference {
         let tag:any = new TagReference(null, name, {});
         tag.isTag = true;
-        this.setInvalid(tag);
+         // ui-select not allows duplicates, so we make tags unique
+        this.makeTagUnique(tag);
+        this.$scope.applyTaggingValidation(tag);
 
         return tag;
     }
 
-    private setInvalid(tag) {
-        tag['$$invalid'] = !this.tagConfigurer.validation.default.isValid(tag.name);
+    private makeTagUnique(tag: TagReference) {
+        // as ui-select use angular.equals we have to add real field
+        tag['uniqueField'] = Math.random() * Math.random();
+        return tag;
+    }
+
+    private isAllLoaded(items: Array<any>, total: number): boolean {
+      const loadedTags: number = items.reduce( (acc, item) => {
+        return item['isTag'] ? acc : acc + 1;
+      }, 0)
+
+      return total === loadedTags;
     }
 }
