@@ -51,40 +51,43 @@ export class TagsController {
                 "size": 20
             };
 
-            tagService.findTags(params).then( (data) => {
-                // total without excluded (filtred)
-                const filtredTotal = data.total - ($scope.excludedNumber ? $scope.excludedNumber : 0);
-                // change collection if data changed
-                if (!this.allLoaded || $scope.$$total !== filtredTotal) {
-                    let tagsFromServer = data.items.map(t => {
-                        return new TagReference(t.id, t.name, {});
-                    });
+            tagService.findTags(params)
+                .then( (data) => {
+                    // total without excluded (filtred)
+                    const filtredTotal = data.total - ($scope.excludedNumber ? $scope.excludedNumber : 0);
+                    // change collection if data changed
+                    if (!this.allLoaded || $scope.$$total !== filtredTotal) {
+                        let tagsFromServer = data.items.map(t => {
+                            return new TagReference(t.id, t.name, {});
+                        });
 
-                    const previousArray = $scope.availableTags && $scope.$$pagingState ? $scope.availableTags : [];
+                        const previousArray = $scope.availableTags && $scope.$$pagingState ? $scope.availableTags : [];
 
-                    // remove previous (new), union and sort
-                    $scope.availableTags = tagConfigurer.sortFn(
-                        _.union(previousArray, tagsFromServer)
-                        .filter(tag => !!tag.id)
-                    );
+                        // remove previous (new), union and sort
+                        $scope.availableTags = tagConfigurer.sortFn(
+                            _.union(previousArray, tagsFromServer)
+                            .filter(tag => !!tag.id)
+                        );
 
-                    //Add tag if we didn't find it
-                    const found = _.findWhere($scope.getFilteredAvailable(), {name: query});
-                    if(query && !found) {
-                        const newTag = this.createTag(query);
-                        $scope.availableTags.unshift(newTag);
+                        //Add tag if we didn't find it
+                        const found = _.findWhere($scope.getFilteredAvailable(), {name: query});
+                        if(query && !found) {
+                            const newTag = this.createTag(query);
+                            $scope.availableTags.unshift(newTag);
+                        }
+
+                        // check if we already loaded all
+                        this.allLoaded = this.isAllLoaded($scope.availableTags, data.total);
+                        // count total for footer
+                        $scope.$$total = filtredTotal;
+                        // pagination
+                        $scope.$$pagingState = data.pagingState || undefined;
                     }
-
-                    // check if we already loaded all
-                    this.allLoaded = this.isAllLoaded($scope.availableTags, data.total);
-                    // count total for footer
-                    $scope.$$total = filtredTotal;
-                    // pagination
-                    $scope.$$pagingState = data.pagingState || undefined;
+                })
+                .finally( () => {
                     // finish request
                     $scope.$$pagingBusy = false;
-                }
-            });
+                })
         }
 
         $scope.refreshDuplicateValidation = (selected) => {
