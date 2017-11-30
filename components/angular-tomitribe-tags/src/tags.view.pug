@@ -17,7 +17,8 @@ on-remove="refreshDuplicateValidation($select.selected)",
 close-on-select="false",
 tribe-tags-on-blur,
 tribe-select-open-on-focus,
-tribe-select-prevent-tab
+tribe-select-prevent-tab,
+tribe-select-on-esc=".modal",
 )
   ui-select-match(
   class="{{$item.$$invalid ? 'invalid' : ''}}",
