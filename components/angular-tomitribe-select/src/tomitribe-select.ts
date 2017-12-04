@@ -28,7 +28,8 @@ module tomitribe_select {
         .directive('tribeSelectRedrawOnTagging', tribeSelectRedrawOnTagging)
         .directive('tribeSelectDontCloseOnClick', tribeSelectDontCloseOnClick)
         .directive('tribeSelectFetchOnSelect', tribeSelectFetchOnSelect)
-        .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab]);
+        .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab])
+        .directive('tribeSelectOnEsc', ['$document', tribeSelectOnEsc]);
 
     function tribeSelectPreventTab($timeout) {
         return {
@@ -314,6 +315,28 @@ module tomitribe_select {
           if (uiSelect.items.length < fetchItemsCount) uiSelect.refresh(attrs.refresh);
         });
       }
+    }
+
+    function tribeSelectOnEsc($document) {
+        return {
+            restrict: 'A',
+            require: 'uiSelect',
+            replace: false,
+            link: link
+        };
+
+        function link(scope, element, attrs, uiSelectCtrl) {
+            if (attrs.tribeSelectOnEsc && document.querySelectorAll(attrs.tribeSelectOnEsc).length && uiSelectCtrl.searchInput && uiSelectCtrl.multiple) {
+                uiSelectCtrl.searchInput.bindFirst('keydown', function (event) {
+                    //we cannot trust in uiSelectCtrl.open: its only updated after this event
+                    if (event.keyCode === 27 && element.find('.ui-select-choices').hasClass('ng-hide')) {
+                        event.stopImmediatePropagation();
+                        //Create new event and fire in $document
+                        $document.trigger($.Event('keydown', {keyCode: 27, which: 27}));
+                    }
+                });
+            }
+        }
     }
 
     // todo: fix proper interfacing
