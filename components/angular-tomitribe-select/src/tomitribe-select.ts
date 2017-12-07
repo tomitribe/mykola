@@ -326,7 +326,7 @@ module tomitribe_select {
         };
 
         function link(scope, element, attrs, uiSelectCtrl) {
-            if (attrs.tribeSelectOnEsc && document.querySelectorAll(attrs.tribeSelectOnEsc).length && uiSelectCtrl.searchInput && uiSelectCtrl.multiple) {
+            if (attrs.tribeSelectOnEsc && document.querySelectorAll(attrs.tribeSelectOnEsc).length && uiSelectCtrl.searchInput) {
                 uiSelectCtrl.searchInput.bindFirst('keydown', function (event) {
                     //we cannot trust in uiSelectCtrl.open: its only updated after this event
                     if (event.keyCode === 27 && element.find('.ui-select-choices').hasClass('ng-hide')) {
