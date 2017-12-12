@@ -137,12 +137,12 @@ module tomitribe_fab {
                 top = $element.offset().top,
                 left = $element.offset().left;
 
-            if (positions[0] === 'top' || positions[0] === 'bottom')
+            if (positions.indexOf('top') > -1 || positions.indexOf('bottom') > -1)
             {
                 let leftPosition;
-                if(positions[1] === 'left') {
+                if(positions.indexOf('left') > -1) {
                     leftPosition = left - width;
-                } else if(positions[1] === 'right') {
+                } else if(positions.indexOf('right') > -1) {
                     leftPosition = left;
                 } else {
                     leftPosition = left - (tooltip.outerWidth() / 2) + (width / 2);
@@ -151,10 +151,10 @@ module tomitribe_fab {
                 tooltip.css(
                     {
                         left: leftPosition,
-                        top: positions[0] === 'top' ? top - tooltip.outerHeight() : top + height
+                        top: positions.indexOf('top') > -1 ? top - tooltip.outerHeight() : top + height
                     });
             }
-            else if (positions[0] === 'left')
+            else if (positions.indexOf('left') > -1)
             {
                 tooltip.css(
                     {
@@ -162,7 +162,7 @@ module tomitribe_fab {
                         top: top + (height / 2) - (tooltip.outerHeight() / 2)
                     });
             }
-            else if (positions[0] === 'right')
+            else if (positions.indexOf('right') > -1)
             {
                 tooltip.css(
                     {
