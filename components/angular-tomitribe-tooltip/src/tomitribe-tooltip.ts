@@ -137,31 +137,23 @@ module tomitribe_fab {
                 top = $element.offset().top,
                 left = $element.offset().left;
 
-            if (positions.indexOf('top') > -1 || positions.indexOf('bottom') > -1)
-            {
-                let leftPosition;
-                if(positions.indexOf('left') > -1) {
-                    leftPosition = left - width;
-                } else if(positions.indexOf('right') > -1) {
-                    leftPosition = left;
-                } else {
-                    leftPosition = left - (tooltip.outerWidth() / 2) + (width / 2);
-                }
+            let options = {
+                left: left - (tooltip.outerWidth() / 2) + (width / 2),
+                top: top + (height / 2) - (tooltip.outerHeight() / 2)
+            };
 
-                tooltip.css(
-                    {
-                        left: leftPosition,
-                        top: positions.indexOf('top') > -1 ? top - tooltip.outerHeight() : top + height
-                    });
+            if (positions.indexOf('top') > -1 || positions.indexOf('bottom') > -1) {
+                options.top = positions.indexOf('top') > -1 ? top - tooltip.outerHeight() : top + height
             }
-            else if (positions.indexOf('left') > -1 || positions.indexOf('right') > -1)
-            {
-                tooltip.css(
-                    {
-                        left: positions.indexOf('left') > -1 ? left - tooltip.outerWidth() : left + width,
-                        top: top + (height / 2) - (tooltip.outerHeight() / 2)
-                    });
+            if (positions.indexOf('left') > -1 || positions.indexOf('right') > -1) {
+                if (positions.indexOf('top') > -1 || positions.indexOf('bottom') > -1) {
+                    options.left = positions.indexOf('left') > -1 ? left - width : left;
+                } else {
+                    options.left = positions.indexOf('left') > -1 ? left - tooltip.outerWidth() : left + width
+                }
             }
+
+            tooltip.css(options);
         }
 
         function setTooltipPosition()
