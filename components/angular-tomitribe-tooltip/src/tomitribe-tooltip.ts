@@ -154,19 +154,11 @@ module tomitribe_fab {
                         top: positions.indexOf('top') > -1 ? top - tooltip.outerHeight() : top + height
                     });
             }
-            else if (positions.indexOf('left') > -1)
+            else if (positions.indexOf('left') > -1 || positions.indexOf('right') > -1)
             {
                 tooltip.css(
                     {
-                        left: left - tooltip.outerWidth(),
-                        top: top + (height / 2) - (tooltip.outerHeight() / 2)
-                    });
-            }
-            else if (positions.indexOf('right') > -1)
-            {
-                tooltip.css(
-                    {
-                        left: left + width,
+                        left: positions.indexOf('left') > -1 ? left - tooltip.outerWidth() : left + width,
                         top: top + (height / 2) - (tooltip.outerHeight() / 2)
                     });
             }
