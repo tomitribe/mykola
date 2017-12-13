@@ -175,7 +175,7 @@ module tomitribe_fab {
 
                     tooltip = angular.element('<div/>',
                         {
-                            class: 'tooltip tooltip-' + tribeTooltip.position.split(' ')[0]
+                            class: 'tooltip tooltip'+tribeTooltip.position.split(' ').map(i => '-'+i).join('')
                         });
 
                     tooltipLabel = angular.element('<span/>',
