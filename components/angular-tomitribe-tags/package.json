@@ -7,7 +7,7 @@
   "main": "index.ts",
   "dependencies": {
     "angular-tomitribe-common": "^0.0.1",
-    "angular-tomitribe-select": "^0.0.27",
+    "angular-tomitribe-select": "^0.0.28",
     "angular": "^1.5.8",
     "angular-sanitize": "^1.5.8",
     "ui-select": "^0.19.6",
