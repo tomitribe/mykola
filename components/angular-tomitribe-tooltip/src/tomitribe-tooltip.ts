@@ -147,7 +147,7 @@ module tomitribe_fab {
             }
             if (positions.indexOf('left') > -1 || positions.indexOf('right') > -1) {
                 if (positions.indexOf('top') > -1 || positions.indexOf('bottom') > -1) {
-                    options.left = positions.indexOf('left') > -1 ? left - width : left;
+                    options.left = positions.indexOf('left') > -1 ? left - (tooltip.outerWidth() / 2) : left + width - (tooltip.outerWidth() / 2);
                 } else {
                     options.left = positions.indexOf('left') > -1 ? left - tooltip.outerWidth() : left + width
                 }
