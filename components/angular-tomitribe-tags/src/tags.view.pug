@@ -3,7 +3,10 @@ ng-model="self.ngModel",
 
 tabindex="0",
 sortable="true",
+
 multiple,
+close-on-select="false",
+tribe-select-multiple-focus-on-select,
 
 tagging="stringToTagReference",
 tagging-tokens="ENTER|,",
@@ -14,7 +17,6 @@ tribe-tagging-validator,
 validation-key="name",
 on-remove="refreshDuplicateValidation($select.selected)",
 
-close-on-select="false",
 tribe-tags-on-blur,
 tribe-select-open-on-focus,
 tribe-select-prevent-tab,
