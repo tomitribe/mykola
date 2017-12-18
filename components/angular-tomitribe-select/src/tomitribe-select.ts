@@ -29,6 +29,7 @@ module tomitribe_select {
         .directive('tribeSelectDontCloseOnClick', tribeSelectDontCloseOnClick)
         .directive('tribeSelectFetchOnSelect', tribeSelectFetchOnSelect)
         .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab])
+        .directive('tribeSelectMultipleFocusOnSelect', tribeSelectMultipleFocusOnSelect)
         .directive('tribeSelectOnEsc', ['$document', tribeSelectOnEsc]);
 
     function tribeSelectPreventTab($timeout) {
@@ -339,6 +340,21 @@ module tomitribe_select {
                     }
                 });
             }
+        }
+    }
+
+    function tribeSelectMultipleFocusOnSelect() {
+        return {
+            restrict: 'A',
+            require: 'uiSelect',
+            replace: false,
+            link: link
+        }
+
+        function link($scope, elem, attrs, uiSelect) {
+            $scope.$on('uis:select', () => {
+                uiSelect.focusInput.focus();
+            })
         }
     }
 
