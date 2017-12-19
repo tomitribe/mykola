@@ -27,9 +27,9 @@ module tomitribe_select {
         .directive('tribeSelectMaxLength', tribeSelectMaxLength)
         .directive('tribeSelectRedrawOnTagging', tribeSelectRedrawOnTagging)
         .directive('tribeSelectDontCloseOnClick', tribeSelectDontCloseOnClick)
-        .directive('tribeSelectFetchOnSelect', tribeSelectFetchOnSelect)
+        .directive('tribeSelectFetchOnSelect', ['$log', tribeSelectFetchOnSelect])
         .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab])
-        .directive('tribeSelectMultipleFocusOnSelect', tribeSelectMultipleFocusOnSelect)
+        .directive('tribeSelectMultipleOpenOnSelect', ['$log', tribeSelectMultipleOpenOnSelect])
         .directive('tribeSelectOnEsc', ['$document', tribeSelectOnEsc]);
 
     function tribeSelectPreventTab($timeout) {
@@ -299,7 +299,7 @@ module tomitribe_select {
       }
     }
 
-    function tribeSelectFetchOnSelect() {
+    function tribeSelectFetchOnSelect($log) {
       return {
         restrict: 'A',
         replace: false,
@@ -311,7 +311,7 @@ module tomitribe_select {
         const fetchItemsCount = parseInt(attrs.fetchItemsCount) || 10;
 
         if (!attrs.refresh) {
-          console.warn('tribe-select-refresh-on-list-drain requires refresh attribute!')
+          $log.warn('tribe-select-refresh-on-list-drain requires refresh attribute!')
           return;
         }
 
@@ -343,7 +343,7 @@ module tomitribe_select {
         }
     }
 
-    function tribeSelectMultipleFocusOnSelect() {
+    function tribeSelectMultipleOpenOnSelect($log) {
         return {
             restrict: 'A',
             require: 'uiSelect',
@@ -352,6 +352,12 @@ module tomitribe_select {
         }
 
         function link($scope, elem, attrs, uiSelect) {
+            if (!uiSelect.multiple) {
+                $log.warn('tribeSelectMultipleOpenOnSelect should be used along with multiple attribute!');
+                return;
+            }
+            uiSelect.closeOnSelect = false;
+
             $scope.$on('uis:select', () => {
                 uiSelect.focusInput.focus();
             })
