@@ -29,7 +29,7 @@ module tomitribe_select {
         .directive('tribeSelectDontCloseOnClick', tribeSelectDontCloseOnClick)
         .directive('tribeSelectFetchOnSelect', ['$log', tribeSelectFetchOnSelect])
         .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab])
-        .directive('tribeSelectMultipleOpenOnSelect', ['$log', tribeSelectMultipleOpenOnSelect])
+        .directive('tribeSelectMultipleFocusHelper', ['$log', tribeSelectMultipleFocusHelper])
         .directive('tribeSelectOnEsc', ['$document', tribeSelectOnEsc]);
 
     function tribeSelectPreventTab($timeout) {
@@ -343,7 +343,7 @@ module tomitribe_select {
         }
     }
 
-    function tribeSelectMultipleOpenOnSelect($log) {
+    function tribeSelectMultipleFocusHelper($log) {
         return {
             restrict: 'A',
             require: 'uiSelect',
@@ -353,13 +353,18 @@ module tomitribe_select {
 
         function link($scope, elem, attrs, uiSelect) {
             if (!uiSelect.multiple) {
-                $log.warn('tribeSelectMultipleOpenOnSelect should be used along with multiple attribute!');
+                $log.warn('tribeSelectMultipleFocusHelper should be used along with multiple attribute!');
                 return;
             }
             uiSelect.closeOnSelect = false;
 
             $scope.$on('uis:select', () => {
                 uiSelect.focusInput.focus();
+            })
+
+            uiSelect.onRemoveCallback = _.wrap(uiSelect.onRemoveCallback, (cb, ...args) => {
+              cb(...args);
+              uiSelect.focusInput.focus();
             })
         }
     }
