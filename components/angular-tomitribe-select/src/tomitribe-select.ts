@@ -27,8 +27,9 @@ module tomitribe_select {
         .directive('tribeSelectMaxLength', tribeSelectMaxLength)
         .directive('tribeSelectRedrawOnTagging', tribeSelectRedrawOnTagging)
         .directive('tribeSelectDontCloseOnClick', tribeSelectDontCloseOnClick)
-        .directive('tribeSelectFetchOnSelect', tribeSelectFetchOnSelect)
+        .directive('tribeSelectFetchOnSelect', ['$log', tribeSelectFetchOnSelect])
         .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab])
+        .directive('tribeSelectMultipleFocusHelper', ['$log', tribeSelectMultipleFocusHelper])
         .directive('tribeSelectOnEsc', ['$document', tribeSelectOnEsc]);
 
     function tribeSelectPreventTab($timeout) {
@@ -198,10 +199,13 @@ module tomitribe_select {
             const key = attrs.tribeSelectSaveSearch || 'id';
             // prevent input clear on select
             uiSelect.resetSearchInput = false;
-            // copy seleted attr to search field
+            // copy selected attr to search field
             const choiceToSearch = () => {
-                uiSelect.search = angular.isObject(uiSelect.selected) ? uiSelect.selected[key] : uiSelect.selected;
-            }
+                let search = angular.isObject(uiSelect.selected) ? uiSelect.selected[key] : uiSelect.selected;
+                if(search) {
+                    uiSelect.search = search
+                }
+            };
             scope.$on('uis:select', choiceToSearch);
             scope.$on('uis:close', choiceToSearch);
         }
@@ -295,7 +299,7 @@ module tomitribe_select {
       }
     }
 
-    function tribeSelectFetchOnSelect() {
+    function tribeSelectFetchOnSelect($log) {
       return {
         restrict: 'A',
         replace: false,
@@ -307,7 +311,7 @@ module tomitribe_select {
         const fetchItemsCount = parseInt(attrs.fetchItemsCount) || 10;
 
         if (!attrs.refresh) {
-          console.warn('tribe-select-refresh-on-list-drain requires refresh attribute!')
+          $log.warn('tribe-select-refresh-on-list-drain requires refresh attribute!')
           return;
         }
 
@@ -336,6 +340,32 @@ module tomitribe_select {
                     }
                 });
             }
+        }
+    }
+
+    function tribeSelectMultipleFocusHelper($log) {
+        return {
+            restrict: 'A',
+            require: 'uiSelect',
+            replace: false,
+            link: link
+        }
+
+        function link($scope, elem, attrs, uiSelect) {
+            if (!uiSelect.multiple) {
+                $log.warn('tribeSelectMultipleFocusHelper should be used along with multiple attribute!');
+                return;
+            }
+            uiSelect.closeOnSelect = false;
+
+            $scope.$on('uis:select', () => {
+                uiSelect.focusInput.focus();
+            })
+
+            uiSelect.onRemoveCallback = _.wrap(uiSelect.onRemoveCallback, (cb, ...args) => {
+              cb(...args);
+              uiSelect.focusInput.focus();
+            })
         }
     }
 

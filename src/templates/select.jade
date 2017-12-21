@@ -3,14 +3,14 @@ div
         div.col-xs-12
             div.meta
                 div.title Select
-    div.page
-        div.panel
-            div.row
-                div.col-sm-12
-                    div(class="form-group")
+    .page
+        .panel
+            .row
+                .col-sm-12
+                    .form-group
                         h3 All input fields should be navigable using TAB
 
-                        div.col-sm-6
+                        .col-sm-6
                             p
                                 h4 Username
                                 input(type="text", ng-model="username", placeholder="Username", class="form-control", autofocus)
@@ -30,15 +30,16 @@ div
                                     ui-select-choices(repeat="age in (ages | filter: $select.search)")
                                         span(ng-bind-html="age | highlight: $select.search")
                             p
-                                h4 Select multiple + (close-on-select="false")
+                                h4 Select multiple, keep opened on select
                                 ui-select(
-                                multiple,
                                 ng-model="myAge3",
                                 tabindex="0",
                                 tribe-select-open-on-focus,
                                 tribe-select-prevent-tab,
                                 tagging="tagNull",
-                                close-on-select="false"
+
+                                multiple,
+                                tribe-select-multiple-focus-helper
                                 )
                                     ui-select-match(placeholder="Select Age...")
                                         span {{$item}}

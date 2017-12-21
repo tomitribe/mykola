@@ -21,7 +21,7 @@ export class TagsController {
         $scope.getFilteredAvailable = () => {
             // ignore selected to be able duplicate loaded tags
             const selected = $scope.ngModel || [];
-            const fieldValid = $scope.form[$scope.fieldName].$valid; // on invalid ngModel undefined;
+            const fieldValid = $scope.form ? $scope.form[$scope.fieldName]['$valid'] : true; // on invalid ngModel undefined;
             const filtered = (!selected.length && !fieldValid) ? [] : _.filter($scope.availableTags, (tag) => {
               const isSelected = selected.reduce( (acc, item) => {
                 return angular.equals(item, tag) || acc;
