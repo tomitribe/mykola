@@ -132,11 +132,19 @@ module tomitribe_select {
             }
 
             // multiple selects have no focusser
-            if (uiSelect.multiple) {
-                angular.element(uiSelect.focusInput).on('focus', focusHandler);
-            } else {
-                angular.element(uiSelect.focusser).on('focus', focusHandler);
+            const focusser = uiSelect.multiple ? uiSelect.focusInput : uiSelect.focusser;
+            const focusElem = angular.element(focusser);
+
+            const setListeners = () => {
+              angular.element(focusElem).off('focus', focusHandler);
+              $timeout( () => {
+                angular.element(focusElem).on('focus', focusHandler);
+              }, 300);
             }
+
+            setListeners();
+            // Prevent open dropdown on window focus (TAG-3289)
+            window.addEventListener("focus", setListeners);
 
             angular.element(uiSelect.focusInput).on('blur', ()=> {
                 destroyTimer();
@@ -166,10 +174,12 @@ module tomitribe_select {
             });
 
             scope.$on('$destroy', () => {
+                window.removeEventListener("focus", setListeners);
                 destroyTimer();
             });
         }
     }
+
 
     function tribeSelectFetchOnOpen() {
         return {
