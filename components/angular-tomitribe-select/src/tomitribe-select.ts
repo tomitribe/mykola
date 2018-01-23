@@ -41,6 +41,10 @@ module tomitribe_select {
         };
 
         function link(scope, element, attrs, crtl) {
+            if(attrs.tribeSelectPreventTab !== '' && !(attrs.tribeSelectPreventTab === "true")) {
+                return;
+            }
+
             let uiSelectCtrl = crtl[0];
 
             if (uiSelectCtrl.searchInput) {
@@ -279,6 +283,9 @@ module tomitribe_select {
             link: link
         };
         function link(scope, element, attrs, uiSelect) {
+            if(attrs.tribeSelectOnTab !== '' && !(attrs.tribeSelectOnTab === "true")) {
+                return;
+            }
             if (uiSelect.searchInput) {
                 uiSelect.searchInput.bindFirst('keydown', function (e) {
                     if (e.keyCode === 9) {
