@@ -290,7 +290,9 @@ module index {
                                     name: "object 4",
                                     value: "4"
                                 }
-                            ]
+                            ];
+
+                            $scope.allowTabCondition = true;
 
                             // Issue with ui-select multiple
                             // [ui.select:choices] Expected multiple .ui-select-choices-row but got '0'
