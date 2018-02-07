@@ -115,7 +115,7 @@ module tomitribe_select {
         };
 
         function link(scope, element, attrs, uiSelect) {
-            scope.openOnFocusDelay = (angular.isDefined(attrs.openOnFocusDelay) && !_.isEmpty(attrs.openOnFocusDelay) && !isNaN(attrs.openOnFocusDelay)) ? parseInt(attrs.openOnFocusDelay) : 0;
+            scope.openOnFocusDelay = !isNaN(attrs.openOnFocusDelay) ? parseInt(attrs.openOnFocusDelay || 0) : 0;
             scope.openOnFocusDelayOnce = angular.isDefined(attrs.openOnFocusDelayOnce) ? !!attrs.openOnFocusDelayOnce : false;
             let timer = null;
             const destroyTimer = () => timer ? $timeout.cancel(timer) : {};
