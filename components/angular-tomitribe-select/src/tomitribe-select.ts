@@ -35,25 +35,23 @@ module tomitribe_select {
     function tribeSelectPreventTab($timeout) {
         return {
             restrict: 'A',
-            require: ['uiSelect', 'ngModel'],
+            require: 'uiSelect',
             replace: false,
             link: link
         };
 
-        function link(scope, element, attrs, crtl) {
+        function link(scope, element, attrs, uiSelectCtrl) {
             if(attrs.tribeSelectPreventTab !== '' && !(attrs.tribeSelectPreventTab === "true")) {
                 return;
             }
 
-            let uiSelectCtrl = crtl[0];
-
             if (uiSelectCtrl.searchInput) {
-                let ngModelCtrl = crtl[1], singleSelectInitialIndex;
-
                 uiSelectCtrl.searchInput.bindFirst('keydown', function (e) {
+                    //TAB
                     if (e.keyCode === 9) {
                         if (!uiSelectCtrl.multiple) {
-                            uiSelectCtrl.activeIndex = singleSelectInitialIndex;
+                            //prevent ui-select event to fire. This event will select the current selected item in the list
+                            e.stopImmediatePropagation();
 
                             if(uiSelectCtrl.tagging) {
                                 uiSelectCtrl.close(true);
@@ -63,28 +61,6 @@ module tomitribe_select {
                         }
                     }
                 });
-
-                scope.$on('uis:activate', ()=> {
-                    $timeout(()=> {
-                        if (!uiSelectCtrl.multiple) {
-                            $timeout(()=> {
-                                singleSelectInitialIndex = findIndex(ngModelCtrl.$viewValue, ngModelCtrl, uiSelectCtrl);
-                            });
-                        }
-                    });
-                });
-            }
-        }
-
-        function findIndex (initial, ngModelCtrl, uiSelectCtrl) {
-            if(!ngModelCtrl.$viewValue) {
-                return -1;
-            }
-
-            if(initial.hasOwnProperty("id")) {
-                return _.findIndex(uiSelectCtrl.items, {id: initial.id})
-            } else {
-                return _.indexOf(uiSelectCtrl.items, initial)
             }
         }
     }
