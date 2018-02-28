@@ -173,7 +173,7 @@ module tomitribe_select {
                    () => {
                        autoOpen = true;
                    },
-                   scope.openOnFocusDelay + 250 // https://github.com/angular-ui/ui-select/issues/428#issuecomment-206684328
+                   scope.openOnFocusDelay + 750 // https://github.com/angular-ui/ui-select/issues/428#issuecomment-206684328
                 );
             });
 
