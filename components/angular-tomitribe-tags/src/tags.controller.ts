@@ -33,6 +33,11 @@ export class TagsController {
 
         $scope.$on('tribe-tags:refresh', () => $scope.loadTagsProposals(''));
 
+        $scope.resetTagsProposals = () => {
+            this.allLoaded = false;
+            this.$scope.$$pagingState = undefined;
+        }
+
         $scope.loadTagsProposals = (query) => {
             if ($scope.$$pagingBusy) return;
 

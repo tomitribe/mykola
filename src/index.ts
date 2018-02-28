@@ -294,6 +294,10 @@ module index {
 
                             $scope.allowTabCondition = true;
 
+                            $scope.executeSelectFetchOnOpen = () => {
+                                console.log("Executing executeSelectFetchOnOpen");
+                            }
+
                             // Issue with ui-select multiple
                             // [ui.select:choices] Expected multiple .ui-select-choices-row but got '0'
                             // Issue https://github.com/angular-ui/ui-select/issues/1355
