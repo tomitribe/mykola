@@ -194,9 +194,13 @@ module tomitribe_select {
         };
 
         function link(scope, element, attrs, uiSelectCtrl) {
-            scope.$on('uis:activate', ()=> {
-                attrs.tribeSelectFetchOnOpen && _.isFunction(scope.$parent[attrs.tribeSelectFetchOnOpen]) && scope.$parent[attrs.tribeSelectFetchOnOpen]();
+            if(attrs.tribeSelectFetchOnOpen && _.isFunction(scope.$parent[attrs.tribeSelectFetchOnOpen])) {
+                scope.$on('uis:close', ()=> {
+                    scope.$parent[attrs.tribeSelectFetchOnOpen]();
+                });
+            }
 
+            scope.$on('uis:activate', ()=> {
                 if(attrs['refresh']) {
                     uiSelectCtrl.refresh(attrs['refresh']);
                 }
