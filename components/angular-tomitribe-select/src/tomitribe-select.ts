@@ -173,7 +173,7 @@ module tomitribe_select {
                    () => {
                        autoOpen = true;
                    },
-                   scope.openOnFocusDelay + 250 // https://github.com/angular-ui/ui-select/issues/428#issuecomment-206684328
+                   scope.openOnFocusDelay + 750 // https://github.com/angular-ui/ui-select/issues/428#issuecomment-206684328
                 );
             });
 
@@ -194,6 +194,12 @@ module tomitribe_select {
         };
 
         function link(scope, element, attrs, uiSelectCtrl) {
+            if(attrs.tribeSelectFetchOnOpen && _.isFunction(scope.$parent[attrs.tribeSelectFetchOnOpen])) {
+                scope.$on('uis:close', ()=> {
+                    scope.$parent[attrs.tribeSelectFetchOnOpen]();
+                });
+            }
+
             scope.$on('uis:activate', ()=> {
                 if(attrs['refresh']) {
                     uiSelectCtrl.refresh(attrs['refresh']);
