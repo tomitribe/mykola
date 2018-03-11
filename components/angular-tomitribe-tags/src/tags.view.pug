@@ -32,7 +32,7 @@ tribe-select-on-esc=".modal",
   select-choices-header="Suggestions",
   select-choices-footer="{{$select.items.length + $select.selected.length}} of {{$$total}} tags are displayed {{ $select.items.length + $select.selected.length < $$total ? '(Scroll for more)' : '(All tags loaded)' }}",
 
-  refresh="loadTagsProposals($select.search)",
+  refresh="loadTagsProposals($select.open, $select.search)",
   refresh-delay="400",
   position="{{position}}"
 
@@ -64,7 +64,7 @@ tribe-select-on-esc=".modal",
     ng-if="$last",
     paging-state="$$pagingState",
     paging-busy="$$pagingBusy",
-    refresh="loadTagsProposals($select.search)"
+    refresh="loadTagsProposals($select.open, $select.search)"
     )
 p.validation-message(
 ng-show="form[fieldName].$error.tagging && (!form[fieldName].$pristine || form.$submitted)"

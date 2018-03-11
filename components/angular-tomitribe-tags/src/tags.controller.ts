@@ -38,8 +38,8 @@ export class TagsController {
             this.$scope.$$pagingState = undefined;
         }
 
-        $scope.loadTagsProposals = (query) => {
-            if ($scope.$$pagingBusy) return;
+        $scope.loadTagsProposals = (isOpen, query) => {
+            if (!isOpen || $scope.$$pagingBusy) return;
 
             if (query !== $scope.$$pagingQuery) {
                 $scope.$$pagingQuery = query;
