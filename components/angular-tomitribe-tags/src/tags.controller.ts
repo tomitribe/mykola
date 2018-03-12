@@ -31,7 +31,7 @@ export class TagsController {
             return filtered;
         }
 
-        $scope.$on('tribe-tags:refresh', () => $scope.loadTagsProposals(''));
+        $scope.$on('tribe-tags:refresh', () => $scope.loadTagsProposals(true, ''));
 
         $scope.resetTagsProposals = () => {
             this.allLoaded = false;
