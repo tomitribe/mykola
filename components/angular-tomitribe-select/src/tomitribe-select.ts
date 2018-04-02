@@ -30,7 +30,8 @@ module tomitribe_select {
         .directive('tribeSelectFetchOnSelect', ['$log', tribeSelectFetchOnSelect])
         .directive('tribeSelectOnTab', ['$timeout', tribeSelectOnTab])
         .directive('tribeSelectMultipleFocusHelper', ['$log', tribeSelectMultipleFocusHelper])
-        .directive('tribeSelectOnEsc', ['$document', tribeSelectOnEsc]);
+        .directive('tribeSelectOnEsc', ['$document', tribeSelectOnEsc])
+        .directive('tribeSelectBackspaceCancelReset', tribeSelectBackspaceCancelReset);
 
     function tribeSelectPreventTab($timeout) {
         return {
@@ -365,6 +366,26 @@ module tomitribe_select {
               cb(...args);
               uiSelect.focusInput.focus();
             })
+        }
+    }
+
+    function tribeSelectBackspaceCancelReset() {
+        return {
+            restrict: 'A',
+            require: 'uiSelect',
+            replace: false,
+            link: link
+        };
+
+        function link(scope, element, attrs, uiSelectCtrl) {
+            //Only for single select, prevent backspace to reset the modal
+            if (uiSelectCtrl.focusser && _.isUndefined(uiSelectCtrl.multiple) && !uiSelectCtrl.tagging.isActivated) {
+                uiSelectCtrl.focusser.bindFirst('keydown', function (e) {
+                    if (e.keyCode === 8) {
+                        e.stopImmediatePropagation();
+                    }
+                });
+            }
         }
     }
 

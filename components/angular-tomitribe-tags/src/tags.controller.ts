@@ -31,15 +31,15 @@ export class TagsController {
             return filtered;
         }
 
-        $scope.$on('tribe-tags:refresh', () => $scope.loadTagsProposals(''));
+        $scope.$on('tribe-tags:refresh', () => $scope.loadTagsProposals(true, ''));
 
         $scope.resetTagsProposals = () => {
             this.allLoaded = false;
             this.$scope.$$pagingState = undefined;
         }
 
-        $scope.loadTagsProposals = (query) => {
-            if ($scope.$$pagingBusy) return;
+        $scope.loadTagsProposals = (isOpen, query) => {
+            if (!isOpen || $scope.$$pagingBusy) return;
 
             if (query !== $scope.$$pagingQuery) {
                 $scope.$$pagingQuery = query;
