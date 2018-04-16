@@ -49,6 +49,10 @@ module tomitribe_button {
                     setButtonStyle(element, attrs.tribeSize, attrs.tribeColor, tribeType);
                 });
 
+                attrs.$observe('tribeTabindex', function (tribeTabindex) {
+                    element.attr('tabindex', tribeTabindex);
+                });
+
                 element.attr('tabindex', attrs.tribeTabindex || 0);
 
                 element.on('click', function (event) {
