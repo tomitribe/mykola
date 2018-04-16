@@ -28,7 +28,8 @@ module tomitribe_fab {
                 opened: '=?openedStatus',
                 triggerHide: '@?',
                 autoClose: '@?',
-                closeSelector: '@?'
+                closeSelector: '@?',
+                fabTabindex: '=?'
             },
             link: link,
             controller: ['$scope', '$timeout', '$document', '$rootScope', tribeFabController],

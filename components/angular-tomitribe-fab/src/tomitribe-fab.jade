@@ -4,5 +4,5 @@ ng-keydown="keyDown($event)",
 ng-mouseenter="showIt()",
 ng-mouseleave="hideIt()",
 ng-transclude,
-tabindex=0,
+tabindex="{{fabTabindex || 0}}",
 )

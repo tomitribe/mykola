@@ -328,6 +328,11 @@ module index {
                             }
                         }]
                     })
+                    .when('/button', {
+                        template: require('./templates/button.jade'),
+                        controller: ['$scope', ($scope) => {
+                        }]
+                    })
                     .otherwise({
                         controller: ['$scope', '$location', ($scope, $location) => {
                             $scope.path = $location.path();

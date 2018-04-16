@@ -33,7 +33,6 @@ module tomitribe_button {
             replace: true,
             transclude: true
         };
-
         function compile(element, attrs) {
             setButtonStyle(element, attrs.tribeSize, attrs.tribeColor, attrs.tribeType);
 
@@ -49,6 +48,8 @@ module tomitribe_button {
                 attrs.$observe('tribeType', function (tribeType) {
                     setButtonStyle(element, attrs.tribeSize, attrs.tribeColor, tribeType);
                 });
+
+                element.attr('tabindex', attrs.tribeTabindex || 0);
 
                 element.on('click', function (event) {
                     if (attrs.disabled === true) {
