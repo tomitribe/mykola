@@ -1,3 +1,3 @@
-# ts-tomitribe-utils
+# ts-tomitribe-util
 
 Tomitribe utilities converted for ts usage.

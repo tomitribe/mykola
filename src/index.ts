@@ -3,7 +3,7 @@ import * as angular from 'angular';
 
 import "./styles/app.sass";
 
-import { LongDuration, TimeUtils } from "../components/ts-tomitribe-utils/index";
+import { LongDuration, TimeUtils } from "../components/ts-tomitribe-util/index";
 
 let _ = require('underscore');
 
