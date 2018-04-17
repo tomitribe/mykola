@@ -97,7 +97,7 @@ export class TimeUtils {
         return res.toString();
     }
 
-    private static max() {
+    public static max() {
         let values: TimeUnit[] = TimeUnit.values();
         return values[values.length - 1];
     }

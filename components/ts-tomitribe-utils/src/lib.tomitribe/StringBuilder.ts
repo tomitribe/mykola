@@ -18,7 +18,7 @@ export class StringBuilder {
     }
 
     public append(str: any): StringBuilder {
-        if (!!str && str.toString) this.str.concat(str.toString());
+        if (!!str && str.toString) this.str = this.str.concat(str.toString());
         return this;
     }
 

@@ -146,7 +146,7 @@ export class LongDuration {
      * @param {TimeUnit} max      the highest time unit of interest
      * @return {string}
      */
-    public formatHighest(max: TimeUnit): string {
+    public formatHighest(max: TimeUnit = TimeUtils.max()): string {
         return TimeUtils.format(this.time, this.unit, TimeUnit.MILLISECONDS, max);
     }
 
