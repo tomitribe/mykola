@@ -13,6 +13,7 @@ div
           h4 Parse new LongDuration
           div
             input.form-control(ng-model="aString")
+            h5 aString (a {{ aObject < bObject ? '<' : (aObject > bObject ? '>' : '==') }} b)
         div.col-sm-6
           h4 Data
           div
@@ -21,6 +22,13 @@ div
         div.col-sm-6
           div
             input.form-control(ng-model="bString")
+            h5 bString (b {{ bObject < aObject ? '<' : (bObject > aObject ? '>' : '==') }} a)
+            h6
+              = "(for equal comparison use "
+              code a.valueOf() == b.valueOf()
+              = " or "
+              code +a == +b
+              = " )"
         div.col-sm-6
           div
             pre(ng-bind-html="bObject | json | prettify")
