@@ -12,4 +12,4 @@
       let duration = new LongDuration("30 minutes, 20 seconds and 15 nanoseconds");
  */
 
-export * from "./lib.tomitribe";
+export * from "./lib";

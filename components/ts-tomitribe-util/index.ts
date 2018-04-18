@@ -4,4 +4,4 @@
  * Tomitribe-utils package.
  */
 
-export * from './src/tomitribe-utils';
+export * from './src/tomitribe-util';
