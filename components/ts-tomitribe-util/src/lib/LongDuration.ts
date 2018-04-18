@@ -14,6 +14,10 @@ export class LongDuration {
         throw e;
     };
 
+    valueOf():number {
+        return this.time * this.unit.valueOf();
+    }
+
     public constructor(text?: any, consumer?: any) {
         if (((typeof text === 'string') || !text) && ((typeof consumer === 'function' && (<any>consumer).length == 1) || !consumer)) {
             this.parseLongDuration(text, <any>(consumer));

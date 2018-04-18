@@ -64,7 +64,7 @@ export class TimeUnit {
         });
     }
 
-    public toNumber(): number {
+    public valueOf(): number {
         return <number> TimeUnitValue[this.timeUnit];
     }
 
@@ -99,6 +99,6 @@ export class TimeUnit {
     }
 
     public convert(duration: number, sourceUnit: TimeUnit): number {
-        return Math.trunc((duration * sourceUnit.toNumber()) / this.toNumber());
+        return Math.trunc((duration * sourceUnit.valueOf()) / this.valueOf());
     }
 }
