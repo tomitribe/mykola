@@ -22,7 +22,7 @@ div
           div.row
             div.col-sm-12
               div(style="padding-left: 20px; padding-top: 5px;")
-                tribe-fab(fab-direction='down' fab-trigger='fabClick' opened-status='menuOneStatus')
+                tribe-fab(fab-direction='down' fab-trigger='fabClick' opened-status='menuOneStatus', open-on-focus="false")
                   tribe-fab-trigger
                     tribe-button(tribe-size='l', tribe-type='fab')
                       span.alegreya.rt +
@@ -36,7 +36,7 @@ div
             div tribe-fab down over
             div {{menuTwoStatus ? 'true' : 'false'}}
           div.col-sm-12
-            tribe-fab(fab-direction='down' fab-trigger='fabOver' opened-status='menuTwoStatus')
+            tribe-fab(fab-direction='down' fab-trigger='fabOver' opened-status='menuTwoStatus', open-on-focus="false")
               tribe-fab-trigger
                 tribe-button(tribe-size='l', tribe-type='fab')
                   span.alegreya.rt +
@@ -56,7 +56,7 @@ div
             div tribe-fab left
             div {{menuThreeStatus ? 'true' : 'false'}}
           div.col-sm-12
-            tribe-fab(fab-direction='left' fab-trigger='fabOver' trigger-hide='true' opened-status='menuThreeStatus')
+            tribe-fab(fab-direction='left' fab-trigger='fabOver' trigger-hide='true' opened-status='menuThreeStatus', open-on-focus="false")
               tribe-fab-trigger
                 i.trigger.bimg
               tribe-fab-actions
@@ -69,3 +69,23 @@ div
                 tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Delete', tribe-tooltip-position='right')
                   i.fa.fa-trash.
       div.clear
+      div(style="margin-top: 100px").row
+        div
+          h3 FAB left with focus behaviour
+          div.col-sm-12
+            div tribe-fab left
+            div {{menuFourStatus ? 'true' : 'false'}}
+          div.col-sm-12
+            tribe-fab(fab-direction='left' fab-trigger='fabOver' trigger-hide='true' opened-status='menuFourStatus' open-on-focus="true")
+              tribe-fab-trigger
+                i.trigger.bimg
+              tribe-fab-actions
+                tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='User', tribe-tooltip-position='left')
+                  i.fa.fa-id-card
+                tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Edit', tribe-tooltip-position='top')
+                  i.fa.fa-edit
+                tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Copy', tribe-tooltip-position='bottom')
+                  i.fa.fa-copy
+                tribe-button(tribe-size='s', tribe-type='icon', tribe-tooltip='Delete', tribe-tooltip-position='right')
+                  i.fa.fa-trash.
+

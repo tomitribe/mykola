@@ -28,7 +28,9 @@ module tomitribe_fab {
                 opened: '=?openedStatus',
                 triggerHide: '@?',
                 autoClose: '@?',
-                closeSelector: '@?'
+                closeSelector: '@?',
+                fabTabindex: '=?',
+                openOnFocus: '=?'
             },
             link: link,
             controller: ['$scope', '$timeout', '$document', '$rootScope', tribeFabController],
@@ -44,6 +46,8 @@ module tomitribe_fab {
             scope.triggerHide = !!scope.triggerHide || false;
             scope.opened = scope.opened || false;
             scope.selectedIndex = 0;
+
+            scope.openOnFocus = scope.openOnFocus !== undefined ? scope.openOnFocus : true;
 
             if (scope.autoClose === 'true') {
                 //if 'true' use our default styles
@@ -62,6 +66,9 @@ module tomitribe_fab {
             ctrl.init(scope.fabDirection, scope.fabTrigger, element);
             ctrl.toggleOpen(scope.opened);
 
+            scope.onFocus = function () {
+                scope.opened = true;
+            };
 
             //When we hover into an element, we fire focus
             $timeout(()=> {
@@ -96,17 +103,30 @@ module tomitribe_fab {
                         //Arrow down || Arrow right || Enter -> Open
                         setMenuStatus(true, $event);
 
-                    } else if (isOpen() && (($event.keyCode === 40) || ($event.keyCode === 9 && !$event.shiftKey && (isFocusOnTrigger() || hasNextFocusableElement())))) {
+                    } else if (isOpen() && (($event.keyCode === 40) || ($event.keyCode === 9 && !$event.shiftKey))) {
                         //Arrow down || TAB -> Navigate down through menu items
-                        if (isFocusOnTrigger()) {
-                            //reset index
-                            scope.selectedIndex = 0;
+                        if(isFocusOnTrigger() || hasNextFocusableElement()) {
+                            if (isFocusOnTrigger()) {
+                                //reset index
+                                scope.selectedIndex = 0;
+                            }
+                            moveDown($event);
+                        } else {
+                            //Going to exit
+                            if(scope.openOnFocus) {
+                                setMenuStatus(false, $event, true);
+                            }
                         }
-                        moveDown($event);
-
-                    } else if (($event.keyCode === 38 && isOpen()) || $event.shiftKey && $event.keyCode === 9 && scope.selectedIndex !== 0) {
+                    } else if (($event.keyCode === 38 && isOpen()) || $event.shiftKey && $event.keyCode === 9) {
                         //Arrow up Shift-TAB -> Navigate up through menu items
-                        moveUp($event);
+                        if(scope.selectedIndex === 0) {
+                            //Going to exit
+                            if(scope.openOnFocus) {
+                                scope.opened = false;
+                            }
+                        } else {
+                            moveUp($event);
+                        }
 
                     } else if ($event.keyCode === 37 || $event.keyCode === 38 || $event.keyCode === 27) {
                         //Arrow left || Arrow Up || ESC  -> Close
@@ -158,8 +178,10 @@ module tomitribe_fab {
             }
 
             function moveUp($event) {
-                if (scope.selectedIndex !== 1 && !isFocusOnTrigger()) {
-                    scope.selectedIndex--;
+                if (scope.selectedIndex !== 1) {
+                    if(!isFocusOnTrigger()) {
+                        scope.selectedIndex--;
+                    }
                     getFocusableElement(scope.selectedIndex).focus();
                 } else {
                     //Focus trigger

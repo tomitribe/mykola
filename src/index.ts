@@ -330,6 +330,12 @@ module index {
                             }
                         }]
                     })
+                    .when('/button', {
+                        template: require('./templates/button.jade'),
+                        controller: ['$scope', ($scope) => {
+                          
+                        }]
+                    })
                     .when('/utils', {
                         template: require('./templates/utils.jade'),
                         controller: ['$scope', ($scope) => {
