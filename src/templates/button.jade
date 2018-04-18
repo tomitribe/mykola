@@ -1,0 +1,21 @@
+div
+    div.row.header
+        .col-xs-12
+            div.meta.pull-left
+                div.title Button
+    div.page
+        div.panel
+            div.row
+                div.col-sm-6
+                    div.row
+                        div
+                            h4 tribe-button with default tabindex
+                            tribe-button(tribe-size='m', tribe-type='raised') My Button 1
+                    div.row
+                        div
+                            h4 tribe-button with tabindex=0
+                            tribe-button(tribe-size='m', tribe-type='raised', tribe-tabindex="0") My Button 2
+                    div.row
+                        div
+                            h4 Button with tabindex=-1
+                            tribe-button(tribe-size='m', tribe-type='raised', tribe-tabindex="-1") My Button 3
