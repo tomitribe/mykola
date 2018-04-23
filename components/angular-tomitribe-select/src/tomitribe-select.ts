@@ -349,7 +349,7 @@ module tomitribe_select {
             require: 'uiSelect',
             replace: false,
             link: link
-        }
+        };
 
         function link($scope, elem, attrs, uiSelect) {
             if (!uiSelect.multiple) {
@@ -360,12 +360,7 @@ module tomitribe_select {
 
             $scope.$on('uis:select', () => {
                 uiSelect.focusInput.focus();
-            })
-
-            uiSelect.onRemoveCallback = _.wrap(uiSelect.onRemoveCallback, (cb, ...args) => {
-              cb(...args);
-              uiSelect.focusInput.focus();
-            })
+            });
         }
     }
 
