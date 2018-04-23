@@ -356,11 +356,28 @@ module tomitribe_select {
                 $log.warn('tribeSelectMultipleFocusHelper should be used along with multiple attribute!');
                 return;
             }
+
+            let cssClassName = "tribe-select-focus";
+
             uiSelect.closeOnSelect = false;
 
             $scope.$on('uis:select', () => {
                 uiSelect.focusInput.focus();
             });
+
+            uiSelect.searchInput.bindFirst('keydown', function (e) {
+                if (e.keyCode === 8 && _.isEmpty(uiSelect.search)) {
+                    getSelectizeInputElement().addClass(cssClassName);
+                }
+            });
+
+            uiSelect.searchInput.bindFirst('blur', function (e) {
+                getSelectizeInputElement().removeClass(cssClassName);
+            });
+
+            function getSelectizeInputElement() {
+                return elem.find('.selectize-input');
+            }
         }
     }
 
