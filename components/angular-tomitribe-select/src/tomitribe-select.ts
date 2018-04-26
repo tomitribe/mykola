@@ -359,10 +359,8 @@ module tomitribe_select {
 
             let cssClassName = "tribe-select-focus";
 
-            uiSelect.closeOnSelect = false;
-
             $scope.$on('uis:select', () => {
-                uiSelect.focusInput.focus();
+                getSelectizeInputElement().addClass(cssClassName);
             });
 
             uiSelect.searchInput.bindFirst('keydown', function (e) {
