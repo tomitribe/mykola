@@ -17,7 +17,8 @@ export class TagsDirective {
     scope = {
         ngModel: '=',
         position: '@?',
-        fieldName: '@?'
+        fieldName: '@?',
+        disabled: '=?'
     };
     link: ng.IDirectiveLinkFn = (scope: any, el: any, attrs: any, ctrl: any): void => {
         scope.form = ctrl;

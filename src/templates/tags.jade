@@ -16,6 +16,9 @@ div
 
             h3 Tags (dropdown open down)
             tribe-tags(ng-model="tags2", field-name="tags2", position="down").col-sm-12
+
+            h3 Tags disabled
+            tribe-tags(ng-model="tags2", field-name="tags2", position="down", disabled="true").col-sm-12
         div(ng-if="tags.length").col-sm-6
           h3 Selected Tags
           ul
