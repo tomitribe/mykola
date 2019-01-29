@@ -13,4 +13,4 @@ angular.module('tomitribe-tags', ['ui.select', 'ngSanitize', 'tomitribe-select']
   .controller('TribeTagsController', TagsController)
   .directive('tribeTags', [function () { return new TagsDirective(); }])
   .directive('tribeTagsOnBlur', ['$timeout', t => new TagsOnBlurDirective(t)])
-  .directive('tribeTaggingValidator', ['TribeTagsConfigurer', t => new TaggingValidatorDirective(t)]);
+  .directive('tribeTaggingValidator', ['TribeTagsConfigurer', '$parse', (t, p) => new TaggingValidatorDirective(t, p)]);
