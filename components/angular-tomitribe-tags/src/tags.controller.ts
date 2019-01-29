@@ -1,6 +1,6 @@
 import {TagReference} from "./tags.service";
 
-export class TagsController {
+export class TagsController{
     static $inject = ['$scope', 'TribeTagsService', 'TribeTagsConfigurer'];
 
     allLoaded: boolean = false;
