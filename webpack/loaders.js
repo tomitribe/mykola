@@ -1,13 +1,14 @@
 module.exports = [
     {
 		test: /\.ts$/,
-		loader: 'ts-loader'
+		loader: 'ts-loader',
+        options: { allowTsInNodeModules: true }
 	}, {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
     }, {
         test: /\.(scss|sass)$/,
-        loader: 'style!css!sass'
+        loader: 'style-loader!css-loader!sass-loader'
     }, {
         test: /\.(jade|pug)$/,
         loader: 'pug-loader'
