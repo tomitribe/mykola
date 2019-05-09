@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-const loaders = require("./loaders");
+const rules = require("./rules");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
@@ -8,7 +8,6 @@ const path = require('path');
 const isBundle = process.env['NODE_ENV'] === 'bundle';
 
 function BundleProcessor(options) {}
-
 BundleProcessor.prototype.apply = function (compiler) {
     compiler.hooks.compilation.tap('BundleProcessor', function (compilation) { // copy html file replacing base value
         compilation.hooks.htmlWebpackPluginAfterHtmlProcessing.tapAsync('BundleProcessor', (object, cb) => {
@@ -48,7 +47,7 @@ module.exports = {
         })
     ],
     module:{
-        rules: loaders
+        rules
     },
     devServer: {
         contentBase: path.resolve(__dirname, '../target/build'),
