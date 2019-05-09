@@ -14,7 +14,7 @@ export class TaggingValidatorDirective implements ng.IDirective {
         const validationIgnore = attrs.validationIgnore && this.$parse(attrs.validationIgnore);
         const [ngModel, uiSelect] = ctrls;
 
-        scope.$parent.applyTaggingValidation = (tag: TagReference, inputValdatorCheck:boolean = false) => {
+        scope.$parent['applyTaggingValidation'] = (tag: TagReference, inputValdatorCheck:boolean = false) => {
             // check duplication on collection without this element
             const pureSelected = _.without(uiSelect.selected, tag);
             tag['$$invalid']   = !this.tagConfigurer.validation.default.isValid(tag.name, pureSelected, inputValdatorCheck, {scope, el, attrs, ctrls, $item: tag, validationIgnore});

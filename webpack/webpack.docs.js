@@ -1,5 +1,6 @@
-const loaders = require("./loaders");
+const rules = require("./rules");
 const webpack = require('webpack');
+const path = require('path');
 
 // just there to build the doc app dependencies bundle
 
@@ -12,12 +13,11 @@ module.exports = {
         publicPath: isBundle ? '/mykola/doc/ngdocs/js/' : ''
     },
     resolve: {
-        root: __dirname,
-        extensions: ['', '.ts', '.js']
+        extensions: ['.ts', '.js']
     },
     devtool: "source-map",
     plugins: [
-      new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery', 'window.jQuery': 'jquery', 'window.jquery': 'jquery' })
+      new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery', 'window.jQuery': 'jquery', 'window.jquery': 'jquery', Popper: ['popper.js', 'default'] })
     ],
-    module: { loaders: loaders }
+    module: { rules }
 };
