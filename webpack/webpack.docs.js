@@ -17,7 +17,7 @@ module.exports = {
     },
     devtool: "source-map",
     plugins: [
-      new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery', 'window.jQuery': 'jquery', 'window.jquery': 'jquery' })
+      new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery', 'window.jQuery': 'jquery', 'window.jquery': 'jquery', Popper: ['popper.js', 'default'] })
     ],
     module: { rules: loaders }
 };

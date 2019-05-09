@@ -7,6 +7,16 @@ const path = require('path');
 
 const isBundle = process.env['NODE_ENV'] === 'bundle';
 
+function BundleProcessor(options) {}
+
+BundleProcessor.prototype.apply = function (compiler) {
+    compiler.hooks.compilation.tap('BundleProcessor', function (compilation) { // copy html file replacing base value
+        compilation.hooks.htmlWebpackPluginAfterHtmlProcessing.tapAsync('BundleProcessor', (object, cb) => {
+            if (isBundle) object.html = object.html.replace('<base href="/">', '<base href="/mykola/">');
+            cb(null, object);
+        });
+    });
+};
 
 module.exports = {
     entry: ['./src/index.ts'],
@@ -25,16 +35,7 @@ module.exports = {
             inject: 'body',
             hash: true
         }),
-        {
-            apply: function (compiler) {
-                compiler.plugin('compilation', function (compilation) { // copy html file replacing base value
-                    compilation.plugin('html-webpack-plugin-after-html-processing', function (object) {
-                        if (isBundle) object.html = object.html.replace('<base href="/">', '<base href="/mykola/">');
-                        return object;
-                    });
-                });
-            }
-        },
+        new BundleProcessor(),
         new CopyWebpackPlugin([
             { from: path.resolve(__dirname, '../src/public') }
         ]),
