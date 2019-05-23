@@ -116,13 +116,17 @@ export class TimeUtils {
         return time;
     }
 
-    public static abbreviate(duration: string | number, sourceUnit?: TimeUnit, min: TimeUnit = TimeUtils.min(), max: TimeUnit = TimeUtils.max()): string {
+    public static abbreviate(duration: string | number,
+                             sourceUnit?: TimeUnit,
+                             min: TimeUnit = TimeUtils.min(),
+                             max: TimeUnit = TimeUtils.max()): string {
         if (sourceUnit && typeof duration === "number") {
             let format: string = TimeUtils.format(<number> duration, sourceUnit, min, max);
             return TimeUtils.abbreviateString(format);
         } else if (typeof duration === "string") {
             return TimeUtils.abbreviateString(<string> duration);
         } else {
+            return 'Wrong duration argument type ' + typeof duration;
             // error wrong abbreviate usage
         }
     }

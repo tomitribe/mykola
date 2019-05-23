@@ -8,14 +8,18 @@ export class LongDuration {
     time: number = 0;
 
     /*private*/
-    unit: TimeUnit = null;
+    unit: TimeUnit;
 
     defaultErrorHandler: (p1: Error) => void = (e) => {
         throw e;
     };
 
-    valueOf():number {
-        return this.time * this.unit.valueOf();
+    valueOf() :number {
+        if (!!this.unit) {
+            return this.time * this.unit.valueOf()
+        } else {
+            throw new Error('No timme unit');
+        }
     }
 
     public constructor(text?: any, consumer?: any) {
@@ -156,7 +160,7 @@ export class LongDuration {
 
     parseUnit(u: string, errorHandler: (p1: Error) => void): TimeUnit {
         if (u.length === 0) {
-            return null;
+            throw new Error('Invalid unit');
         }
         if (equalsIgnoreCase("NANOSECONDS", u)) return TimeUnit.NANOSECONDS;
         if (equalsIgnoreCase("NANOSECOND", u)) return TimeUnit.NANOSECONDS;
@@ -190,7 +194,7 @@ export class LongDuration {
         if (equalsIgnoreCase("D", u)) return TimeUnit.DAYS;
 
         this.invalidFormat(u, errorHandler);
-        return null;
+        throw new Error('Invalid format');
     }
 }
 
@@ -201,7 +205,7 @@ export namespace LongDuration {
 
         b: number = 0;
 
-        base: TimeUnit = null;
+        base: TimeUnit;
 
         constructor(a: LongDuration, b: LongDuration) {
             this.base = Normalize.lowest(a, b);
@@ -216,3 +220,5 @@ export namespace LongDuration {
         }
     }
 }
+
+export default { LongDuration };

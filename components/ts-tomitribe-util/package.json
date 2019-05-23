@@ -1,10 +1,13 @@
 {
   "name": "ts-tomitribe-util",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tomitribe utilities converted for ts usage.",
   "repository": "https://github.com/tomitribe/mykola/tree/master/components/ts-tomitribe-util",
   "license": "MIT",
   "main": "index.ts",
+  "scripts": {
+    "ts:defs": "tsc --declaration --outDir . --emitDeclarationOnly"
+  },
   "dependencies": {
   }
 }
