@@ -32,3 +32,5 @@ export class StringBuilder {
         return this
     }
 }
+
+export default { StringBuilder };

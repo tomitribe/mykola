@@ -102,3 +102,5 @@ export class TimeUnit {
         return Math.trunc((duration * sourceUnit.valueOf()) / this.valueOf());
     }
 }
+
+export default {TimeUnitEnum, TimeUnitValue, TimeUnit};
