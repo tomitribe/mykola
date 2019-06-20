@@ -223,10 +223,18 @@ module tomitribe_fab {
             if (!!$scope.trigger) $scope.trigger();
             $scope.trigger = $scope.$watch(_trigger, _checkStatus);
 
+            $scope.toggleActive = false;
             let _toggleOpen = (_opened)=> {
-                $scope[_trigger] = _opened;
-                $timeout(el.find('.fab-actions a').attr("tabindex", _opened ? 0 : -1))
+                if($scope.toggleActive) return;
+
+                $scope.toggleActive = true;
+                $timeout(() => {
+                    $scope[_trigger] = _opened;
+                    el.find('.fab-actions a').attr("tabindex", _opened ? 0 : -1);
+                    $scope.toggleActive = false;
+                })
             };
+
             $scope.$watch('opened', _toggleOpen);
             tribeFab.toggleOpen = _toggleOpen;
 
