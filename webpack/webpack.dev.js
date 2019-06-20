@@ -52,7 +52,10 @@ module.exports = {
     devServer: {
         contentBase: path.resolve(__dirname, '../target/build'),
         historyApiFallback: true,
+        // page server port
         port: 8082,
+        // user websocket port
+        //sockPort: 38082,
         host: '0.0.0.0',
         hot: true,
         disableHostCheck: true
