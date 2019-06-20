@@ -23,6 +23,6 @@ import 'bootstrap/dist/js/bootstrap.js';
 // load our default (non specific) css
 import "ui-select/dist/select.css";
 import "selectize/dist/css/selectize.css";
-import "font-awesome/css/font-awesome.css";
+import "font-awesome/scss/font-awesome.scss";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-admin-ui/dist/css/bootstrap-admin-ui.css';
