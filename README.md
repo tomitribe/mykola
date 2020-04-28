@@ -15,6 +15,11 @@ npm i
 npm start
 ```
 
+If you prefer docker
+```
+docker-compose run -p 8082:8082 npm start
+```
+
 Check demo page at:
 http://localhost:8082/
 
